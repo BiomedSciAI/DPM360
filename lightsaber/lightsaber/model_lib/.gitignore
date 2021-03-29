@@ -1,0 +1,10 @@
+# By default ignore all sub-projects
+/*
+
+# Include these always
+!.gitignore
+!README.md
+
+# Manually add projects
+!pu_models/
+!pt_sota_models/

@@ -1,0 +1,7 @@
+tgt_file: /home/shared/expt_covid19/cohorts/severity_v1/SEVERITY_OUT_V1.csv
+feat_file: /home/shared/expt_covid19/cohorts/severity_v1/SEVERITY_FEAT_V1_DEMO-COMORB.csv
+
+feat_columns: ["SEX", "BMI_LATEST", "AGE", 
+    "has_MI", " has_STROKE" , "has_ISCH_STROKE", "has_ASTHMA", "has_RENAL",
+    "has_COPD", "has_DEMENTIA", "has_NEURONE", "has_PARKINSON", "has_CANCER", "has_DM"]
+
