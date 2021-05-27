@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#welcome-to-mkdocs" class="md-skip">
+        <a href="#service_builder" class="md-skip">
           Skip to content
         </a>
       
@@ -309,45 +309,9 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Intro
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
         Intro
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#commands" class="md-nav__link">
-    Commands
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#project-layout" class="md-nav__link">
-    Project layout
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -422,28 +386,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#commands" class="md-nav__link">
-    Commands
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#project-layout" class="md-nav__link">
-    Project layout
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -455,20 +397,105 @@
               
                 
                 
-                <h1 id="welcome-to-mkdocs">Welcome to MkDocs</h1>
-<p>For full documentation visit <a href="https://www.mkdocs.org">mkdocs.org</a>.</p>
-<h2 id="commands">Commands</h2>
-<ul>
-<li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
-<li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
-<li><code>mkdocs build</code> - Build the documentation site.</li>
-<li><code>mkdocs -h</code> - Print help message and exit.</li>
-</ul>
-<h2 id="project-layout">Project layout</h2>
-<div class="codehilite"><pre><span></span><code><span class="err">mkdocs.yml    # The configuration file.</span>
-<span class="err">docs/</span>
-<span class="err">    index.md  # The documentation homepage.</span>
-<span class="err">    ...       # Other markdown pages, images and other files.</span>
+                <h1 id="service_builder">service_builder</h1>
+<ol>
+<li>
+<p>Run the following command</p>
+<p>``` 
+ docker  build  -t dpm360_model_wrapper_v1  .</p>
+<p>```</p>
+</li>
+<li>
+<p>Tag the image and push to registry
+    NB: I am using my public git account: kibnelson</p>
+<p>``` 
+ docker  tag dpm360_model_wrapper_v1 kibnelson/dpm360_model_wrapper_v1</p>
+<p>```
+ 3. Push the image   </p>
+<p>``` 
+ docker  push kibnelson/dpm360_model_wrapper_v1</p>
+<p>```
+ # Testing  <br />
+ 1. To test image locally run the following command</p>
+<p>```
+docker run --publish=0.0.0.0:8080:8080 -e MLFLOW_S3_ENDPOINT_URL=https://foh-ohdsi-dev-minio.bx.cloud9.ibm.com -e AWS_ACCESS_KEY_ID=minioRoot -e AWS_SECRET_ACCESS_KEY=minioRoot123 -e MODEL_NAME=ElasticnetWineTestModel -e MODEL_VERSION=1 -e MODEL_RUN_ID=208797568cee4b1c96c121827eb1ddac -e MLFLOW_TRACKING_URI=https://foh-ohdsi-dev-mlflow.bx.cloud9.ibm.com -e MODEL_SOURCE=s3://mlflow-experiments/0/208797568cee4b1c96c121827eb1ddac/artifacts/dpm360 -ti dpm360_model_wrapper_v2</p>
+<p><code>2. To test model wrapper code locally, set the following env variables</code> 
+export MODEL_NAME=ElasticnetWineModelFeatures3
+export MODEL_VERSION=1
+export FEATURE_GENERATOR_FILE_NAME=""
+export MLFLOW_TRACKING_URI=https://foh-ohdsi-dev-mlflow.bx.cloud9.ibm.com
+export MODEL_SOURCE=s3://mlflow-experiments/0/81e4192736f8497384e09d6928ee0f2f/artifacts/model
+export MODEL_RUN_ID=81e4192736f8497384e09d6928ee0f2f
+export AWS_ACCESS_KEY_ID=minioRoot
+export AWS_SECRET_ACCESS_KEY=minioRoot123
+export MLFLOW_S3_ENDPOINT_URL=https://foh-ohdsi-dev-minio.bx.cloud9.ibm.com</p>
+<p><code>3. Then start flask app</code>
+python ModelWrapperApp.py    </p>
+<p>```</p>
+<p>To access the swagger page</p>
+<p>```
+http://0.0.0.0:8080/doc/</p>
+<p>```     <br />
+The following payload is used to test the sample elasticwine model </p>
+<p>```</p>
+<p>{"alcohol":[12.8],"chlorides":[0.029],"citricacid":[0.029],"density":[0.029],"fixedacidity":[0.029],"freesulfurdioxide":[0.029],"pH":[0.029],"residualsugar":[0.029],"sulphates":[0.029],"totalsulfurdioxide":[0.029],"volatileacidity":[0.029]}</p>
+<p>```</p>
+<h1 id="access-the-deployed-pod">Access the deployed pod</h1>
+<ol>
+<li>Run the following to login to the cluster</li>
+</ol>
+</li>
+</ol>
+<p><code>oc login --token=ogRUKtHV5kmece-W8cyKW6WNOKtP520BaIQ5FKJTp_A --server=https://c100-e.us-south.containers.cloud.ibm.com:30049</code>
+2. Run the following command to see new pods 
+   ```
+    oc get pods</p>
+<div class="codehilite"><pre><span></span><code><span class="err"># or use kubectl</span>
+</code></pre></div>
+
+<p>kubectl get pods  <br />
+<code>2. Get the name of the pod of interest</code>
+       oc port-forward elasticnetwinemodel-65b94cbc44-tlp8t 8080:8080 
+   <code>Thereafter access the following address to access the pods swagger</code>
+    http://0.0.0.0:8080/doc/</p>
+<p>```
+   The following payload is used to test the sample elasticwine model </p>
+<div class="codehilite"><pre><span></span><code><span class="o">```</span>
+
+<span class="err">{</span><span class="ss">&quot;alcohol&quot;</span><span class="p">:[</span><span class="mi">12</span><span class="p">.</span><span class="mi">8</span><span class="p">],</span><span class="ss">&quot;chlorides&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;citricacid&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;density&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;fixedacidity&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;freesulfurdioxide&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;pH&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;residualsugar&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;sulphates&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;totalsulfurdioxide&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;volatileacidity&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">]</span><span class="err">}</span>
+
+<span class="o">```</span>
+</code></pre></div>
+
+<h1 id="local-cluster-set-up">Local cluster set up</h1>
+<p>Run the following commands inside service_builder dir
+1. To start, we pass start command. After the integration with training pipeline we will also pass model_name to  be used to build  an image</p>
+<div class="codehilite"><pre><span></span><code><span class="err">sh startup.sh start </span>
+</code></pre></div>
+
+<ol>
+<li>To stop</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="err">sh startup.sh stop</span>
+</code></pre></div>
+
+<p>NB: Once we have the training pipeline ready we will follow the example below to integrate</p>
+<div class="codehilite"><pre><span></span><code><span class="c">https://docs.seldon.io/projects/seldon-core/en/v0.3.0/examples/mlflow.html</span>
+</code></pre></div>
+
+<h1 id="troubleshooting">Troubleshooting</h1>
+<p>If the deployment does not work, possible todo following this https://www.kubeflow.org/docs/started/workstation/minikube-linux/</p>
+<h1 id="helm-notes">Helm NOTES</h1>
+<p>Use the following command to helm chart outputs</p>
+<div class="codehilite"><pre><span></span><code><span class="err">helm template --dry-run --debug service_builder ./chart --set image.name=slur</span>
+</code></pre></div>
+
+<p>To install </p>
+<div class="codehilite"><pre><span></span><code><span class="err">helm install service_builder ./chart --set image.name=slur</span>
+</code></pre></div>
+
+<p>Sample patient test id</p>
+<div class="codehilite"><pre><span></span><code><span class="err">subject_id = [392786844,392814153,392798611])</span>
 </code></pre></div>
                 
               
