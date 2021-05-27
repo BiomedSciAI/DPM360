@@ -1,0 +1,1108 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
+    
+    
+      
+        <title>IHM Example using LSTM - DPM360</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.2c0c5eaf.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.7fa14f5b.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../css/ansi-colours.css">
+    
+      <link rel="stylesheet" href="../../css/jupyter-cells.css">
+    
+      <link rel="stylesheet" href="../../css/pandas-dataframe.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pre-amble" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="DPM360" class="md-header__button md-logo" aria-label="DPM360" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DPM360
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              IHM Example using LSTM
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="md-header__options">
+      
+    </div>
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="DPM360" class="md-nav__button md-logo" aria-label="DPM360" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    DPM360
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Intro
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Components
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Components" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" checked>
+      
+      <label class="md-nav__link" for="__nav_2_1">
+        Lightsaber
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Lightsaber" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Lightsaber
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Welcome to lightsaber
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_guide/" class="md-nav__link">
+        User Guide
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          IHM Example using LSTM
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        IHM Example using LSTM
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pre-amble" class="md-nav__link">
+    Pre-amble
+  </a>
+  
+    <nav class="md-nav" aria-label="Pre-amble">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-transformation-functions" class="md-nav__link">
+    Data Transformation functions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ihm-example" class="md-nav__link">
+    IHM Example
+  </a>
+  
+    <nav class="md-nav" aria-label="IHM Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reading-data-along-with-usage-of-pre-processor" class="md-nav__link">
+    Reading data along with usage of pre-processor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defining-the-user-model" class="md-nav__link">
+    Defining the user model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber-to-run-training-and-evaluate" class="md-nav__link">
+    Lightsaber to run training and evaluate
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      <label class="md-nav__link" for="__nav_2_2">
+        Service Builder
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Service Builder" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Service Builder
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ServiceBuilder/" class="md-nav__link">
+        Intro
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      <label class="md-nav__link" for="__nav_2_3">
+        Installer
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Installer" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Installer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Installer/" class="md-nav__link">
+        Intro
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pre-amble" class="md-nav__link">
+    Pre-amble
+  </a>
+  
+    <nav class="md-nav" aria-label="Pre-amble">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-transformation-functions" class="md-nav__link">
+    Data Transformation functions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ihm-example" class="md-nav__link">
+    IHM Example
+  </a>
+  
+    <nav class="md-nav" aria-label="IHM Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reading-data-along-with-usage-of-pre-processor" class="md-nav__link">
+    Reading data along with usage of pre-processor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defining-the-user-model" class="md-nav__link">
+    Defining the user model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber-to-run-training-and-evaluate" class="md-nav__link">
+    Lightsaber to run training and evaluate
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>IHM Example using LSTM</h1>
+                
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script>
+(function() {
+  function addWidgetsRenderer() {
+    var mimeElement = document.querySelector('script[type="application/vnd.jupyter.widget-view+json"]');
+    var scriptElement = document.createElement('script');
+    var widgetRendererSrc = 'https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js';
+    var widgetState;
+
+    // Fallback for older version:
+    try {
+      widgetState = mimeElement && JSON.parse(mimeElement.innerHTML);
+
+      if (widgetState && (widgetState.version_major < 2 || !widgetState.version_major)) {
+        widgetRendererSrc = 'jupyter-js-widgets@*/dist/embed.js';
+      }
+    } catch(e) {}
+
+    scriptElement.src = widgetRendererSrc;
+    document.body.appendChild(scriptElement);
+  }
+
+  document.addEventListener('DOMContentLoaded', addWidgetsRenderer);
+}());
+</script>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This Notebook shows an example of using LSTM to model <code>In-hospital mortality</code> from MIMIC-III dataset. </p>
+<p>Data is presumed to have been already extracted from cohort and defined via a <code>yaml</code> configuration as below:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># USER DEFINED</span>
+<span class="nt">tgt_col</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">y_true</span>
+<span class="nt">idx_cols</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stay</span>
+<span class="nt">time_order_col</span><span class="p">:</span> 
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Hours</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">seqnum</span>
+
+<span class="nt">feat_cols</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">null</span>
+
+<span class="nt">train</span><span class="p">:</span>
+    <span class="nt">tgt_file</span><span class="p">:</span> <span class="s">&#39;{DATA_DIR}/IHM_V0_COHORT_OUT_EXP-SPLIT0-train.csv&#39;</span>
+    <span class="nt">feat_file</span><span class="p">:</span> <span class="s">&#39;{DATA_DIR}/IHM_V0_FEAT_EXP-SPLIT0-train.csv&#39;</span>
+
+<span class="nt">val</span><span class="p">:</span>
+    <span class="nt">tgt_file</span><span class="p">:</span> <span class="s">&#39;{DATA_DIR}/IHM_V0_COHORT_OUT_EXP-SPLIT0-val.csv&#39;</span>
+    <span class="nt">feat_file</span><span class="p">:</span> <span class="s">&#39;{DATA_DIR}/IHM_V0_FEAT_EXP-SPLIT0-val.csv&#39;</span>
+
+<span class="nt">test</span><span class="p">:</span>
+    <span class="nt">tgt_file</span><span class="p">:</span> <span class="s">&#39;{DATA_DIR}/IHM_V0_COHORT_OUT_EXP-SPLIT0-test.csv&#39;</span>
+    <span class="nt">feat_file</span><span class="p">:</span> <span class="s">&#39;{DATA_DIR}/IHM_V0_FEAT_EXP-SPLIT0-test.csv&#39;</span>
+
+<span class="c1"># DATA DEFINITIONS</span>
+
+<span class="c1">## Definitions of categorical data in the dataset</span>
+<span class="nt">category_map</span><span class="p">:</span>
+  <span class="nt">Capillary refill rate</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;0.0&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;1.0&#39;</span><span class="p p-Indicator">]</span>
+  <span class="nt">Glascow coma scale eye opening</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;To</span><span class="nv"> </span><span class="s">Pain&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;3</span><span class="nv"> </span><span class="s">To</span><span class="nv"> </span><span class="s">speech&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;1</span><span class="nv"> </span><span class="s">No</span><span class="nv"> </span><span class="s">Response&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;4</span><span class="nv"> </span><span class="s">Spontaneously&#39;</span><span class="p p-Indicator">,</span>
+                                   <span class="s">&#39;To</span><span class="nv"> </span><span class="s">Speech&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;Spontaneously&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;2</span><span class="nv"> </span><span class="s">To</span><span class="nv"> </span><span class="s">pain&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;None&#39;</span><span class="p p-Indicator">]</span> 
+  <span class="nt">Glascow coma scale motor response</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;1</span><span class="nv"> </span><span class="s">No</span><span class="nv"> </span><span class="s">Response&#39;</span> <span class="p p-Indicator">,</span> <span class="s">&#39;3</span><span class="nv"> </span><span class="s">Abnorm</span><span class="nv"> </span><span class="s">flexion&#39;</span> <span class="p p-Indicator">,</span> <span class="s">&#39;Abnormal</span><span class="nv"> </span><span class="s">extension&#39;</span> <span class="p p-Indicator">,</span> <span class="s">&#39;No</span><span class="nv"> </span><span class="s">response&#39;</span><span class="p p-Indicator">,</span>
+                                      <span class="s">&#39;4</span><span class="nv"> </span><span class="s">Flex-withdraws&#39;</span> <span class="p p-Indicator">,</span> <span class="s">&#39;Localizes</span><span class="nv"> </span><span class="s">Pain&#39;</span> <span class="p p-Indicator">,</span> <span class="s">&#39;Flex-withdraws&#39;</span> <span class="p p-Indicator">,</span> <span class="s">&#39;Obeys</span><span class="nv"> </span><span class="s">Commands&#39;</span><span class="p p-Indicator">,</span>
+                                      <span class="s">&#39;Abnormal</span><span class="nv"> </span><span class="s">Flexion&#39;</span> <span class="p p-Indicator">,</span> <span class="s">&#39;6</span><span class="nv"> </span><span class="s">Obeys</span><span class="nv"> </span><span class="s">Commands&#39;</span> <span class="p p-Indicator">,</span> <span class="s">&#39;5</span><span class="nv"> </span><span class="s">Localizes</span><span class="nv"> </span><span class="s">Pain&#39;</span> <span class="p p-Indicator">,</span> <span class="s">&#39;2</span><span class="nv"> </span><span class="s">Abnorm</span><span class="nv"> </span><span class="s">extensn&#39;</span><span class="p p-Indicator">]</span>
+  <span class="nt">Glascow coma scale total</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;11&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;10&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;13&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;12&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;15&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;14&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;3&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;5&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;4&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;7&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;6&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;9&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;8&#39;</span><span class="p p-Indicator">]</span>
+  <span class="nt">Glascow coma scale verbal response</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;1</span><span class="nv"> </span><span class="s">No</span><span class="nv"> </span><span class="s">Response&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;No</span><span class="nv"> </span><span class="s">Response&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;Confused&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;Inappropriate</span><span class="nv"> </span><span class="s">Words&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;Oriented&#39;</span><span class="p p-Indicator">,</span> 
+                                       <span class="s">&#39;No</span><span class="nv"> </span><span class="s">Response-ETT&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;5</span><span class="nv"> </span><span class="s">Oriented&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;Incomprehensible</span><span class="nv"> </span><span class="s">sounds&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;1.0</span><span class="nv"> </span><span class="s">ET/Trach&#39;</span><span class="p p-Indicator">,</span> 
+                                       <span class="s">&#39;4</span><span class="nv"> </span><span class="s">Confused&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;2</span><span class="nv"> </span><span class="s">Incomp</span><span class="nv"> </span><span class="s">sounds&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;3</span><span class="nv"> </span><span class="s">Inapprop</span><span class="nv"> </span><span class="s">words&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="nt">numerical</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;Heart</span><span class="nv"> </span><span class="s">Rate&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;Fraction</span><span class="nv"> </span><span class="s">inspired</span><span class="nv"> </span><span class="s">oxygen&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;Weight&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;Respiratory</span><span class="nv"> </span><span class="s">rate&#39;</span><span class="p p-Indicator">,</span> 
+            <span class="s">&#39;pH&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;Diastolic</span><span class="nv"> </span><span class="s">blood</span><span class="nv"> </span><span class="s">pressure&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;Glucose&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;Systolic</span><span class="nv"> </span><span class="s">blood</span><span class="nv"> </span><span class="s">pressure&#39;</span><span class="p p-Indicator">,</span>
+            <span class="s">&#39;Height&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;Oxygen</span><span class="nv"> </span><span class="s">saturation&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;Temperature&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;Mean</span><span class="nv"> </span><span class="s">blood</span><span class="nv"> </span><span class="s">pressure&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="c1">## Definitions of normal values in the dataset</span>
+<span class="nt">normal_values</span><span class="p">:</span>
+  <span class="nt">Capillary refill rate</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0</span>
+  <span class="nt">Diastolic blood pressure</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">59.0</span>
+  <span class="nt">Fraction inspired oxygen</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.21</span>
+  <span class="nt">Glucose</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">128.0</span>
+  <span class="nt">Heart Rate</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">86</span>
+  <span class="nt">Height</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">170.0</span>
+  <span class="nt">Mean blood pressure</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">77.0</span>
+  <span class="nt">Oxygen saturation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">98.0</span>
+  <span class="nt">Respiratory rate</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">19</span>
+  <span class="nt">Systolic blood pressure</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">118.0</span>
+  <span class="nt">Temperature</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">36.6</span>
+  <span class="nt">Weight</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">81.0</span>
+  <span class="nt">pH</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">7.4</span>
+  <span class="nt">Glascow coma scale eye opening</span><span class="p">:</span> <span class="s">&#39;4</span><span class="nv"> </span><span class="s">Spontaneously&#39;</span>
+  <span class="nt">Glascow coma scale motor response</span><span class="p">:</span> <span class="s">&#39;6</span><span class="nv"> </span><span class="s">Obeys</span><span class="nv"> </span><span class="s">Commands&#39;</span>
+  <span class="nt">Glascow coma scale total</span><span class="p">:</span>  <span class="s">&#39;15&#39;</span>
+  <span class="nt">Glascow coma scale verbal response</span><span class="p">:</span> <span class="s">&#39;5</span><span class="nv"> </span><span class="s">Oriented&#39;</span>
+</code></pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="pre-amble">Pre-amble</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># Jupyter notebook Specific imports</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="c1"># Imports injecting into namespace</span>
+<span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="n">tqdm</span><span class="o">.</span><span class="n">pandas</span><span class="p">()</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../../&#39;</span><span class="p">)</span>
+
+<span class="c1"># General imports</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">getpass</span> <span class="kn">import</span> <span class="n">getpass</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.exceptions</span> <span class="kn">import</span> <span class="n">NotFittedError</span>
+
+<span class="kn">import</span> <span class="nn">torch</span> <span class="k">as</span> <span class="nn">T</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Trainer</span>
+
+<span class="kn">from</span> <span class="nn">lightsaber</span> <span class="kn">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">C</span>
+<span class="kn">import</span> <span class="nn">lightsaber.data_utils.utils</span> <span class="k">as</span> <span class="nn">du</span>
+<span class="kn">from</span> <span class="nn">lightsaber.data_utils</span> <span class="kn">import</span> <span class="n">pt_dataset</span> <span class="k">as</span> <span class="n">ptd</span>
+<span class="kn">from</span> <span class="nn">lightsaber.trainers</span> <span class="kn">import</span> <span class="n">pt_trainer</span> <span class="k">as</span> <span class="n">ptr</span>
+
+<span class="kn">from</span> <span class="nn">lightsaber.model_lib.pt_sota_models</span> <span class="kn">import</span> <span class="n">rnn</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">data_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">getpass</span><span class="p">())</span>  <span class="c1"># enter or REPLACE with your data path containing the mimic files</span>
+<span class="k">assert</span> <span class="n">data_dir</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()</span>
+
+<span class="n">expt_conf</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./ihm_expt_config.yml&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">DATA_DIR</span><span class="o">=</span><span class="n">data_dir</span><span class="p">),</span>
+                         <span class="n">Loader</span><span class="o">=</span><span class="n">du</span><span class="o">.</span><span class="n">_Loader</span><span class="p">)</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="data-transformation-functions">Data Transformation functions</h3>
+<p>Transform/Filter functions allow runtime processing of data. 
+User can either use pre-packaged filter/transforms or write their own and pass
+at run time</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="nd">@ptd</span><span class="o">.</span><span class="n">functoolz</span><span class="o">.</span><span class="n">curry</span>
+<span class="k">def</span> <span class="nf">filter_fillna</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">time_order_col</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">idx_cols</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">names</span>
+    <span class="k">if</span> <span class="n">time_order_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sort_cols</span> <span class="o">=</span> <span class="n">idx_cols</span> <span class="o">+</span> <span class="n">time_order_col</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">sort_cols</span> <span class="o">=</span> <span class="n">idx_cols</span> <span class="o">+</span> <span class="p">[</span><span class="n">time_order_col</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sort_cols</span> <span class="o">=</span> <span class="n">idx_cols</span>
+
+    <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+               <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">sort_cols</span><span class="p">)</span>
+               <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">idx_cols</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+               <span class="o">.</span><span class="n">ffill</span><span class="p">())</span>
+
+    <span class="n">data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">fill_value</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span>
+
+
+<span class="nd">@ptd</span><span class="o">.</span><span class="n">functoolz</span><span class="o">.</span><span class="n">curry</span>
+<span class="k">def</span> <span class="nf">filter_preprocessor</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">preprocessor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">refit</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">preprocessor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">all_columns</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span>
+
+        <span class="c1"># Extracting the columns to fit</span>
+        <span class="k">if</span> <span class="n">cols</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="n">all_columns</span>
+        <span class="n">_oCols</span> <span class="o">=</span> <span class="n">all_columns</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
+        <span class="n">xData</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span>
+
+        <span class="c1"># If fit required fitting it</span>
+        <span class="k">if</span> <span class="n">refit</span><span class="p">:</span>
+            <span class="n">preprocessor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xData</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fitting pre-proc: </span><span class="si">{</span><span class="n">preprocessor</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Transforming data to be transformed</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">xData</span> <span class="o">=</span> <span class="n">preprocessor</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">xData</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">NotFittedError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">preprocessor</span><span class="si">}</span><span class="s2"> not fitted. pass fitted preprocessor or set refit=True&quot;</span><span class="p">)</span>
+        <span class="n">xData</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">xData</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="c1"># Merging other columns if required</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_oCols</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">_oCols</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> 
+                               <span class="n">columns</span><span class="o">=</span><span class="n">_oCols</span><span class="p">,</span>
+                               <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">xData</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">tmp</span><span class="p">,</span> <span class="n">xData</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Re-ordering the columns to original order</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">xData</span><span class="p">[</span><span class="n">all_columns</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="ihm-example">IHM Example</h2>
+<p>In general, user need to follow the following steps to train a <code>LSTM</code> for IHM model.</p>
+<ol>
+<li>Define the <code>filters</code> and <code>transforms</code> to be used. In this example, we will use a <code>StandardScaler</code> from <code>scikit-learn</code> using <code>filters</code> defined within <code>lightsaber</code>. </li>
+<li>Read the <code>train</code>, <code>test</code>, and <code>validation</code> dataset. In some cases, users may also want to define a <code>calibration dataset</code></li>
+<li>Define the model. In this example, we will use a pre-packaged <code>LSTM</code> model.</li>
+<li>Use <code>lightsaber</code> to chain the model via <code>pytorch-trainer</code> and generate metrics. </li>
+</ol>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="reading-data-along-with-usage-of-pre-processor">Reading data along with usage of pre-processor</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">preprocessor</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">train_filter</span> <span class="o">=</span> <span class="p">[</span><span class="n">filter_preprocessor</span><span class="p">(</span><span class="n">cols</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;numerical&#39;</span><span class="p">],</span> 
+                                    <span class="n">preprocessor</span><span class="o">=</span><span class="n">preprocessor</span><span class="p">,</span>
+                                    <span class="n">refit</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                <span class="n">filter_fillna</span><span class="p">(</span><span class="n">fill_value</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;normal_values&#39;</span><span class="p">],</span>
+                              <span class="n">time_order_col</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;time_order_col&#39;</span><span class="p">])</span>
+                <span class="p">]</span>
+<span class="n">transform</span> <span class="o">=</span> <span class="n">ptd</span><span class="o">.</span><span class="n">transform_drop_cols</span><span class="p">(</span><span class="n">cols_to_drop</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;time_order_col&#39;</span><span class="p">])</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">ptd</span><span class="o">.</span><span class="n">BaseDataset</span><span class="p">(</span><span class="n">tgt_file</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">][</span><span class="s1">&#39;tgt_file&#39;</span><span class="p">],</span>
+                                <span class="n">feat_file</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">][</span><span class="s1">&#39;feat_file&#39;</span><span class="p">],</span>
+                                <span class="n">idx_col</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;idx_cols&#39;</span><span class="p">],</span>
+                                <span class="n">tgt_col</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;tgt_col&#39;</span><span class="p">],</span>
+                                <span class="n">feat_columns</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;feat_cols&#39;</span><span class="p">],</span>
+                                <span class="n">time_order_col</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;time_order_col&#39;</span><span class="p">],</span>
+                                <span class="n">category_map</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;category_map&#39;</span><span class="p">],</span>
+                                <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span>
+                                <span class="nb">filter</span><span class="o">=</span><span class="n">train_filter</span><span class="p">,</span>
+                               <span class="p">)</span>
+<span class="c1"># print(train_dataset.data.head())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">train_dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">))</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># For other datasets use fitted preprocessors</span>
+<span class="n">fitted_filter</span> <span class="o">=</span> <span class="p">[</span><span class="n">filter_preprocessor</span><span class="p">(</span><span class="n">cols</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;numerical&#39;</span><span class="p">],</span> 
+                                     <span class="n">preprocessor</span><span class="o">=</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">refit</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                 <span class="n">filter_fillna</span><span class="p">(</span><span class="n">fill_value</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;normal_values&#39;</span><span class="p">],</span>
+                               <span class="n">time_order_col</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;time_order_col&#39;</span><span class="p">])</span>
+                 <span class="p">]</span>
+
+<span class="n">val_dataset</span> <span class="o">=</span> <span class="n">ptd</span><span class="o">.</span><span class="n">BaseDataset</span><span class="p">(</span><span class="n">tgt_file</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">][</span><span class="s1">&#39;tgt_file&#39;</span><span class="p">],</span>
+                              <span class="n">feat_file</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">][</span><span class="s1">&#39;feat_file&#39;</span><span class="p">],</span>
+                              <span class="n">idx_col</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;idx_cols&#39;</span><span class="p">],</span>
+                              <span class="n">tgt_col</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;tgt_col&#39;</span><span class="p">],</span>
+                              <span class="n">feat_columns</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;feat_cols&#39;</span><span class="p">],</span>
+                              <span class="n">time_order_col</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;time_order_col&#39;</span><span class="p">],</span>
+                              <span class="n">category_map</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;category_map&#39;</span><span class="p">],</span>
+                              <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span>
+                              <span class="nb">filter</span><span class="o">=</span><span class="n">fitted_filter</span><span class="p">,</span>
+                              <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">val_dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">val_dataset</span><span class="p">))</span>
+
+<span class="n">test_dataset</span> <span class="o">=</span> <span class="n">ptd</span><span class="o">.</span><span class="n">BaseDataset</span><span class="p">(</span><span class="n">tgt_file</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">][</span><span class="s1">&#39;tgt_file&#39;</span><span class="p">],</span>
+                               <span class="n">feat_file</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">][</span><span class="s1">&#39;feat_file&#39;</span><span class="p">],</span>
+                               <span class="n">idx_col</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;idx_cols&#39;</span><span class="p">],</span>
+                               <span class="n">tgt_col</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;tgt_col&#39;</span><span class="p">],</span>
+                               <span class="n">feat_columns</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;feat_cols&#39;</span><span class="p">],</span>
+                               <span class="n">time_order_col</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;time_order_col&#39;</span><span class="p">],</span>
+                               <span class="n">category_map</span><span class="o">=</span><span class="n">expt_conf</span><span class="p">[</span><span class="s1">&#39;category_map&#39;</span><span class="p">],</span>
+                               <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span>
+                               <span class="nb">filter</span><span class="o">=</span><span class="n">fitted_filter</span><span class="p">,</span>
+                               <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">))</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># For most models you need to change only this part</span>
+<span class="n">input_dim</span><span class="p">,</span> <span class="n">target_dim</span> <span class="o">=</span> <span class="n">train_dataset</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">output_dim</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">weight_labels</span> <span class="o">=</span> <span class="n">train_dataset</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">weight_labels</span> <span class="o">=</span> <span class="p">(</span><span class="n">weight_labels</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">/</span> <span class="p">((</span><span class="n">weight_labels</span> <span class="o">+</span> <span class="mf">0.0000001</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span><span class="p">)))</span>
+<span class="n">weight_labels</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">weight_labels</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">train_dataset</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="defining-the-user-model">Defining the user model</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># For most models you need to change only this part</span>
+<span class="n">hparams</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">(</span><span class="n">gpus</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                             <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+                             <span class="n">max_epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                             <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+                             <span class="n">hidden_dim</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+                             <span class="n">rnn_class</span><span class="o">=</span><span class="s1">&#39;LSTM&#39;</span><span class="p">,</span>
+                             <span class="n">n_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                             <span class="n">dropout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+                             <span class="n">recurrent_dropout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+                             <span class="n">bidirectional</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                             <span class="p">)</span>
+
+
+<span class="n">base_model</span> <span class="o">=</span> <span class="n">rnn</span><span class="o">.</span><span class="n">RNNClassifier</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">,</span> 
+                               <span class="n">hidden_dim</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">hidden_dim</span><span class="p">,</span>
+                               <span class="n">rnn_class</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">rnn_class</span><span class="p">,</span>
+                               <span class="n">n_layers</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">n_layers</span><span class="p">,</span>
+                               <span class="n">dropout</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">dropout</span><span class="p">,</span>
+                               <span class="n">recurrent_dropout</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">recurrent_dropout</span><span class="p">,</span>
+                               <span class="n">bidirectional</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">bidirectional</span>
+                              <span class="p">)</span>
+
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">(</span><span class="n">weight</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>
+<span class="c1"># optimizer = T.optim.Adam(base_model.parameters(),</span>
+<span class="c1">#                          lr=hparams.lr,</span>
+<span class="c1">#                          weight_decay=1e-5  # standard value)</span>
+<span class="c1">#                          )</span>
+
+<span class="c1"># scheduler = T.optim.lr_scheduler.ReduceLROnPlateau(optimizer, &#39;min&#39;)</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="lightsaber-to-run-training-and-evaluate">Lightsaber to run training and evaluate</h3>
+<p>This part entails a few steps:</p>
+<ul>
+<li>create a wrapped model that takes in a base pytorch model and adds the training routines to the model</li>
+<li>associate a trainer for the wrapped model</li>
+<li>run training on the model with model tracking enabled</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># Creating the wrapped model</span>
+<span class="n">wrapped_model</span> <span class="o">=</span> <span class="n">ptr</span><span class="o">.</span><span class="n">PyModel</span><span class="p">(</span><span class="n">hparams</span><span class="p">,</span> <span class="n">base_model</span><span class="p">,</span>
+                            <span class="n">train_dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span>
+                            <span class="n">val_dataset</span><span class="o">=</span><span class="n">val_dataset</span><span class="p">,</span> <span class="c1"># None</span>
+                            <span class="n">test_dataset</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">,</span> <span class="c1"># test_dataset</span>
+                            <span class="c1">#optimizer=optimizer,</span>
+                            <span class="n">loss_func</span><span class="o">=</span><span class="n">criterion</span><span class="p">,</span>
+                            <span class="c1">#scheduler=scheduler,</span>
+                            <span class="n">collate_fn</span><span class="o">=</span><span class="n">ptd</span><span class="o">.</span><span class="n">collate_fn</span>
+                            <span class="p">)</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># Training </span>
+<span class="n">overfit_pct</span><span class="p">,</span> <span class="n">fast_dev_run</span><span class="p">,</span> <span class="n">terminate_on_nan</span><span class="p">,</span> <span class="n">auto_lr_find</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span>
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">max_epochs</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">max_epochs</span><span class="p">,</span> 
+                  <span class="n">gpus</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">gpus</span><span class="p">,</span>
+                  <span class="n">default_root_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;./out/&#39;</span><span class="p">,</span> <span class="s1">&#39;classifier_ihm&#39;</span><span class="p">),</span>
+                  <span class="n">terminate_on_nan</span><span class="o">=</span><span class="n">terminate_on_nan</span><span class="p">,</span>
+                  <span class="n">auto_lr_find</span><span class="o">=</span><span class="n">auto_lr_find</span><span class="p">,</span>
+                  <span class="n">overfit_pct</span><span class="o">=</span><span class="n">overfit_pct</span><span class="p">,</span>
+                  <span class="n">fast_dev_run</span><span class="o">=</span><span class="n">fast_dev_run</span> <span class="c1">#True if devugging</span>
+                 <span class="p">)</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># Run Training with model tracking</span>
+<span class="n">mlflow_conf</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">experiment_name</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;classifier_ihm&#39;</span><span class="p">)</span>
+<span class="n">artifacts</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">preprocessor</span><span class="o">=</span><span class="n">preprocessor</span><span class="p">)</span>
+<span class="n">experiment_tags</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;RNNClassifier&#39;</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">test_y</span><span class="p">,</span> 
+ <span class="n">test_yhat</span><span class="p">,</span> <span class="n">test_pred_proba</span><span class="p">)</span> <span class="o">=</span> <span class="n">ptr</span><span class="o">.</span><span class="n">run_training_with_mlflow</span><span class="p">(</span><span class="n">mlflow_conf</span><span class="p">,</span> 
+                                                            <span class="n">trainer</span><span class="p">,</span> 
+                                                            <span class="n">wrapped_model</span><span class="p">,</span> 
+                                                            <span class="n">overfit_pct</span><span class="o">=</span><span class="n">overfit_pct</span><span class="p">,</span>
+                                                            <span class="n">artifacts</span><span class="o">=</span><span class="n">artifacts</span><span class="p">,</span>
+                                                            <span class="o">**</span><span class="n">experiment_tags</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../user_guide/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              User Guide
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../../ServiceBuilder/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Intro
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fb4a9340.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a1c7c35e.min.js"></script>
+      
+    
+  </body>
+</html>
