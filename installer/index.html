@@ -1,0 +1,1170 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
+    
+    
+      
+        <title>Installer - DPM360</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.2c0c5eaf.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.7fa14f5b.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../css/ansi-colours.css">
+    
+      <link rel="stylesheet" href="../css/jupyter-cells.css">
+    
+      <link rel="stylesheet" href="../css/pandas-dataframe.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#dpm-360" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="DPM360" class="md-header__button md-logo" aria-label="DPM360" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DPM360
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Installer
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="md-header__options">
+      
+    </div>
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="DPM360" class="md-nav__button md-logo" aria-label="DPM360" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    DPM360
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        DPM360 Components
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="DPM360 Components" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          DPM360 Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Installer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Installer
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#design-of-dpm360-installer" class="md-nav__link">
+    Design of DPM360 Installer
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-the-chart" class="md-nav__link">
+    Installing the Chart
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../serviceBuilder/" class="md-nav__link">
+        Service Builder
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      <label class="md-nav__link" for="__nav_2_3">
+        Lightsaber
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Lightsaber" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Lightsaber
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lightsaber/" class="md-nav__link">
+        Welcome to lightsaber
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lightsaber/user_guide/" class="md-nav__link">
+        User Guide
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lightsaber/IHM_Example_using_LSTM/" class="md-nav__link">
+        IHM Example using LSTM
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#design-of-dpm360-installer" class="md-nav__link">
+    Design of DPM360 Installer
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-the-chart" class="md-nav__link">
+    Installing the Chart
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="dpm-360">DPM 360</h1>
+<p>The <strong>Installer</strong> component installs the fully functional DPM60 into Kubernetes or OpenShift Container Platform using <a href="https://helm.sh/">Helm charts</a>. Upon installation, models for different endpoints are available for the user. Helm Charts are simply Kubernetes manifests combined into a single package that can be installed to Kubernetes clusters. Once packaged, installing a Helm Chart into a cluster is as easy as running a single helm install, which really simplifies the deployment of containerized applications.</p>
+<h2 id="design-of-dpm360-installer">Design of DPM360 Installer</h2>
+<p><img alt="architecture" src="../installer-design.jpg" /></p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Kubernetes v1.18+</li>
+<li>Helm v3</li>
+<li>Persistent Volume claims for Postgres Database ( Refer to the Configuration section in each of the charts)</li>
+</ul>
+<h2 id="installing-the-chart">Installing the Chart</h2>
+<p><strong>Step 1:  Install the OHDSI Stack by following the instructions below.  This will install the OHDSI components ( Atlas, WebAPI, a Postgres Database, and Achilles)</strong></p>
+<h1 id="dpm360-ohdsi-stack-installer">DPM360 - OHDSI stack installer</h1>
+<p>This chart is an adaptation of chart listed by <a href="https://github.com/chgl/charts/tree/master/charts/ohdsi">chgl/ohdsi</a></p>
+<p>A sample values.yaml file is provided in the repository <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/master/installer/ohdsi-stack/values.yaml">here</a>.</p>
+<h2 id="introduction">Introduction</h2>
+<p>This chart deploys the OHDSI WebAPI and ATLAS app. on a <a href="http://kubernetes.io">Kubernetes</a> cluster using the <a href="https://helm.sh">Helm</a> package manager.</p>
+<h2 id="_1"></h2>
+<h2 id="prerequisites_1">Prerequisites</h2>
+<ul>
+<li>Kubernetes v1.18+</li>
+<li>Helm v3</li>
+<li>Persistent Volume claims for Postgres Database ( Refer to the Configuration section below)</li>
+</ul>
+<h2 id="_2"></h2>
+<h2 id="installing-the-chart_1">Installing the Chart</h2>
+<p>To install the chart with the release name <code>ohdsi</code>:</p>
+<div class="codehilite"><pre><span></span><code>$ helm repo add chgl https://chgl.github.io/charts
+$ helm repo update
+$ helm install ohdsi chgl/ohdsi -n &lt;your workspace&gt; --values values.yaml
+</code></pre></div>
+
+<p>The command deploys the OHDSI WebAPI and ATLAS app. on the Kubernetes cluster in the default configuration. The <a href="https://github.com/chgl/charts/tree/master/charts/ohdsi#configuration">configuration</a> section lists the parameters that can be configured during installation.</p>
+<blockquote>
+<p><strong>Tip</strong>: List all releases using <code>helm list</code></p>
+</blockquote>
+<h2 id="_3"></h2>
+<h2 id="uninstalling-the-chart">Uninstalling the Chart</h2>
+<p>To uninstall/delete the <code>ohdsi</code>:</p>
+<pre>$ <span class="pl-s1">helm delete ohdsi -n ohdsi</span></pre>
+
+<p>The command removes all the Kubernetes components associated with the chart and deletes the release.</p>
+<h2 id="_4"></h2>
+<h2 id="configuration">Configuration</h2>
+<p>The following table lists the configurable parameters of the <code>ohdsi</code> chart and their default values.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>imagePullSecrets</td>
+<td>image pull secrets used by all pods</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>nameOverride</td>
+<td>partially override the release name</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>fullnameOverride</td>
+<td>fully override the release name</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>commonAnnotations</td>
+<td>annotations applied to all deployments and jobs</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>postgresql.enabled</td>
+<td>enable an included PostgreSQL DB. if set to<code>false</code>, the values under <code>webApi.db</code> are used</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>postgresql.postgresqlDatabase</td>
+<td>name of the database to create see:<a href="https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md#creating-a-database-on-first-run">https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md#creating-a-database-on-first-run</a></td>
+<td><code>"ohdsi"</code></td>
+</tr>
+<tr>
+<td>postgresql.existingSecret</td>
+<td>Name of existing secret to use for PostgreSQL passwords. The secret has to contain the keys<code>postgresql-password</code> which is the password for <code>postgresqlUsername</code> when it is different of <code>postgres</code>, <code>postgresql-postgres-password</code> which will override <code>postgresqlPassword</code>, <code>postgresql-replication-password</code> which will override <code>replication.password</code> and <code>postgresql-ldap-password</code> which will be sed to authenticate on LDAP. The value is evaluated as a template.</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>postgresql.replication.enabled</td>
+<td>should be true for production use</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>postgresql.replication.readReplicas</td>
+<td>number of read replicas</td>
+<td><code>2</code></td>
+</tr>
+<tr>
+<td>postgresql.replication.synchronousCommit</td>
+<td>set synchronous commit mode: on, off, remote_apply, remote_write and local</td>
+<td><code>"on"</code></td>
+</tr>
+<tr>
+<td>postgresql.replication.numSynchronousReplicas</td>
+<td>from the number of<code>readReplicas</code> defined above, set the number of those that will have synchronous replication</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td>postgresql.metrics.enabled</td>
+<td>should also be true for production use</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>webApi.enabled</td>
+<td>enable the OHDSI WebAPI deployment</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>webApi.replicaCount</td>
+<td>number of pod replicas for the WebAPI</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td>webApi.db.host</td>
+<td>database hostname</td>
+<td><code>"host.example.com"</code></td>
+</tr>
+<tr>
+<td>webApi.db.port</td>
+<td>port used to connect to the postgres DB</td>
+<td><code>5432</code></td>
+</tr>
+<tr>
+<td>webApi.db.database</td>
+<td>name of the database inside. If postgresql.enabled=true, then postgresql.postgresqlDatabase is used</td>
+<td><code>"ohdsi"</code></td>
+</tr>
+<tr>
+<td>webApi.db.username</td>
+<td>username used to connect to the DB. Note that this name is currently used even if postgresql.enabled=true</td>
+<td><code>"postgres"</code></td>
+</tr>
+<tr>
+<td>webApi.db.password</td>
+<td>the database password. Only used if postgresql.enabled=false, otherwise the secret created by the postgresql chart is used</td>
+<td><code>"postgres"</code></td>
+</tr>
+<tr>
+<td>webApi.db.existingSecret</td>
+<td>name of an existing secret containing the password to the DB.</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>webApi.db.existingSecretKey</td>
+<td>name of the key in<code>webApi.db.existingSecret</code> to use as the password to the DB.</td>
+<td><code>"postgresql-postgres-password"</code></td>
+</tr>
+<tr>
+<td>webApi.db.schema</td>
+<td>schema used for the WebAPI's tables. Also referred to as the "OHDSI schema"</td>
+<td><code>"ohdsi"</code></td>
+</tr>
+<tr>
+<td>webApi.podAnnotations</td>
+<td>annotations applied to the pod</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>webApi.cors.enabled</td>
+<td>whether CORS is enabled for the WebAPI. Sets the<code>security.cors.enabled</code> property.</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>webApi.cors.allowedOrigin</td>
+<td>value of the<code>Access-Control-Allow-Origin</code> header. Sets the <code>security.origin</code> property. set to <code>*</code> to allow requests from all origins. if <code>cors.enabled=true</code>, <code>cors.allowedOrigin=""</code> and <code>ingress.enabled=true</code>, then <code>ingress.hosts[0].host</code> is used.</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>webApi.podSecurityContext</td>
+<td>security context for the pod</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>webApi.service</td>
+<td>the service used to expose the WebAPI web port</td>
+<td><code>{"port":8080,"type":"ClusterIP"}</code></td>
+</tr>
+<tr>
+<td>webApi.resources</td>
+<td>resource requests and limits for the container.<br/> 2Gi+ of RAM are recommended (<a href="https://github.com/OHDSI/WebAPI/issues/1811#issuecomment-792988811">https://github.com/OHDSI/WebAPI/issues/1811#issuecomment-792988811</a>) <br/> You might also want to use <code>webApi.extraEnv</code> to set <code>MinRAMPercentage</code> and <code>MaxRAMPercentage</code>: <br/> Example: <br/> <code>helm template charts/ohdsi \</code> <br/> <code>--set webApi.extraEnv[0].name="JAVA_OPTS" \</code> <br/> <code>--set webApi.extraEnv[0].value="-XX:MinRAMPercentage=60.0 -XX:MaxRAMPercentage=80.0"</code></td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>webApi.nodeSelector</td>
+<td>node labels for pods assignment see:<a href="https://kubernetes.io/docs/user-guide/node-selection/">https://kubernetes.io/docs/user-guide/node-selection/</a></td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>webApi.tolerations</td>
+<td>tolerations for pods assignment see:<a href="https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/">https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/</a></td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>webApi.affinity</td>
+<td>affinity for pods assignment see:<a href="https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity">https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity</a></td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>webApi.extraEnv</td>
+<td>extra environment variables</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>atlas.enabled</td>
+<td>enable the OHDSI Atlas deployment</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>atlas.replicaCount</td>
+<td>number of replicas</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td>atlas.webApiUrl</td>
+<td>the base URL of the OHDSI WebAPI, e.g.<a href="https://example.com/WebAPI">https://example.com/WebAPI</a> if this value is not set but <code>ingress.enabled=true</code> and <code>constructWebApiUrlFromIngress=true</code>, then this URL is constructed from <code>ingress</code></td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>atlas.constructWebApiUrlFromIngress</td>
+<td>if enabled, sets the WebAPI URL to<code>http://ingress.hosts[0]/WebAPI</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>atlas.podAnnotations</td>
+<td>annotations for the pod</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>atlas.podSecurityContext</td>
+<td>security context for the pod</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>atlas.service</td>
+<td>the service used to expose the Atlas web port</td>
+<td><code>{"port":8080,"type":"ClusterIP"}</code></td>
+</tr>
+<tr>
+<td>atlas.resources</td>
+<td>resource requests and limits for the container</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>atlas.nodeSelector</td>
+<td>node labels for pods assignment see:<a href="https://kubernetes.io/docs/user-guide/node-selection/">https://kubernetes.io/docs/user-guide/node-selection/</a></td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>atlas.tolerations</td>
+<td>tolerations for pods assignment see:<a href="https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/">https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/</a></td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>atlas.affinity</td>
+<td>affinity for pods assignment see:<a href="https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity">https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity</a></td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>atlas.extraEnv</td>
+<td>extra environment variables</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>atlas.config.local</td>
+<td>this value is expected to contain the config-local.js contents</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>cdmInitJob.enabled</td>
+<td>if enabled, create a Kubernetes Job running the specified container see<a href="https://github.com/chgl/charts/blob/master/charts/ohdsi/templates/cdm-init-job.yaml">cdm-init-job.yaml</a> for the env vars that are passed by default</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>cdmInitJob.image</td>
+<td>the container image used to create the CDM initialization job</td>
+<td><code>{"pullPolicy":"Always","registry":"docker.io","repository":"docker/whalesay","tag":"latest"}</code></td>
+</tr>
+<tr>
+<td>cdmInitJob.podAnnotations</td>
+<td>annotations set on the cdm-init pod</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>cdmInitJob.podSecurityContext</td>
+<td>PodSecurityContext for the cdm-init pod</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>cdmInitJob.securityContext</td>
+<td>ContainerSecurityContext for the cdm-init container</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>cdmInitJob.extraEnv</td>
+<td>extra environment variables to set</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>achilles.enabled</td>
+<td>whether or not to enable the Achilles cron job</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>achilles.schedule</td>
+<td>when to run the Achilles job. See<a href="https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#cron-schedule-syntax">https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#cron-schedule-syntax</a></td>
+<td><code>"@daily"</code></td>
+</tr>
+<tr>
+<td>achilles.schemas.cdm</td>
+<td>name of the schema containing the OMOP CDM. Equivalent to the Achilles<code>ACHILLES_CDM_SCHEMA</code> env var.</td>
+<td><code>"synpuf_cdm"</code></td>
+</tr>
+<tr>
+<td>achilles.schemas.vocab</td>
+<td>name of the schema containing the vocabulary. Equivalent to the Achilles<code>ACHILLES_VOCAB_SCHEMA</code> env var.</td>
+<td><code>"synpuf_vocab"</code></td>
+</tr>
+<tr>
+<td>achilles.schemas.res</td>
+<td>name of the schema containing the cohort generation results. Equivalent to the Achilles<code>ACHILLES_RES_SCHEMA</code> env var.</td>
+<td><code>"synpuf_results"</code></td>
+</tr>
+<tr>
+<td>achilles.cdmVersion</td>
+<td>version of the CDM. Equivalent to the Achilles<code>ACHILLES_CDM_VERSION</code> env var.</td>
+<td><code>"5.3.1"</code></td>
+</tr>
+<tr>
+<td>achilles.sourceName</td>
+<td>the CDM source name. Equivalent to the Achilles<code>ACHILLES_SOURCE</code> env var.</td>
+<td><code>"synpuf-5.3.1"</code></td>
+</tr>
+<tr>
+<td>ingress.enabled</td>
+<td>whether to create an Ingress to expose the Atlas web interface</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>ingress.annotations</td>
+<td>provide any additional annotations which may be required. Evaluated as a template.</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>ingress.tls</td>
+<td>ingress TLS config</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td><code>CDM_URL</code></td>
+<td>Location of Athena Vocabulary file in tar.gz format.  It could be either a s3 url or a local file</td>
+<td></td>
+</tr>
+<tr>
+<td><code>SYNPUF1K_URL</code></td>
+<td>Location of Synthetic 1K data file in tar.gz format.  It could be either a s3 url or a local file.  You can download this from<a href="https://caruscloud.uniklinikum-dresden.de/index.php/s/teddxwwa2JipbXH/download">here</a>.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>RESULTS_TABLE_URL</code></td>
+<td>This will be the URL to get the Results schema.<br />Example:<br />http://<a href="server:port">server:port</a>/WebAPI/ddl/results?dialect=<your_cdm_database_dialect>&amp;schema=<your_results_schema>&amp;vocabSchema=<your_vocab_schema>&amp;tempSchema=<your_temp_schema>&amp;initConceptHierarchy=true</td>
+<td></td>
+</tr>
+<tr>
+<td><code>CDM_SCHEMA</code></td>
+<td>Value of the CDM_SCHEMA in your CDM Database</td>
+<td></td>
+</tr>
+<tr>
+<td><code>OHDSI_WEBAPI_SCHEMA</code></td>
+<td>Value of the WebAPI Schema in your database</td>
+<td></td>
+</tr>
+<tr>
+<td><code>RESULTS_SCHEMA</code></td>
+<td>Value of Results Schema in your daabase</td>
+<td></td>
+</tr>
+<tr>
+<td><code>TEMP_SCHEMA</code></td>
+<td>Value of Temp schema in your database</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Specify each parameter using the <code>--set key=value[,key=value]</code> argument to <code>helm install</code>. For example:</p>
+<pre>$ <span class="pl-s1">helm install ohdsi chgl/ohdsi -n ohdsi --set postgresql.postgresqlDatabase=<span class="pl-s"><span class="pl-pds">"</span>ohdsi<span class="pl-pds">"</span></span></span></pre>
+
+<p>Alternatively, a YAML file that specifies the values for the parameters can be provided while
+installing the chart. For example:</p>
+<pre>$ <span class="pl-s1">helm install ohdsi chgl/ohdsi -n ohdsi --values values.yaml</span></pre>
+
+<h2 id="_5"></h2>
+<h2 id="initialize-the-cdm-using-a-custom-container">Initialize the CDM using a custom container</h2>
+<ol>
+<li>A custom docker image to initialize the CDM database with Athena Vocabularies and Synthetic 1K patient data is built based on the broad guidelines outlined <a href="https://github.com/IBM/DPM360">here</a>.
+   This custom image is utilized in the cdmInitJob.image parameter in the values.yaml.</li>
+</ol>
+<p>The cdmInit container takes in the following parameters to initialize the data:</p>
+<p><code>CDM_URL</code>Location of Athena Vocabulary file in tar.gz format.  It could be either a s3 url or a local file <code>SYNPUF1K_URL</code>Location of Synthetic 1K data file in tar.gz format.  It could be either a s3 url or a local file.  You can download this from<a href="https://caruscloud.uniklinikum-dresden.de/index.php/s/teddxwwa2JipbXH/download">here</a>. <code>RESULTS_TABLE_URL</code>This will be the URL to get the Results schema.
+   Example:
+   http://<a href="server:port">server:port</a>/WebAPI/ddl/results?dialect=<your_cdm_database_dialect>&amp;schema=<your_results_schema>&amp;vocabSchema=<your_vocab_schema>&amp;tempSchema=<your_temp_schema>&amp;initConceptHierarchy=true</p>
+<p><code>CDM_SCHEMA</code> Name of the schema that contains the CDM tables in your database.</p>
+<p><code>OHDSI_WEBAPI_SCHEMA</code> Name of the schema that contains the WebAPI tables in your database.</p>
+<p><code>RESULTS_SCHEMA</code>Name of the schema that contains the results tables in your database.
+   <code>TEMP_SCHEMA</code> Name of the schema that contains the temp results table in your database.</p>
+<h1 id="troubleshooting">Troubleshooting</h1>
+<p>If the deployment does not work, possible todo following this https://www.kubeflow.org/docs/started/workstation/minikube-linux/</p>
+<p><strong>Step 2: Install the Model Registry by following the instructions below.  This will install Mlflow with a Postgres and Minio backend.</strong></p>
+<h1 id="mlflow-and-dependcies">MLFlow and dependcies</h1>
+<p><a href="https://github.com/ibm/dpm360">DPM360</a> - Helm chart for deploying Disease progression model framework including OHDSI tools ( Atlas, WebAPI), MLFlow and its dependencies ( minio for object storage and postgresql for relational database).</p>
+<h2 id="pre-requisites">Pre-requisites</h2>
+<div class="codehilite"><pre><span></span><code><span class="go">Download the chart repo</span>
+<span class="go">In your cloud environment, create 3 persistent volume claims ( one for OHDSI postgres, one for minio-mlflow and one for postgres-mlflow)</span>
+<span class="go">Update the values.yaml with paramters matching your cloud environment</span>
+</code></pre></div>
+
+<h2 id="introduction_1">Introduction</h2>
+<p>This chart deploys the MLFlow along with a minio based storage and postgesql database on a <a href="http://kubernetes.io">Kubernetes</a> cluster using the <a href="https://helm.sh">Helm</a> package manager.</p>
+<h2 id="prerequisites_2">Prerequisites</h2>
+<ul>
+<li>Kubernetes v1.18+</li>
+<li>Helm v3</li>
+</ul>
+<h2 id="installing-the-chart_2">Installing the Chart</h2>
+<div class="codehilite"><pre><span></span><code><span class="go">Once you have cloned the repo (https://github.com/IBM/DPM360)</span>
+
+<span class="gp">$</span> <span class="nb">cd</span> to the folder where you have installer/
+<span class="gp">$</span> helm install modelregistry ./model-registry -n &lt;your namespace&gt; --values ./model-registry/values.yaml
+<span class="go">This will create 3 deployments in your kubernetes cluster ( mlflow, minio and postgresql)</span>
+
+<span class="go">Update your ingress to allow access to the services created by the helm chart.</span>
+</code></pre></div>
+
+<p>The command deploys the MLFlow (version 1.14.1) along with minio for storage and postgresql on the Kubernetes cluster in the default configuration. The <a href="#configuration">configuration</a> section lists the parameters that can be configured during installation.</p>
+<blockquote>
+<p><strong>Tip</strong>: List all releases using <code>helm list</code></p>
+</blockquote>
+<h2 id="uninstalling-the-chart_1">Uninstalling the Chart</h2>
+<p>To uninstall/delete the <code>modelregistry</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="gp">$</span> helm delete modelregistry -n &lt;yournamespace&gt;
+</code></pre></div>
+
+<p>The command removes all the Kubernetes components associated with the chart and deletes the release.</p>
+<h2 id="configuration_1">Configuration</h2>
+<p>The following table lists the configurable parameters of the <code>model-registry</code> chart and their default values.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MINIO</td>
+<td>This section is for minio configuration</td>
+<td></td>
+</tr>
+<tr>
+<td>minio.image</td>
+<td>minio images used for this installation</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>minio.accessKey</td>
+<td>access key ( usename) required by minio</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>minio.secretKey</td>
+<td>secret key required by minio</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>minio.rootuser</td>
+<td>minio console user</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>minio.rootpassword</td>
+<td>minio console user password</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>minio.resources</td>
+<td>section used to configure your pod memory and cpu settings</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>minio.persistence</td>
+<td>This section specifies the PVC that you had created a part of the pre-requisites</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>minio.container port</td>
+<td>container port ( typically set to 9000)</td>
+<td><code>9000</code></td>
+</tr>
+<tr>
+<td>minio.httpport</td>
+<td>port that is exposed in your service specification. Typcially set to 9000</td>
+<td><code>"9000"</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Postgres for MLFlow</td>
+<td>This section describes Postgres for MLFlow configuration</td>
+<td></td>
+</tr>
+<tr>
+<td>pgmlflow.enabled</td>
+<td>enable the postgres deployment for mlflow</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>pgmlflow.image</td>
+<td>postgres images used ( 12.5 in this example)</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td>pgmlflow.POSTGRES_USER</td>
+<td>postgres user used for the installation</td>
+<td><code>"postgres"</code></td>
+</tr>
+<tr>
+<td>pgmlflow.POSTGRES_PASSWORD</td>
+<td>password for the postgres user</td>
+<td><code>postgres</code></td>
+</tr>
+<tr>
+<td>pgmlflow.resources</td>
+<td>use this section to specify the pod memery and cpu limits</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>pgmlflow.containerport</td>
+<td>container port for postgres db</td>
+<td><code>"5432"</code></td>
+</tr>
+<tr>
+<td>pgmlflow.httpport</td>
+<td>port for running the postgres service.  If you have multiple postgres instances, this will be different from the container port</td>
+<td><code>"5452"</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>MLFlow</td>
+<td>This section lists the configuration for MLFlow</td>
+<td></td>
+</tr>
+<tr>
+<td>mlflow.enabled</td>
+<td>enable the mlflow for this deployment</td>
+<td><code>"true"</code></td>
+</tr>
+<tr>
+<td>mlflow.image</td>
+<td>specifies the mlflow image used</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>mlflow.MLFLOW_HOST</td>
+<td>MLFlow host name</td>
+<td>``</td>
+</tr>
+<tr>
+<td>mlflow.BACKEND_STORE_URI</td>
+<td>datastore used for backend.  In our case we have used postgresql</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>mlflow.POSTGRES_HOST</td>
+<td>postgres service name</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>mlflow.MINIO_HOST</td>
+<td>minio endpoint that will be exposed by the ingress</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>mlflow.MLFLOW_TRACKING_URI</td>
+<td>mlflow endpoit that will exposed by the ingress</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>mlflow.MLFLOW_S3_ENDPOINT_URL</td>
+<td>minio endpoint that will be exposed by the ingress.</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>mlflow.AWS_ACCESS_KEY_ID</td>
+<td>minio user id</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>mlflow.AWS_SECRET_ACCESS_KEY</td>
+<td>minio access key for the user</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>mlflow.AWS_MLFLOW_BUCKET_NAME<br />mlflow.AWS_BUCKET  / AWS_MLFLOW_BUCKET</td>
+<td>name of the bucket used for mlflow experiments<br /></td>
+<td><code>mlflow-experiments</code></td>
+</tr>
+<tr>
+<td>mlflow.resources</td>
+<td>use this section to define the memory and cpu for the pod</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td>mlflow.containerport</td>
+<td>port number of the container. Typically it is 5000</td>
+<td><code>"9000"</code></td>
+</tr>
+<tr>
+<td>mlflow.httpport</td>
+<td>port number that the service listens.  Typically same as containerport</td>
+<td><code>"9000"</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Specify each parameter using the  YAML file that specifies the values for the parameters while installing the chart. For example:</p>
+<div class="codehilite"><pre><span></span><code><span class="gp">$</span> helm install modelregistry ./model-registry -n &lt;your namespace&gt; --values ./model-registry/values.yaml
+</code></pre></div>
+
+<h2 id="_6"></h2>
+<div class="codehilite"><pre><span></span><code>
+</code></pre></div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href=".." class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Overview
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../serviceBuilder/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Service Builder
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.fb4a9340.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a1c7c35e.min.js"></script>
+      
+    
+  </body>
+</html>

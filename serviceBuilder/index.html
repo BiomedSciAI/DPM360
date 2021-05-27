@@ -14,7 +14,7 @@
     
     
       
-        <title>Intro - DPM360</title>
+        <title>Service Builder - DPM360</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#service_builder" class="md-skip">
+        <a href="#service-builder" class="md-skip">
           Skip to content
         </a>
       
@@ -96,7 +96,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Intro
+              Service Builder
             
           </span>
         </div>
@@ -178,7 +178,7 @@
   
     <li class="md-nav__item">
       <a href=".." class="md-nav__link">
-        Intro
+        Overview
       </a>
     </li>
   
@@ -200,15 +200,48 @@
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
       
       <label class="md-nav__link" for="__nav_2">
-        Components
+        DPM360 Components
         <span class="md-nav__icon md-icon"></span>
       </label>
-      <nav class="md-nav" aria-label="Components" data-md-level="1">
+      <nav class="md-nav" aria-label="DPM360 Components" data-md-level="1">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
-          Components
+          DPM360 Components
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installer/" class="md-nav__link">
+        Installer
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Service Builder
+      </a>
+      
+    </li>
+  
+
           
             
   
@@ -218,14 +251,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
       
-      <label class="md-nav__link" for="__nav_2_1">
+      <label class="md-nav__link" for="__nav_2_3">
         Lightsaber
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Lightsaber" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_1">
+        <label class="md-nav__title" for="__nav_2_3">
           <span class="md-nav__icon md-icon"></span>
           Lightsaber
         </label>
@@ -273,95 +306,6 @@
   
 
           
-            
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
-      
-      <label class="md-nav__link" for="__nav_2_2">
-        Service Builder
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Service Builder" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_2">
-          <span class="md-nav__icon md-icon"></span>
-          Service Builder
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../ServiceBuilder/" class="md-nav__link">
-        Intro
-      </a>
-    </li>
-  
-
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-          
-            
-  
-  
-    
-  
-  
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" checked>
-      
-      <label class="md-nav__link" for="__nav_2_3">
-        Installer
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Installer" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_3">
-          <span class="md-nav__icon md-icon"></span>
-          Installer
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        Intro
-      </a>
-      
-    </li>
-  
-
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-          
         </ul>
       </nav>
     </li>
@@ -397,85 +341,80 @@
               
                 
                 
-                <h1 id="service_builder">service_builder</h1>
-<ol>
-<li>
-<p>Run the following command</p>
-<p>``` 
- docker  build  -t dpm360_model_wrapper_v1  .</p>
-<p>```</p>
-</li>
-<li>
-<p>Tag the image and push to registry
-    NB: I am using my public git account: kibnelson</p>
-<p>``` 
- docker  tag dpm360_model_wrapper_v1 kibnelson/dpm360_model_wrapper_v1</p>
-<p>```
- 3. Push the image   </p>
-<p>``` 
- docker  push kibnelson/dpm360_model_wrapper_v1</p>
-<p>```
- # Testing  <br />
- 1. To test image locally run the following command</p>
-<p>```
-docker run --publish=0.0.0.0:8080:8080 -e MLFLOW_S3_ENDPOINT_URL=https://foh-ohdsi-dev-minio.bx.cloud9.ibm.com -e AWS_ACCESS_KEY_ID=minioRoot -e AWS_SECRET_ACCESS_KEY=minioRoot123 -e MODEL_NAME=ElasticnetWineTestModel -e MODEL_VERSION=1 -e MODEL_RUN_ID=208797568cee4b1c96c121827eb1ddac -e MLFLOW_TRACKING_URI=https://foh-ohdsi-dev-mlflow.bx.cloud9.ibm.com -e MODEL_SOURCE=s3://mlflow-experiments/0/208797568cee4b1c96c121827eb1ddac/artifacts/dpm360 -ti dpm360_model_wrapper_v2</p>
-<p><code>2. To test model wrapper code locally, set the following env variables</code> 
-export MODEL_NAME=ElasticnetWineModelFeatures3
-export MODEL_VERSION=1
-export FEATURE_GENERATOR_FILE_NAME=""
-export MLFLOW_TRACKING_URI=https://foh-ohdsi-dev-mlflow.bx.cloud9.ibm.com
-export MODEL_SOURCE=s3://mlflow-experiments/0/81e4192736f8497384e09d6928ee0f2f/artifacts/model
-export MODEL_RUN_ID=81e4192736f8497384e09d6928ee0f2f
-export AWS_ACCESS_KEY_ID=minioRoot
-export AWS_SECRET_ACCESS_KEY=minioRoot123
-export MLFLOW_S3_ENDPOINT_URL=https://foh-ohdsi-dev-minio.bx.cloud9.ibm.com</p>
-<p><code>3. Then start flask app</code>
-python ModelWrapperApp.py    </p>
-<p>```</p>
-<p>To access the swagger page</p>
-<p>```
-http://0.0.0.0:8080/doc/</p>
-<p>```     <br />
-The following payload is used to test the sample elasticwine model </p>
-<p>```</p>
-<p>{"alcohol":[12.8],"chlorides":[0.029],"citricacid":[0.029],"density":[0.029],"fixedacidity":[0.029],"freesulfurdioxide":[0.029],"pH":[0.029],"residualsugar":[0.029],"sulphates":[0.029],"totalsulfurdioxide":[0.029],"volatileacidity":[0.029]}</p>
-<p>```</p>
-<h1 id="access-the-deployed-pod">Access the deployed pod</h1>
-<ol>
-<li>Run the following to login to the cluster</li>
-</ol>
-</li>
-</ol>
-<p><code>oc login --token=ogRUKtHV5kmece-W8cyKW6WNOKtP520BaIQ5FKJTp_A --server=https://c100-e.us-south.containers.cloud.ibm.com:30049</code>
-2. Run the following command to see new pods 
-   ```
-    oc get pods</p>
-<div class="codehilite"><pre><span></span><code><span class="err"># or use kubectl</span>
+                <h1 id="service-builder">Service Builder</h1>
+<p>a) Run the following command</p>
+<div class="codehilite"><pre><span></span><code><span class="err">     docker  build  -t dpm360_model_wrapper_v1  .</span>
 </code></pre></div>
 
-<p>kubectl get pods  <br />
-<code>2. Get the name of the pod of interest</code>
-       oc port-forward elasticnetwinemodel-65b94cbc44-tlp8t 8080:8080 
-   <code>Thereafter access the following address to access the pods swagger</code>
-    http://0.0.0.0:8080/doc/</p>
-<p>```
-   The following payload is used to test the sample elasticwine model </p>
-<div class="codehilite"><pre><span></span><code><span class="o">```</span>
+<p>b) Tag the image and push to registry
+    NB: I am using my public git account: kibnelson</p>
+<div class="codehilite"><pre><span></span><code><span class="err">     docker  tag dpm360_model_wrapper_v1 kibnelson/dpm360_model_wrapper_v1</span>
+</code></pre></div>
 
-<span class="err">{</span><span class="ss">&quot;alcohol&quot;</span><span class="p">:[</span><span class="mi">12</span><span class="p">.</span><span class="mi">8</span><span class="p">],</span><span class="ss">&quot;chlorides&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;citricacid&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;density&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;fixedacidity&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;freesulfurdioxide&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;pH&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;residualsugar&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;sulphates&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;totalsulfurdioxide&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">],</span><span class="ss">&quot;volatileacidity&quot;</span><span class="p">:[</span><span class="mi">0</span><span class="p">.</span><span class="mi">029</span><span class="p">]</span><span class="err">}</span>
+<p>c) Push the image   </p>
+<div class="codehilite"><pre><span></span><code><span class="err">     docker  push kibnelson/dpm360_model_wrapper_v1</span>
+</code></pre></div>
 
-<span class="o">```</span>
+<h1 id="testing">Testing</h1>
+<p>a) To test image locally run the following command</p>
+<div class="codehilite"><pre><span></span><code><span class="err">    docker run --publish=0.0.0.0:8080:8080 -e MLFLOW_S3_ENDPOINT_URL=https://foh-ohdsi-dev-minio.bx.cloud9.ibm.com -e AWS_ACCESS_KEY_ID=minioRoot -e AWS_SECRET_ACCESS_KEY=minioRoot123 -e MODEL_NAME=ElasticnetWineTestModel -e MODEL_VERSION=1 -e MODEL_RUN_ID=208797568cee4b1c96c121827eb1ddac -e MLFLOW_TRACKING_URI=https://foh-ohdsi-dev-mlflow.bx.cloud9.ibm.com -e MODEL_SOURCE=s3://mlflow-experiments/0/208797568cee4b1c96c121827eb1ddac/artifacts/dpm360 -ti dpm360_model_wrapper_v2</span>
+</code></pre></div>
+
+<p>b) To test model wrapper code locally, set the following env variables </p>
+<div class="codehilite"><pre><span></span><code>    <span class="k">export</span> <span class="n">MODEL_NAME</span><span class="o">=</span><span class="n">ElasticnetWineModelFeatures3</span>
+    <span class="k">export</span> <span class="n">MODEL_VERSION</span><span class="o">=</span><span class="mi">1</span>
+    <span class="k">export</span> <span class="n">FEATURE_GENERATOR_FILE_NAME</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="k">export</span> <span class="n">MLFLOW_TRACKING_URI</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">foh</span><span class="o">-</span><span class="n">ohdsi</span><span class="o">-</span><span class="n">dev</span><span class="o">-</span><span class="n">mlflow</span><span class="o">.</span><span class="n">bx</span><span class="o">.</span><span class="n">cloud9</span><span class="o">.</span><span class="n">ibm</span><span class="o">.</span><span class="n">com</span>
+    <span class="k">export</span> <span class="n">MODEL_SOURCE</span><span class="o">=</span><span class="n">s3</span><span class="p">:</span><span class="o">//</span><span class="n">mlflow</span><span class="o">-</span><span class="n">experiments</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mf">81e4192736</span><span class="n">f8497384e09d6928ee0f2f</span><span class="o">/</span><span class="n">artifacts</span><span class="o">/</span><span class="n">model</span>
+    <span class="k">export</span> <span class="n">MODEL_RUN_ID</span><span class="o">=</span><span class="mf">81e4192736</span><span class="n">f8497384e09d6928ee0f2f</span>
+    <span class="k">export</span> <span class="n">AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="n">minioRoot</span>
+    <span class="k">export</span> <span class="n">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span><span class="n">minioRoot123</span>
+    <span class="k">export</span> <span class="n">MLFLOW_S3_ENDPOINT_URL</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">foh</span><span class="o">-</span><span class="n">ohdsi</span><span class="o">-</span><span class="n">dev</span><span class="o">-</span><span class="n">minio</span><span class="o">.</span><span class="n">bx</span><span class="o">.</span><span class="n">cloud9</span><span class="o">.</span><span class="n">ibm</span><span class="o">.</span><span class="n">com</span>
+</code></pre></div>
+
+<p>c) Then start flask app</p>
+<div class="codehilite"><pre><span></span><code><span class="err">    python ModelWrapperApp.py    </span>
+</code></pre></div>
+
+<p>To access the swagger page</p>
+<div class="codehilite"><pre><span></span><code><span class="err">    http://0.0.0.0:8080/doc/</span>
+</code></pre></div>
+
+<p>The following payload is used to test the sample elasticwine model </p>
+<div class="codehilite"><pre><span></span><code><span class="err">{&quot;alcohol&quot;:[12.8],&quot;chlorides&quot;:[0.029],&quot;citricacid&quot;:[0.029],&quot;density&quot;:[0.029],&quot;fixedacidity&quot;:[0.029],&quot;freesulfurdioxide&quot;:[0.029],&quot;pH&quot;:[0.029],&quot;residualsugar&quot;:[0.029],&quot;sulphates&quot;:[0.029],&quot;totalsulfurdioxide&quot;:[0.029],&quot;volatileacidity&quot;:[0.029]}</span>
+</code></pre></div>
+
+<h1 id="access-the-deployed-pod">Access the deployed pod</h1>
+<p>a) Run the following to login to the cluster</p>
+<div class="codehilite"><pre><span></span><code><span class="err">   oc login --token=ogRUKtHV5kmece-W8cyKW6WNOKtP520BaIQ5FKJTp_A --server=https://c100-e.us-south.containers.cloud.ibm.com:30049</span>
+</code></pre></div>
+
+<p>b) Run the following command to see new pods </p>
+<div class="codehilite"><pre><span></span><code>    <span class="n">oc</span> <span class="k">get</span> <span class="n">pods</span>
+
+    <span class="o">#</span> <span class="k">or</span> <span class="n">use</span> <span class="n">kubectl</span>
+   <span class="n">kubectl</span> <span class="k">get</span> <span class="n">pods</span>    
+</code></pre></div>
+
+<p>c) Get the name of the pod of interest</p>
+<div class="codehilite"><pre><span></span><code><span class="err">       oc port-forward elasticnetwinemodel-65b94cbc44-tlp8t 8080:8080 </span>
+</code></pre></div>
+
+<p>Thereafter access the following address to access the pods swagger</p>
+<div class="codehilite"><pre><span></span><code><span class="err">    http://0.0.0.0:8080/doc/</span>
+</code></pre></div>
+
+<p>The following payload is used to test the sample elasticwine model </p>
+<div class="codehilite"><pre><span></span><code><span class="err">{&quot;alcohol&quot;:[12.8],&quot;chlorides&quot;:[0.029],&quot;citricacid&quot;:[0.029],&quot;density&quot;:[0.029],&quot;fixedacidity&quot;:[0.029],&quot;freesulfurdioxide&quot;:[0.029],&quot;pH&quot;:[0.029],&quot;residualsugar&quot;:[0.029],&quot;sulphates&quot;:[0.029],&quot;totalsulfurdioxide&quot;:[0.029],&quot;volatileacidity&quot;:[0.029]}</span>
 </code></pre></div>
 
 <h1 id="local-cluster-set-up">Local cluster set up</h1>
-<p>Run the following commands inside service_builder dir
-1. To start, we pass start command. After the integration with training pipeline we will also pass model_name to  be used to build  an image</p>
+<p>Run the following commands inside service_builder dir</p>
+<p>a) To start, we pass start command. After the integration with training pipeline we will also pass model_name to  be used to build  an image</p>
 <div class="codehilite"><pre><span></span><code><span class="err">sh startup.sh start </span>
 </code></pre></div>
 
-<ol>
-<li>To stop</li>
-</ol>
+<p>b) To stop</p>
 <div class="codehilite"><pre><span></span><code><span class="err">sh startup.sh stop</span>
 </code></pre></div>
 
@@ -514,7 +453,7 @@ The following payload is used to test the sample elasticwine model </p>
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../ServiceBuilder/" class="md-footer__link md-footer__link--prev" rel="prev">
+        <a href="../installer/" class="md-footer__link md-footer__link--prev" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -523,11 +462,25 @@ The following payload is used to test the sample elasticwine model </p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Intro
+              Installer
             </div>
           </div>
         </a>
       
+      
+        <a href="../Lightsaber/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Welcome to lightsaber
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
       
     </nav>
   
