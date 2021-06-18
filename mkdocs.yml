@@ -1,0 +1,29 @@
+site_name: DPM360
+
+
+theme:
+  name: material
+
+plugins:
+  - monorepo
+  - mknotebooks
+  - search
+  - mkdocstrings:
+      default_handler: python
+  # - pdf-export:
+      # combined: true
+
+markdown_extensions:
+  - codehilite
+
+nav:
+  - Overview: 'index.md'
+  - DPM360 Components:
+    - Installer: 'installer.md'
+    - Service Builder: 'serviceBuilder.md'
+    - Lightsaber: '!include ./lightsaber/mkdocs.yml'    
+
+# extra:
+#   version:
+#     provider: mike
+#     default: stable

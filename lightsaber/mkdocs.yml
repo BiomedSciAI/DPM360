@@ -1,0 +1,32 @@
+# Ref: https://www.timvink.nl/mkdocs-for-tech-doc/
+site_name: Lightsaber
+# repo_name: 'greenape/mknotebooks'
+# repo_url: https://github.com/greenape/mknotebooks
+# edit_uri: edit/master/examples/execute_with_preamble/docs/
+# use_directory_urls: False
+
+# theme:
+#   name: material
+# 
+# 
+# plugins:
+#   - mknotebooks
+#   - search
+#   - mkdocstrings:
+#       default_handler: python
+#   # - pdf-export:
+#       # combined: true
+# 
+# markdown_extensions:
+#   - codehilite
+
+nav:
+  - index.md
+  - user_guide.md
+  # - why_use_lightsaber.md
+  - IHM_Example_using_LSTM.ipynb
+
+# extra:
+#   version:
+#     provider: mike
+#     default: stable
