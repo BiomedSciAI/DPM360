@@ -2,11 +2,12 @@
 
 Disease Progression Modeling workbench 360 (DPM360) is a clinical informatics framework for collaborative research and delivery of healthcare AI. DPM360, when fully developed, will manage the entire modeling life cycle, from data analysis (e.g., cohort identification) to machine learning algorithm development and prototyping. DPM360 augments the advantages of data model standardization and tooling (OMOP-CDM, Athena, ATLAS) with a powerful machine learning training framework, and a mechanism for rapid prototyping through automatic deployment of models as containerized services to a cloud environment
 
+![DPM360](./images/png/dpm360v2.png "DPM360")
+
 ## Background
 
 Chronic diseases are becoming more and more prevalent across the globe and are known to drive rising costs of healthcare. The health informatics community has reacted to these challenges with the development of data driven Disease Progression Modeling (DPM) techniques seeking to describe the time course of such diseases to track evolution and predict severity over time. These techniques are vast, ranging from disease staging and patient trajectory analytics, prediction and event time to event estimations for important disease related events of interests. While applications of DPM are numerous for both providers (e.g., decision support for patient care), payers (e.g., care management) and pharmas (e.g., clinical trial enrichment), the adoption of DPM is hindered by the complexity of developing and managing DPM models throughout their life cycle, from data to production. While organizations like [OHDSI](https://www.ohdsi.org/) have made huge strides to help the research community with widely adopted data models like OMOP coupled with cohorting tools like [Atlas](https://www.ohdsi.org/atlas-a-unified-interface-for-the-ohdsi-tools/), work remains to be done to provide the right platform for the complete management of DPM models. In this demonstration, we introduce Disease Progression Modeling Workbench 360 (DPM360), a work-in-progress system to address these concerns.
 
-![DPM360](./images/png/dpm360v2.png "DPM360")
 
 Building upon the ideas from our [earlier work](https://arxiv.org/abs/2007.12780), DPM360 is compatible with such OHDSI open tools while enabling health informaticians to build and manage DPM models throughout their entire life cycle within modern cloud infrastructures. DPM360 also facilitates the transparent development of such models following best practices embedded in its modeling framework, thus addressing reproducibility challenges that the AI community is facing.
 
