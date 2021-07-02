@@ -1,0 +1,24 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: dpm360-cronjob-v3
+spec:
+  schedule: "*/5 * * * *"
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: dpm360-cronjob-v3
+            image: kibnelson/dpm360_cronjob_v3
+            imagePullPolicy: IfNotPresent
+            env:
+              - name: MLFLOW_API
+                value: ""
+              - name: K8S_API
+                value: ""
+              - name: TOKEN
+                value: ""
+          restartPolicy: OnFailure

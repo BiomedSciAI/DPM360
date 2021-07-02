@@ -1,0 +1,77 @@
+{{- with .Values.mlflow }}
+{{- if .enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: mlflow
+  name: mlflow-deployment
+spec:
+  progressDeadlineSeconds: 2147483647
+  replicas: 1
+  revisionHistoryLimit: 2147483647
+  selector:
+    matchLabels:
+      run: mlflow
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: mlflow
+      name: mlflow
+    spec:
+      containers:
+      - env:
+        - name: BACKEND_STORE_URI
+          value:  {{.BACKEND_STORE_URI }}
+        - name: AWS_MLFLOW_BUCKET
+          value:  {{.AWS_MLFLOW_BUCKET }}
+        - name: AWS_ACCESS_KEY_ID
+          value:  {{.AWS_ACCESS_KEY_ID}}
+        - name: AWS_SECRET_ACCESS_KEY
+          value:  {{.AWS_SECRET_ACCESS_KEY}}
+        - name: MLFLOW_HOST
+          value:  {{.MLFLOW_HOST}}
+        - name: POSTGRES_HOST
+          value:  {{.POSTGRES_HOST}}
+        - name: MINIO_HOST
+          value:  {{.MINIO_HOST}}
+        - name: MLFLOW_TRACKING_URI
+          value:  {{.MLFLOW_TRACKING_URI}}
+        - name: MLFLOW_S3_ENDPOINT_URL
+          value:  {{.MLFLOW_S3_ENDPOINT_URL}}
+        image: "{{ .image.registry }}/{{ .image.repository }}:{{ .image.tag }}"
+        imagePullPolicy: Always
+        name: mlflow-container
+        ports:
+        - containerPort: {{ .containerport }}
+          name: port
+          protocol: TCP
+        resources:
+          limits:
+            cpu: {{ .resources.limits.cpu }}
+            memory: {{ .resources.limits.memory }}
+          requests:
+            cpu: {{ .resources.requests.cpu }}
+            memory: {{ .resources.requests.memory }}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      hostname: mlflow
+      imagePullSecrets:
+      {{- with $.Values.imagePullSecrets }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status: {}
+{{- end }}
+{{- end }}

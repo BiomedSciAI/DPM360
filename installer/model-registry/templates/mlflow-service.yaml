@@ -1,0 +1,23 @@
+{{- with .Values.mlflow }}
+{{- if .enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: mlflow
+  name: mlflow-service
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - port: {{ .httpport }}
+    protocol: TCP
+    targetPort: {{ .httpport }}
+  selector:
+    run: mlflow
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
+{{- end }}
+{{- end }}

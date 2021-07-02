@@ -1,0 +1,15 @@
+ apiVersion: v1
+ kind: PersistentVolumeClaim
+ metadata:
+   creationTimestamp: null
+   name: mflow-pg-db-pvc
+   namespace: ohdsi
+ spec:
+   accessModes:
+   - ReadWriteMany
+   resources:
+     requests:
+       storage: 15Gi
+   volumeMode: Filesystem
+ status:
+  phase: Pending

@@ -1,0 +1,473 @@
+# image pull secrets used by all pods
+imagePullSecrets:
+  - name: research-alvearie-us-icr-io
+# partially override the release name
+nameOverride: ""
+# fully override the release name
+fullnameOverride: ""
+
+# annotations applied to all deployments and jobs
+commonAnnotations: []
+
+# see <https://github.com/bitnami/charts/tree/master/bitnami/postgresql> for details
+postgresql:
+  # enable an included PostgreSQL DB.
+  # if set to `false`, the values under `webApi.db` are used
+  enabled: true
+  # update the default Postgres version to 13.1
+  image: # +doc-gen:break
+    tag: 13.1.0
+    pullPolicy: Always
+  # name of the database to create
+  # see: <https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md#creating-a-database-on-first-run>
+  postgresqlDatabase: "ohdsi"
+  # Name of existing secret to use for PostgreSQL passwords.
+  # The secret has to contain the keys `postgresql-password`
+  # which is the password for `postgresqlUsername` when it is
+  # different of `postgres`, `postgresql-postgres-password` which
+  # will override `postgresqlPassword`, `postgresql-replication-password`
+  # which will override `replication.password` and `postgresql-ldap-password`
+  # which will be sed to authenticate on LDAP. The value is evaluated as a template.
+  existingSecret: "pg-atlas-secret"
+  resources:
+    requests:
+      memory: 16Gi
+      cpu: "3"
+    limits:
+      cpu: "3"
+      memory: 16Gi
+  persistence:
+    enabled: true
+    existingClaim: ohdsi-pg-claim
+    #mountPath: /bitnami/postgresql/data
+  volumePermissions: # this is important
+    enabled: true 
+    securityContext: 
+      runAsUser: 0
+  shmVolume: # this as well
+    chmod:
+      enabled: false
+  replication:
+    # should be true for production use
+    enabled: false
+    # number of read replicas
+    readReplicas: 1
+    # set synchronous commit mode: on, off, remote_apply, remote_write and local
+    synchronousCommit: "on"
+    # from the number of `readReplicas` defined above, set the number of those that will have synchronous replication
+    numSynchronousReplicas: 1
+  metrics:
+    # should also be true for production use
+    enabled: false
+  # Example for creating an ohdsi_admin_user
+  # initdbScripts:
+  #   00-init-ohdsi-admin-user.sh: |
+  #     #!/bin/bash
+  #     set -e
+
+  #     psql -v ON_ERROR_STOP=1 <<-EOSQL
+  #         CREATE ROLE ohdsi_admin_user LOGIN PASSWORD '${OHDSI_ADMIN_PASSWORD}' VALID UNTIL 'infinity';
+  #         COMMENT ON ROLE ohdsi_admin_user IS 'Admin user account for OHDSI applications';
+  #         CREATE ROLE ohdsi_admin CREATEDB REPLICATION VALID UNTIL 'infinity';
+  #         COMMENT ON ROLE ohdsi_admin IS 'Administration group for OHDSI applications';
+  #         GRANT ohdsi_admin TO ohdsi_admin_user;
+  #         GRANT ALL ON DATABASE ${POSTGRES_DB} TO GROUP ohdsi_admin;
+  #     EOSQL
+  # extraEnv:
+  #   - name: OHDSI_ADMIN_PASSWORD
+  #     value: admin1
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+
+
+webApi:
+  # enable the OHDSI WebAPI deployment
+  enabled: true
+  # number of pod replicas for the WebAPI
+  replicaCount: 1
+  # the WebAPI image
+  image: # +doc-gen:break
+    registry: ghcr.io
+    repository: chgl/ohdsi/webapi
+    tag: 2.8.0
+    pullPolicy: Always
+
+  db:
+    # database hostname
+    host: "ohdsi-postgresql"
+    # port used to connect to the postgres DB
+    port: 5432
+    # name of the database inside. If postgresql.enabled=true, then postgresql.postgresqlDatabase is used
+    database: "ohdsi"
+    # name of database schema for webAPI.  If left unspecified, ohdsi is used
+    schema: "webapi"
+    # username used to connect to the DB. Note that this name is currently used even if postgresql.enabled=true
+    username: "postgres"
+    # the database password. Only used if postgresql.enabled=false, otherwise the secret created by the postgresql chart is used
+    password: "postgres"
+    # name of an existing secret containing the password to the DB.
+    existingSecret: "pg-atlas-secret"
+    # name of the key in `webApi.db.existingSecret` to use as the password to the DB.
+    existingSecretKey: "postgresql-password"
+
+  # annotations applied to the pod
+  podAnnotations: {}
+
+  # security context for the pod
+  podSecurityContext:
+    {}
+    # fsGroup: 2000
+
+  # security context for the WebAPI container
+  securityContext: # +doc-gen:break
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: false
+    runAsNonRoot: false
+    runAsUser: 0
+
+  # the service used to expose the WebAPI web port
+  service: # +doc-gen:break
+    type: NodePort
+    port: 8080
+
+  # resource requests and limits for the container
+  resources:
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+     limits:
+       cpu: 4
+       memory: 16Gi
+     requests:
+       cpu: 4
+       memory: 16Gi
+
+  # readiness probe
+  readinessProbe: # +doc-gen:break
+    failureThreshold: 5
+    initialDelaySeconds: 1000
+    periodSeconds: 100
+    successThreshold: 1
+    timeoutSeconds: 15
+  # startup probe
+  startupProbe: # +doc-gen:break
+    failureThreshold: 10
+    initialDelaySeconds: 1000
+    periodSeconds: 300
+    successThreshold: 1
+    timeoutSeconds: 30
+  # liveness probe
+  livenessProbe: # +doc-gen:break
+    failureThreshold: 5
+    initialDelaySeconds: 10000000
+    periodSeconds: 1000
+    successThreshold: 1
+    timeoutSeconds: 15
+
+  # node labels for pods assignment
+  # see: <https://kubernetes.io/docs/user-guide/node-selection/>
+  nodeSelector: {}
+
+  # tolerations for pods assignment
+  # see: <https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/>
+  tolerations: []
+
+  # affinity for pods assignment
+  # see: <https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity>
+  affinity: {}
+
+  # extra environment variables
+  extraEnv:
+    #[]
+    # - name: "TEST"
+    #   value: "TEST"
+    - name: "datasource.cdm.schema"
+      value: "cdm"
+    - name: "datasource.ohdsi.schema"
+      value: "webapi"
+    - name: "spring.jpa.properties.hibernate.default_schema"
+      value: "webapi"
+    - name: "spring.batch.repository.tableprefix"
+      value: "webapi.BATCH_"
+    - name: "flyway_schemas"
+      value: "webapi"
+    - name: "flyway.placeholders.ohdsiSchema"
+      value: "webapi"
+
+atlas:
+  # enable the OHDSI Atlas deployment
+  enabled: true
+  # number of replicas
+  replicaCount: 1
+  # the Atlas image
+  image: # +doc-gen:break
+    registry: ghcr.io
+    repository: chgl/ohdsi/atlas
+    tag: 2.8.0
+    pullPolicy: Always
+
+  # the base URL of the OHDSI WebAPI, e.g. https://example.com/WebAPI
+  # if this value is not set but `webapi.ingress.enabled=true`, then this
+  # URL is constructed from `webapi.ingress`
+  webApiUrl: "https://research-alvearie.bx.cloud9.ibm.com/WebAPI/"
+
+  # annotations for the pod
+  podAnnotations: {}
+
+  # security context for the pod
+  podSecurityContext:
+    {}
+    # fsGroup: 2000
+
+  # ContainerSecurityContext for the Atlas container
+  securityContext: # +doc-gen:break
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: false
+    runAsNonRoot: true
+    runAsUser: 101
+
+  # the service used to expose the Atlas web port
+  service: # +doc-gen:break
+    type: NodePort
+    port: 8080
+
+  # resource requests and limits for the container
+  resources:
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+     limits:
+       cpu: "3"
+       memory: 12Gi
+     requests:
+       cpu: "3"
+       memory: 12Gi
+  
+  # readiness probe
+  readinessProbe: # +doc-gen:break
+    failureThreshold: 5
+    initialDelaySeconds: 30
+    periodSeconds: 15
+    successThreshold: 1
+    timeoutSeconds: 15
+  # liveness probe
+  livenessProbe: # +doc-gen:break
+    failureThreshold: 5
+    initialDelaySeconds: 30
+    periodSeconds: 15
+    successThreshold: 1
+    timeoutSeconds: 15
+
+  # node labels for pods assignment
+  # see: <https://kubernetes.io/docs/user-guide/node-selection/>
+  nodeSelector: {}
+
+  # tolerations for pods assignment
+  # see: <https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/>
+  tolerations: []
+
+  # affinity for pods assignment
+  # see: <https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity>
+  affinity: {}
+
+  # extra environment variables
+  extraEnv:
+    #[]
+    #- name: "WEBAPI_URL"
+    #  value: "https://research-alvearie.bx.cloud9.ibm.com/WebAPI/"
+
+# define a custom init container to be run as part of the installation.
+minio:
+  # if enabled, create a Kubernetes Job running the specified container
+  # see [cdm-init-job.yaml](templates/cdm-init-job.yaml) for the env vars
+  # that are passed by default
+  enabled: true
+  # the container image used to create the CDM initialization job
+  image: # +doc-gen:break
+    registry: minio
+    repository: minio
+    tag: RELEASE.2021-02-07T01-31-02Z
+    pullPolicy: Always
+  
+  accessKey: "minio"
+  secretKey: "minio123"
+  rootuser: "minioRoot"
+  rootpassword: "minioRoot123"
+  
+  # annotations 
+  podAnnotations: {}
+
+  # PodSecurityContext for the cdm-init pod
+  podSecurityContext:
+    {}
+    # fsGroup: 2000
+
+  # ContainerSecurityContext for the cdm-init container
+  securityContext: {}
+
+  # resource requests and limits for the container
+  resources:
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+     limits:
+       cpu: "1"
+       memory: 8Gi
+     requests:
+       cpu: "1"
+       memory: 8Gi
+
+  persistence:
+    enabled: true
+    existingClaim: "mflow-minio-db-pvc"
+    mountPath: /data
+
+  
+  containerport:  9000
+  httpport: 9000
+
+  # extra environment variables to set
+  extraEnv:
+    #[]
+    # - name: "TEST"
+    #   value: "TEST"
+
+pgmlflow:
+  # if enabled, create a Kubernetes Job running the specified container
+  # see [cdm-init-job.yaml](templates/cdm-init-job.yaml) for the env vars
+  # that are passed by default
+  enabled: true
+  # the container image used to create the CDM initialization job
+  image: # +doc-gen:break
+    registry: 
+    repository: postgres
+    tag: 12.5
+    pullPolicy: Always
+  
+  POSTGRES_USER: "postgres"
+  POSTGRES_PASSWORD: "postgres"
+  
+  # annotations 
+  podAnnotations: {}
+
+  # PodSecurityContext for the cdm-init pod
+  podSecurityContext:
+    {}
+    # fsGroup: 2000
+
+  # ContainerSecurityContext for the cdm-init container
+  securityContext: {}
+
+  # resource requests and limits for the container
+  resources:
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+     limits:
+       cpu: "1"
+       memory: 8Gi
+     requests:
+       cpu: "1"
+       memory: 8Gi
+
+  persistence:
+    enabled: true
+    existingClaim: "mflow-pg-db-pvc"
+    mountPath: /data
+
+  
+  containerport:  5432
+  httpport: 5452
+
+mlflow:
+  # if enabled, create a Kubernetes Job running the specified container
+  # see [cdm-init-job.yaml](templates/cdm-init-job.yaml) for the env vars
+  # that are passed by default
+  enabled: true
+  # the container image used to create the CDM initialization job
+  image: # +doc-gen:break
+    registry: docker.io
+    repository: ibmcom/dpm360-model-registry
+    tag: "1.0"
+    pullPolicy: Always
+  
+  MLFLOW_HOST: research-alvearie-mlflow.bx.cloud9.ibm.com 
+  BACKEND_STORE_URI: postgresql://postgres:postgres@pg-mlflow-db-service:5452/postgres
+  POSTGRES_HOST: pg-mlflow-db-service
+  MINIO_HOST: research-alvearie-minio.bx.cloud9.ibm.com
+  MLFLOW_TRACKING_URI: https://research-alvearie-mlflow.bx.cloud9.ibm.com:5000
+  MLFLOW_S3_ENDPOINT_URL: https://research-alvearie-minio.bx.cloud9.ibm.com
+  AWS_ACCESS_KEY_ID: minioRoot
+  AWS_SECRET_ACCESS_KEY: minioRoot123
+  AWS_MLFLOW_BUCKET_NAME: mlflow-experiments
+  AWS_BUCKET: mlflow-experiments
+  AWS_MLFLOW_BUCKET: mlflow-experiments
+
+  # annotations 
+  podAnnotations: {}
+
+  # PodSecurityContext for the cdm-init pod
+  podSecurityContext:
+    {}
+    # fsGroup: 2000
+
+  # ContainerSecurityContext for the cdm-init container
+  securityContext: {}
+
+  # resource requests and limits for the container
+  resources:
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+     limits:
+       cpu: "1"
+       memory: 8Gi
+     requests:
+       cpu: "1"
+       memory: 8Gi
+
+  containerport:  5000
+  httpport: 5000
+
+  # extra environment variables to set
+  extraEnv:
+    #[]
+    # - name: "TEST"
+    #   value: "TEST"
+
+
+ingress:
+  # whether to create an Ingress to expose the Atlas web interface
+  enabled: false
+  # provide any additional annotations which may be required. Evaluated as a template.
+  annotations:
+    ingress.kubernetes.io/allow-http: "true"
+    ingress.kubernetes.io/ssl-redirect: "true"
+    kubernetes.io/ingress.class: f5
+    virtual-server.f5.com/balance: round-robin
+    virtual-server.f5.com/ip: 9.12.240.50
+    virtual-server.f5.com/partition: RIS-INT-WDC07
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: research-alvearie.bx.cloud9.ibm.com
+      pathType: ImplementationSpecific
+  # ingress TLS config
+  tls: []
+  #    - secretName: "/Common/BlueMix"
+  #    hosts:
+  #      - chart-example.local

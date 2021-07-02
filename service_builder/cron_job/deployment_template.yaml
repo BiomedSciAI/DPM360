@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: <%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>
+  template:
+    metadata:
+      labels:
+        app: <%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>
+    spec:
+      containers:
+      - name: dpm360-service-builder
+        image: ibmcom/dpm360-service-builder
+        imagePullPolicy: Always
+        env:
+        - name: MODEL_NAME
+          value: <%=ENV["MODEL_NAME"]%>
+        - name: MODEL_VERSION
+          value: '1'
+        - name: MODEL_RUN_ID
+          value: <%=ENV["MODEL_RUN_ID"]%>
+        - name: MODEL_SOURCE
+          value: <%=ENV["MODEL_SOURCE"]%>
+        - name: MLFLOW_TRACKING_URI
+          value: <YOUR_VALUE_HERE>
+        - name: MLFLOW_S3_ENDPOINT_URL
+          value: <YOUR_VALUE_HERE>
+        - name: AWS_SECRET_ACCESS_KEY
+          value: <YOUR_VALUE_HERE>
+        - name: AWS_ACCESS_KEY_ID
+          value: <YOUR_VALUE_HERE>
+        ports:
+        - containerPort: 8080

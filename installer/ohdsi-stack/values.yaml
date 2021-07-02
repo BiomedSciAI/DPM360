@@ -1,0 +1,346 @@
+# image pull secrets used by all pods
+imagePullSecrets:
+  - name: 
+# partially override the release name
+nameOverride: ""
+# fully override the release name
+fullnameOverride: ""
+
+# annotations applied to all deployments and jobs
+commonAnnotations: []
+
+# see <https://github.com/bitnami/charts/tree/master/bitnami/postgresql> for details
+postgresql:
+  # enable an included PostgreSQL DB.
+  # if set to `false`, the values under `webApi.db` are used
+  enabled: true
+  # update the default Postgres version to 13.1
+  image: # +doc-gen:break
+    tag: 13.1.0
+    pullPolicy: Always
+  # name of the database to create
+  # see: <https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md#creating-a-database-on-first-run>
+  postgresqlDatabase: "ohdsi"
+  # Name of existing secret to use for PostgreSQL passwords.
+  # The secret has to contain the keys `postgresql-password`
+  # which is the password for `postgresqlUsername` when it is
+  # different of `postgres`, `postgresql-postgres-password` which
+  # will override `postgresqlPassword`, `postgresql-replication-password`
+  # which will override `replication.password` and `postgresql-ldap-password`
+  # which will be sed to authenticate on LDAP. The value is evaluated as a template.
+  existingSecret: ""
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: "1"
+    limits:
+      cpu: "1"
+      memory: 1Gi
+  persistence:
+    enabled: true
+    existingClaim: "ohdsi-db-pvc"
+    mountPath: /data 
+    #mountPath: /bitnami/postgresql/data
+  volumePermissions: # this is important
+    enabled: true 
+    securityContext: 
+      runAsUser: 0
+  shmVolume: # this as well
+    chmod:
+      enabled: false
+  replication:
+    # should be true for production use
+    enabled: false
+    # number of read replicas
+    readReplicas: 1
+    # set synchronous commit mode: on, off, remote_apply, remote_write and local
+    synchronousCommit: "on"
+    # from the number of `readReplicas` defined above, set the number of those that will have synchronous replication
+    numSynchronousReplicas: 1
+  metrics:
+    # should also be true for production use
+    enabled: false
+  # Example for creating an ohdsi_admin_user
+  # initdbScripts:
+  #   00-init-ohdsi-admin-user.sh: |
+  #     #!/bin/bash
+  #     set -e
+
+  #     psql -v ON_ERROR_STOP=1 <<-EOSQL
+  #         CREATE ROLE ohdsi_admin_user LOGIN PASSWORD '${OHDSI_ADMIN_PASSWORD}' VALID UNTIL 'infinity';
+  #         COMMENT ON ROLE ohdsi_admin_user IS 'Admin user account for OHDSI applications';
+  #         CREATE ROLE ohdsi_admin CREATEDB REPLICATION VALID UNTIL 'infinity';
+  #         COMMENT ON ROLE ohdsi_admin IS 'Administration group for OHDSI applications';
+  #         GRANT ohdsi_admin TO ohdsi_admin_user;
+  #         GRANT ALL ON DATABASE ${POSTGRES_DB} TO GROUP ohdsi_admin;
+  #     EOSQL
+  # extraEnv:
+  #   - name: OHDSI_ADMIN_PASSWORD
+  #     value: admin1
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+
+
+webApi:
+  # enable the OHDSI WebAPI deployment
+  enabled: true
+  # number of pod replicas for the WebAPI
+  replicaCount: 1
+  # the WebAPI image
+  image: # +doc-gen:break
+    registry: ghcr.io
+    repository: chgl/ohdsi/webapi
+    tag: 2.8.0
+    pullPolicy: Always
+
+  db:
+    # database hostname
+    host: "ohdsi-postgresql"
+    # port used to connect to the postgres DB
+    port: 5432
+    # name of the database inside. If postgresql.enabled=true, then postgresql.postgresqlDatabase is used
+    database: "ohdsi"
+    # name of database schema for webAPI.  If left unspecified, ohdsi is used
+    schema: "webapi"
+    # username used to connect to the DB. Note that this name is currently used even if postgresql.enabled=true
+    username: "postgres"
+    # the database password. Only used if postgresql.enabled=false, otherwise the secret created by the postgresql chart is used
+    password: "postgres"
+    # name of an existing secret containing the password to the DB.
+    existingSecret: ""
+    # name of the key in `webApi.db.existingSecret` to use as the password to the DB.
+    existingSecretKey: "postgresql-password"
+
+  # annotations applied to the pod
+  podAnnotations: {}
+
+  # security context for the pod
+  podSecurityContext:
+    {}
+    # fsGroup: 2000
+
+  # security context for the WebAPI container
+  securityContext: # +doc-gen:break
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: false
+    runAsNonRoot: false
+    runAsUser: 0
+
+  # the service used to expose the WebAPI web port
+  service: # +doc-gen:break
+    type: NodePort
+    port: 8080
+
+  # resource requests and limits for the container
+  resources:
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+     limits:
+       cpu: 3
+       memory: 2Gi
+     requests:
+       cpu: 3
+       memory: 2Gi
+
+  # readiness probe
+  readinessProbe: # +doc-gen:break
+    failureThreshold: 5
+    initialDelaySeconds: 1000
+    periodSeconds: 100
+    successThreshold: 1
+    timeoutSeconds: 15
+  # startup probe
+  startupProbe: # +doc-gen:break
+    failureThreshold: 10
+    initialDelaySeconds: 1000
+    periodSeconds: 300
+    successThreshold: 1
+    timeoutSeconds: 30
+  # liveness probe
+  livenessProbe: # +doc-gen:break
+    failureThreshold: 5
+    initialDelaySeconds: 10000000
+    periodSeconds: 1000
+    successThreshold: 1
+    timeoutSeconds: 15
+
+  # node labels for pods assignment
+  # see: <https://kubernetes.io/docs/user-guide/node-selection/>
+  nodeSelector: {}
+
+  # tolerations for pods assignment
+  # see: <https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/>
+  tolerations: []
+
+  # affinity for pods assignment
+  # see: <https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity>
+  affinity: {}
+
+  # extra environment variables
+  extraEnv:
+    #[]
+    # - name: "TEST"
+    #   value: "TEST"
+    - name: "datasource.cdm.schema"
+      value: "cdm"
+    - name: "datasource.ohdsi.schema"
+      value: "webapi"
+    - name: "spring.jpa.properties.hibernate.default_schema"
+      value: "webapi"
+    - name: "spring.batch.repository.tableprefix"
+      value: "webapi.BATCH_"
+    - name: "flyway_schemas"
+      value: "webapi"
+    - name: "flyway.placeholders.ohdsiSchema"
+      value: "webapi"
+
+atlas:
+  # enable the OHDSI Atlas deployment
+  enabled: true
+  # number of replicas
+  replicaCount: 1
+  # the Atlas image
+  image: # +doc-gen:break
+    registry: ghcr.io
+    repository: chgl/ohdsi/atlas
+    tag: 2.8.0
+    pullPolicy: Always
+
+  # the base URL of the OHDSI WebAPI, e.g. https://example.com/WebAPI
+  # if this value is not set but `webapi.ingress.enabled=true`, then this
+  # URL is constructed from `webapi.ingress`
+  webApiUrl: "http://ohdsi.hcls-ibm.localmachine.io/WebAPI/"
+
+  constructWebApiUrlFromIngress: true
+
+  # annotations for the pod
+  podAnnotations: {}
+
+  # security context for the pod
+  podSecurityContext:
+    {}
+    # fsGroup: 2000
+
+  # ContainerSecurityContext for the Atlas container
+  securityContext: # +doc-gen:break
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: false
+    runAsNonRoot: true
+    runAsUser: 101
+
+  # the service used to expose the Atlas web port
+  service: # +doc-gen:break
+    type: NodePort
+    port: 8080
+
+  # resource requests and limits for the container
+  resources:
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+     limits:
+       cpu: "5"
+       memory: 3Gi
+     requests:
+       cpu: "5"
+       memory: 3Gi
+  
+  # readiness probe
+  readinessProbe: # +doc-gen:break
+    failureThreshold: 5
+    initialDelaySeconds: 30
+    periodSeconds: 15
+    successThreshold: 1
+    timeoutSeconds: 15
+  # liveness probe
+  livenessProbe: # +doc-gen:break
+    failureThreshold: 5
+    initialDelaySeconds: 30
+    periodSeconds: 15
+    successThreshold: 1
+    timeoutSeconds: 15
+
+  # node labels for pods assignment
+  # see: <https://kubernetes.io/docs/user-guide/node-selection/>
+  nodeSelector: {}
+
+  # tolerations for pods assignment
+  # see: <https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/>
+  tolerations: []
+
+  # affinity for pods assignment
+  # see: <https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity>
+  affinity: {}
+
+  # extra environment variables
+  extraEnv:
+    #[]
+#    - name: "WEBAPI_URL"
+#      value: "http://ohdsi.hcls-ibm.localmachine.io/WebAPI/"
+
+# by default, Achilles connects to the same DB that the WebAPI uses
+# this assumes that it contains both the WebAPI schema (`ohdsi`) as well
+# as any CDM schemas. Future versions may allow for more flexibility here.
+achilles:
+  # whether or not to enable the Achilles cron job
+  enabled: true
+  # when to run the Achilles job. See <https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#cron-schedule-syntax>
+  schedule: "@daily"
+  # the Achilles image
+  image: # +doc-gen:break
+    registry: ghcr.io
+    repository: chgl/ohdsi/achilles
+    tag: master
+    pullPolicy: Always
+  schemas:
+    # name of the schema containing the OMOP CDM. Equivalent to the Achilles `ACHILLES_CDM_SCHEMA` env var.
+    cdm: "cdm"
+    # name of the schema containing the vocabulary. Equivalent to the Achilles `ACHILLES_VOCAB_SCHEMA` env var.
+    vocab: "webapi"
+    # name of the schema containing the cohort generation results. Equivalent to the Achilles `ACHILLES_RES_SCHEMA` env var.
+    res: "results"
+
+  # version of the CDM. Equivalent to the Achilles `ACHILLES_CDM_VERSION` env var.
+  cdmVersion: "5.3.1"
+
+  # the CDM source name. Equivalent to the Achilles `ACHILLES_SOURCE` env var.
+  sourceName: "synpuf-5.3.1"
+  
+  # ContainerSecurityContext for the Achilles container
+  securityContext: # +doc-gen:break
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    runAsNonRoot: true
+    runAsUser: 101
+
+ingress:
+  # whether to create an Ingress to expose the Atlas web interface
+  enabled: true
+  # provide any additional annotations which may be required. Evaluated as a template.
+  annotations:
+    #nginx.ingress.kubernetes.io/rewrite-target: /
+    {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: ohdsi.hcls-ibm.localmachine.io
+      pathType: ImplementationSpecific
+  # ingress TLS config
+  tls: []
+  #    - secretName: "/Common/BlueMix"
+  #    hosts:
+  #      - chart-example.local

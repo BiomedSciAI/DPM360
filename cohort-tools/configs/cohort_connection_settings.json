@@ -1,0 +1,21 @@
+{
+    "connection_details": {
+        "dbms": "",
+        "path_to_driver": ""
+        "hostname": "",
+        "port": "",
+        "dbname": "",
+        "user": "",
+        "password": ""
+    },
+    "cohort_details": {
+        "cdm_database_schema": "",
+        "target_cohort_database_schema": "",
+        "target_cohort_table": "",
+        "target_cohort_id": ,
+        "outcome_cohort_database_schema": "",
+        "outcome_cohort_table": "",
+        "outcome_cohort_id": ,
+        "oracle_temp_schema": 
+    }
+}

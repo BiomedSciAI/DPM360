@@ -1,0 +1,117 @@
+{
+    "analysis_name": "IHM",
+    "covariate_settings": {
+        "use_demographics_gender": true,
+        "use_demographics_age_group": true,
+        "use_demographics_race": true,
+        "use_demographics_ethnicity": true,
+        "use_condition_occurrence_any_time_prior": true,
+        "use_dcsi": true,
+        "use_chads2": true,
+        "use_chads2_vasc": true,
+        "included_covariate_concept_ids": [
+            3012888,
+            3020716,
+            3016335,
+            3008223,
+            3032652,
+            3009094,
+            3034962,
+            3027018,
+            3036277,
+            3027598,
+            3016502,
+            3024171,
+            3004249,
+            3020891,
+            3025315
+        ]
+    },
+    "tidy_covariate_settings": {
+        "min_fraction": 0.1,
+        "normalize": false,
+        "remove_redundancy": true
+    },
+    "model_training_settings": {
+        "sample_size": null,
+        "val_size": 0.25,
+        "random_state": 10,
+        "path": "/Users/williamogallo/ai-research/dpm360/lightsaber/examples/in_hosptial_mortality/data/"
+    },
+    "expt_config_settings": {
+        "categorical_covariate_concept_ids": [
+            3008223,
+            3009094,
+            3016335,
+            3032652
+        ],
+        "numerical_covariate_concept_ids": [
+            3004249,
+            3012888,
+            3016502,
+            3020716,
+            3020891,
+            3024171,
+            3025315,
+            3027018,
+            3027598,
+            3034962,
+            3036277
+        ],
+        "categorical_covariate_concept_value_mappings": {
+            "3016335": {
+                "1": "No Response",
+                "2": "To pain",
+                "3": "To speech",
+                "4": "Spontaneously"
+            },
+            "3009094": {
+                "1": "No response",
+                "2": "Incomprensible sounds",
+                "3": "Inappropriate words",
+                "4": "Confused",
+                "5": "Oriented"
+            },
+            "3008223": {
+                "1": "No response",
+                "2": "Abnormal extension",
+                "3": "Abnormal flexion",
+                "4": "Flex-withdraws",
+                "5": "Localizes pain",
+                "6": "Obeys commands"
+            },
+            "3032652": {
+                "3": "L3",
+                "4": "L4",
+                "5": "L5",
+                "6": "L6",
+                "7": "L7",
+                "8": "L8",
+                "9": "L9",
+                "10": "L10",
+                "11": "L11",
+                "12": "L12",
+                "13": "L13",
+                "14": "L14",
+                "15": "L15"
+            }
+        },
+        "normal_covariate_concept_values": {
+            "3036277": 170.0,
+            "3020891": 36.6,
+            "3025315": 81.0,
+            "3012888": 59.0,
+            "3032652": "L15",
+            "3016335": "Spontaneously",
+            "3008223": "Obeys commands",
+            "3009094": "Oriented",
+            "3034962": 128.0,
+            "3027018": 86,
+            "3020716": 0.21,
+            "3027598": 77.0,
+            "3016502": 98.0,
+            "3024171": 19,
+            "3004249": 118.0
+        }
+    }
+}

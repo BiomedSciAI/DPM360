@@ -1,0 +1,19 @@
+project:
+  name: DiseaseProgressionModel
+  shortName: DPM360
+  url: https://github.com/ibm/dpm360
+  description: Helm chart for deploying Minio.
+  app: the minio app.
+repository:
+  url: https:/github.com/ibm/dpm360/installer/charts
+  name: dpm360
+chart:
+  name: dpm360
+  values: "-- generate from values file --"
+  valuesExample: "-- generate from values file --"
+prerequisites:
+  - "Kubernetes v1.18+"
+  - "Helm v3"
+release:
+  name: dpm360
+  namespace: dpm360

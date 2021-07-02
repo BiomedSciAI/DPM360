@@ -1,0 +1,45 @@
+# define a custom init container to be run as part of the installation.
+cdmInitJob:
+  # if enabled, create a Kubernetes Job running the specified container
+  # see [cdm-init-job.yaml](templates/cdm-init-job.yaml) for the env vars
+  # that are passed by default
+  enabled: true
+  # the container image used to create the CDM initialization job
+  image: # +doc-gen:break
+    registry: docker.io
+    repository: ibmcom/dpm360-cdm_init
+    tag: "1.0"
+    pullPolicy: Always
+
+
+  # annotations set on the cdm-init pod
+  podAnnotations: {}
+
+  # PodSecurityContext for the cdm-init pod
+  podSecurityContext:
+    {}
+    # fsGroup: 2000
+
+  # ContainerSecurityContext for the cdm-init container
+  securityContext: {}
+
+  # extra environment variables to set
+  extraEnv:
+    - name: "CDM_URL"
+      value: "http://minio-mlflow-db-service:9000/1ksync/vocabulary-windows.tar.gz"
+    - name: "SYNPUF1K_URL"
+      value: "http://minio-mlflow-db-service:9000/1ksync/synpuf1k.tar.gz"
+    - name: "RESULTS_TABLE_URL"
+      value: "ohdsi-webapi:8080/WebAPI/ddl/results?dialect=postgresql&schema=results&vocabSchema=cmd&tempSchema=temp&initConceptHierarchy=true"
+    - name: "CDM_SCHEMA"
+      value: "cdm"
+    - name: "OHDSI_WEBAPI_SCHEMA"
+      value: "webapi"
+    - name: "RESULTS_SCHEMA"
+      value: "results"
+    - name: "TEMP_SCHEMA"
+      value: "temp"
+    - name: "PGHOST"
+      value: "ohdsi-postgresql"
+    - name: "PGPASSWORD"
+      value: ""

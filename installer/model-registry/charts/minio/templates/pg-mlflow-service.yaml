@@ -1,0 +1,23 @@
+{{- with .Values.pgmlflow }}
+{{- if .enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: pg-mlflow-db
+  name: pg-mlflow-db-service
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - port: {{ .httpport }}
+    protocol: TCP
+    targetPort: {{ .containerport }}
+  selector:
+    run: pg-mlflow-db
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
+{{- end }}
+{{- end }}

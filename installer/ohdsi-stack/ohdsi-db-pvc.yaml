@@ -1,0 +1,21 @@
+ apiVersion: v1
+ kind: Namespace
+ metadata:
+   name: ohdsi
+---
+ apiVersion: v1
+ kind: PersistentVolumeClaim
+ metadata:
+   creationTimestamp: null
+   name: ohdsi-db-pvc
+   # Provide <your namespace> here
+   namespace: ohdsi
+ spec:
+   accessModes:
+   - ReadWriteMany
+   resources:
+     requests:
+       storage: 15Gi
+   volumeMode: Filesystem
+ status:
+  phase: Pending

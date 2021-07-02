@@ -1,0 +1,70 @@
+{{- with .Values.pgmlflow }}
+{{- if .enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: pg-mlflow-db
+  name: pg-mlflow-db
+spec:
+  progressDeadlineSeconds: 2147483647
+  replicas: 1
+  revisionHistoryLimit: 2147483647
+  selector:
+    matchLabels:
+      run: pg-mlflow-db
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: pg-mlflow-db
+      name: pg-mlflow-db
+    spec:
+      containers:
+      - env:
+        - name: POSTGRES_USER
+          value:  {{.POSTGRES_USER }}
+        - name: POSTGRES_PASSWORD
+          value:  {{.POSTGRES_PASSWORD }}
+        image: "{{ .image.repository }}:{{ .image.tag }}"
+        imagePullPolicy: Always
+        name: pg-mlflow-db
+        ports:
+        - containerPort: {{ .containerport }}
+          name: port
+          protocol: TCP
+        resources:
+          limits:
+            cpu: {{ .resources.limits.cpu }}
+            memory: {{ .resources.limits.memory }}
+          requests:
+            cpu: {{ .resources.requests.cpu }}
+            memory: {{ .resources.requests.memory }}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /data
+          name: pg-mlflow-db-pvc
+      dnsPolicy: ClusterFirst
+      hostname: pg-mlflow-db
+      imagePullSecrets:
+      {{- with $.Values.imagePullSecrets }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: pg-mlflow-db-pvc
+        persistentVolumeClaim:
+          claimName: {{ .persistence.existingClaim }}
+status: {}
+{{- end }}
+{{- end }}

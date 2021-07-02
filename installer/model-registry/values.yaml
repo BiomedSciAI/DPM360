@@ -1,0 +1,195 @@
+# image pull secrets used by all pods
+imagePullSecrets:
+  - name: ""
+# partially override the release name
+nameOverride: ""
+# fully override the release name
+fullnameOverride: ""
+
+# annotations applied to all deployments and jobs
+commonAnnotations: []
+
+# define a custom init container to be run as part of the installation.
+minio:
+  # if enabled, create a Kubernetes Job running the specified container
+  # see [cdm-init-job.yaml](templates/cdm-init-job.yaml) for the env vars
+  # that are passed by default
+  enabled: true
+  # the container image used to create the CDM initialization job
+  image: # +doc-gen:break
+    registry: minio
+    repository: minio
+    tag: RELEASE.2021-02-07T01-31-02Z
+    pullPolicy: Always
+  
+  accessKey: "minio"
+  secretKey: "minio123"
+  rootuser: "minioRoot"
+  rootpassword: "minioRoot123"
+  
+  # annotations 
+  podAnnotations: {}
+
+  # PodSecurityContext for the cdm-init pod
+  podSecurityContext:
+    {}
+    # fsGroup: 2000
+
+  # ContainerSecurityContext for the cdm-init container
+  securityContext: {}
+
+  # resource requests and limits for the container
+  resources:
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+     limits:
+       cpu: "1"
+       memory: 1Gi
+     requests:
+       cpu: "1"
+       memory: 1Gi
+
+  persistence:
+    enabled: true
+    existingClaim: "mflow-minio-db-pvc"
+    mountPath: /data
+
+  
+  containerport:  9000
+  httpport: 9000
+
+  # extra environment variables to set
+  extraEnv:
+    #[]
+    # - name: "TEST"
+    #   value: "TEST"
+
+pgmlflow:
+  # if enabled, create a Kubernetes Job running the specified container
+  # see [cdm-init-job.yaml](templates/cdm-init-job.yaml) for the env vars
+  # that are passed by default
+  enabled: true
+  # the container image used to create the CDM initialization job
+  image: # +doc-gen:break
+    registry: 
+    repository: postgres
+    tag: 12.5
+    pullPolicy: Always
+  
+  POSTGRES_USER: "postgres"
+  POSTGRES_PASSWORD: "postgres"
+  
+  # annotations 
+  podAnnotations: {}
+
+  # PodSecurityContext for the cdm-init pod
+  podSecurityContext:
+    {}
+    # fsGroup: 2000
+
+  # ContainerSecurityContext for the cdm-init container
+  securityContext: {}
+
+  # resource requests and limits for the container
+  resources:
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+     limits:
+       cpu: "1"
+       memory: 1Gi
+     requests:
+       cpu: "1"
+       memory: 1Gi
+
+  persistence:
+    enabled: true
+    #####existingClaim: "mflow-pg-db-pvc"
+    mountPath: /data
+
+  
+  containerport:  5432
+  httpport: 5452
+
+mlflow:
+  # if enabled, create a Kubernetes Job running the specified container
+  # see [cdm-init-job.yaml](templates/cdm-init-job.yaml) for the env vars
+  # that are passed by default
+  enabled: true
+  # the container image used to create the CDM initialization job
+  image: # +doc-gen:break
+    registry: docker.io
+    repository: ibmcom/dpm360-model-registry
+    tag: "1.0"
+    pullPolicy: Always
+  
+  MLFLOW_HOST: ohdsi.hcls-ibm.localmachine.io
+  BACKEND_STORE_URI: postgresql://postgres:postgres@pg-mlflow-db-service:5452/postgres
+  POSTGRES_HOST: pg-mlflow-db-service
+  MINIO_HOST: ohdsi.hcls-ibm.localmachine.io
+  MLFLOW_TRACKING_URI: https://ohdsi.hcls-ibm.localmachine.io:5000
+  MLFLOW_S3_ENDPOINT_URL: https://ohdsi.hcls-ibm.localmachine.io
+  AWS_ACCESS_KEY_ID: minioRoot
+  AWS_SECRET_ACCESS_KEY: minioRoot123
+  AWS_MLFLOW_BUCKET_NAME: mlflow-experiments
+  AWS_BUCKET: mlflow-experiments
+  AWS_MLFLOW_BUCKET: mlflow-experiments
+
+  # annotations 
+  podAnnotations: {}
+
+  # PodSecurityContext for the cdm-init pod
+  podSecurityContext:
+    {}
+    # fsGroup: 2000
+
+  # ContainerSecurityContext for the cdm-init container
+  securityContext: {}
+
+  # resource requests and limits for the container
+  resources:
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+     limits:
+       cpu: "1"
+       memory: 1Gi
+     requests:
+       cpu: "1"
+       memory: 1Gi
+
+  containerport:  5000
+  httpport: 5000
+
+  # extra environment variables to set
+  extraEnv:
+    #[]
+    # - name: "TEST"
+    #   value: "TEST"
+
+
+ingress:
+  # whether to create an Ingress to expose the Atlas web interface
+  enabled: true
+  # provide any additional annotations which may be required. Evaluated as a template.
+  annotations:
+    ingress.kubernetes.io/allow-http: "true"
+    ingress.kubernetes.io/ssl-redirect: "true"
+    kubernetes.io/ingress.class: f5
+    virtual-server.f5.com/balance: round-robin
+    virtual-server.f5.com/ip: 9.12.240.50
+    virtual-server.f5.com/partition: RIS-INT-WDC07
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: ohdsi.hcls-ibm.localmachine.io
+      pathType: ImplementationSpecific
+  # ingress TLS config
+  tls: []
+  #    - secretName: "/Common/BlueMix"
+  #    hosts:
+  #      - chart-example.local
