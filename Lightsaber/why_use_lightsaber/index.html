@@ -190,12 +190,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
       
       <label class="md-nav__link" for="__nav_2">
         DPM360 Components
@@ -243,11 +245,64 @@
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
       
       <label class="md-nav__link" for="__nav_2_3">
+        Cohort Tools
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Cohort Tools" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Cohort Tools
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CohortTools/" class="md-nav__link">
+        Cohort-Tools
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CohortTools/running-atlas/" class="md-nav__link">
+        Running Atlas-Lightsaber
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" checked>
+      
+      <label class="md-nav__link" for="__nav_2_4">
         Lightsaber
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Lightsaber" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_3">
+        <label class="md-nav__title" for="__nav_2_4">
           <span class="md-nav__icon md-icon"></span>
           Lightsaber
         </label>
@@ -259,8 +314,52 @@
   
     <li class="md-nav__item">
       <a href="../" class="md-nav__link">
-        Welcome to lightsaber
+        Home
       </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4_2" type="checkbox" id="__nav_2_4_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2_4_2">
+        User Guide
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="User Guide" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          User Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Why use lightsaber
+      </a>
+      
     </li>
   
 
@@ -271,8 +370,14 @@
   
     <li class="md-nav__item">
       <a href="../user_guide/" class="md-nav__link">
-        User Guide
+        Overview
       </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -281,10 +386,37 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4_3" type="checkbox" id="__nav_2_4_3" >
+      
+      <label class="md-nav__link" for="__nav_2_4_3">
+        Example
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Example" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          Example
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../IHM_Example_Using_LSTM/" class="md-nav__link">
-        IHM Example Using LSTM
+      <a href="../IHM_Example_using_LSTM.ipynb" class="md-nav__link">
+        None
       </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -331,6 +463,22 @@
                 
                 
                 <h1 id="why-use-lightsaber">Why use lightsaber</h1>
+<p><strong>Architectural Overview</strong></p>
+<p><img alt="Lightsaber architectural diagram" src="../resources/lightsaber_survival_model_view.png" /></p>
+<p>In this example, Lightsaber packages the core for model training, experiments management, dataset ingestion, hyper-parameter tuning, and ad-hoc distributed computing. Survival modeling, now a part of lightsaber, provides the flavor of lightsaber that uses concepts to provide specialized capabilities such as model trainer (including loss functions) and metrics for time-to-event modeling. With this core, models such as RankSVX and VAECox only implements the network architecture and specifies the loss function without spending so much time around training and optimizing the model.</p>
+<p>Lightsaber is a common model training and evaluation framework that caters to primarily 2 personas: (a) data scientists and (b) researchers. </p>
+<p>W/o Lightsaber, for each model and datasets, we have to write our own custom training routines (more important for deep learning models as base Pytorch is quite low-level for that), custom data processors to ingest data from extracted cohort (again more important for deep learning models), and inbuilt model tracking using Mlflow (this is valid for both sklearn and Pytorch). Also, w/o Lightsaber for every model and type of model we have to use in custom manner metrics and evaluations - Lightsaber standardizes and integrates that - e.g. for a classification mode we track AUC-ROC, AUC-PROC, Recall@K, etc. Lightsaber also integrates recalling such evaluations for post-hoc report generation and/or model maintenance by providing routines to interact with Mlflow. w/o lightsaber all of these need to (a) be custom built and (b) be repeated for each model.</p>
+<p>It also provides additional built-in utilities such as calibration of the model. Indeed to develop and test a new deep learning model, we need to code:</p>
+<ol>
+<li>Data ingestion across splits in a repeatable and standard manner</li>
+<li>the network structure and the loss function</li>
+<li>the training framework to train the model on the training data and use the validation data for optimization of the model</li>
+<li>Apply techniques such as early stopping to prevent overfitting using the validation set</li>
+<li>tuning the model to find the optimal hyperparameters</li>
+<li>evaluating the model on the test data using different metrics</li>
+<li>saving and deploying the model for later use.</li>
+</ol>
+<p>Lightsaber isolates all engineering parts of training the model [steps 1 and 3-6] from the core model development [step 2] so the researcher needs to only focus on the architecture of the network as well as the loss function. All other steps are provided by the lightsaber framework in a standarized way for training/optimizing/evaluating/deploying the model</p>
                 
               
               
@@ -345,6 +493,39 @@
       
         
 <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Home
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../user_guide/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Overview
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
