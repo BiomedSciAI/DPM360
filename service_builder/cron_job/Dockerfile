@@ -16,9 +16,14 @@ RUN mv ./oc /usr/local/bin/oc
 RUN chmod +x ./kubectl
 RUN mv ./kubectl /usr/local/bin/kubectl
 
+COPY requirements.txt /
+RUN pip3 install -r /requirements.txt
 
 COPY execute.sh /
 COPY deployment_template.yaml /
+COPY service_template.yaml /
+COPY route_template.yaml /
+COPY ingress_template.yaml /
 RUN chmod +x /execute.sh
 
 ENTRYPOINT /bin/bash /execute.sh

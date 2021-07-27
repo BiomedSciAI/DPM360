@@ -39,7 +39,6 @@ to support: **(a) reproducible research, (b) accelarate model development, and (
 From source: 
 
 * for barebones `lightsaber`: `pip install .` 
-* for support with t2e: `pip install .[t2e]` 
 * For support with doc: `pip install .[doc]`
 * For all: `pip install .[full]`
 

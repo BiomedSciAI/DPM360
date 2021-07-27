@@ -1,5 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+## Copyright 2020 IBM Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 import torch as T
 import torch.nn as nn
 import torch.nn.functional as F
@@ -7,14 +21,16 @@ from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence, Packed
 
 from torch.autograd import Variable
 from lightsaber import constants as C
-from lightsaber.trainers.pt_trainer import BaseModel
+from lightsaber.trainers.components import BaseModel
 
 
 class RNNBase(BaseModel):
     def __init__(self, 
         input_dim, output_dim, hidden_dim,
-        rnn_class='LSTM',
-        n_layers=1, bias=True, dropout=0, 
+        rnn_class=C.PYTORCH_CLASS_DICT['LSTM'],
+        n_layers=1, 
+        bias=True,
+        dropout=0, 
         recurrent_dropout=0.,
         batch_first=True, 
         bidirectional=False, 
@@ -26,7 +42,7 @@ class RNNBase(BaseModel):
         self.output_dim = output_dim
         self.hidden_dim = hidden_dim
 
-        self.rnn_class = C.PYTORCH_CLASS_DICT[rnn_class]
+        self.rnn_class = rnn_class
         self.n_layers = n_layers
         self.bias = bias
         self.recurrent_dropout = recurrent_dropout
@@ -101,15 +117,17 @@ class RNNBase(BaseModel):
         
     
 class RNNClassifier(RNNBase):
-    def __init__(self, input_dim, output_dim, hidden_dim,
-                 rnn_class=nn.LSTM,
+    def __init__(self, 
+                 input_dim, output_dim, hidden_dim,
+                 rnn_class=C.PYTORCH_CLASS_DICT['LSTM'],
                  n_layers=1, bias=True, dropout=0, 
                  recurrent_dropout=0.,
                  batch_first=True, 
                  bidirectional=False, 
                  *args, **kwargs):
         """TODO: to be defined. """
-        RNNBase.__init__(self, input_dim, output_dim, hidden_dim,
+        RNNBase.__init__(self, 
+            input_dim, output_dim, hidden_dim,
             rnn_class=rnn_class,
             n_layers=n_layers, bias=bias, dropout=dropout, 
             recurrent_dropout=recurrent_dropout,

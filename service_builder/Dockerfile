@@ -19,10 +19,13 @@ ENV LD_LIBRARY_PATH=/usr/lib/jvm/default-java/lib/:/usr/lib/jvm/default-java/lib
 
 COPY ../service_builder/requirements.txt ./
 COPY ../service_builder/ModelWrapperApp.py ./
+COPY ../service_builder/static ./static
+COPY ../service_builder/templates ./templates
 
 # Copy files
 COPY ../lightsaber/lightsaber ./lightsaber
 
 RUN pip3 install -r ./requirements.txt
 
+#CMD ["/bin/bash"]
 ENTRYPOINT ["python3", "ModelWrapperApp.py"]

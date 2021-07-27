@@ -1,6 +1,6 @@
 **to be updated
 
-Create cron job by execution cronjob.yaml file from the container platform UI
+Create cron job by execution cronjob.yaml file from the container platfor UI
 
 The following paramters need to be populated in the cronjob.yaml file, prior to execution. 
 

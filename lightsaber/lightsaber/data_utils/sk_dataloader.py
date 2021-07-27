@@ -1,3 +1,17 @@
+## Copyright 2020 IBM Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 import os
 import sys
 import numpy as np
@@ -10,37 +24,30 @@ from sklearn.exceptions import NotFittedError
 
 from lightsaber import constants as C
 from lightsaber.data_utils import pt_dataset as ptd 
-from lightsaber.data_utils.pt_dataset import filter_flatten_filled_drop_cols
+from lightsaber.data_utils.pt_dataset import (filter_flatten_filled_drop_cols,
+                                              filter_preprocessor)
 
 import warnings
 import logging
 log = logging.getLogger()
 
-@functoolz.curry
-def filter_preproc_data(data, target, preprocessor=None):
-    X = data.values
-    # if preprocessor is None:
-    #     preprocessor = MinMaxpreprocessor()
-    #     preprocessor.fit(X)
-    try:
-        X_values = preprocessor.transform(X)
-    except NotFittedError:
-        raise Exception(f"{preprocessor} not fitted. consider passing fitted preprocessor")
-
-    data = pd.DataFrame(X_values, index=data.index, columns=data.columns)
-    data._preprocessor = preprocessor
-    return data, target
-
+DEFAULT_DEVICE = 'cpu'
+DEFAULT_FILTER = None
+DEFAULT_TRANSFORM = [ptd.identity_2d]
 
 class SKDataLoader(object):
     """Custom data loaders for scikit-learn"""
 
-    def __init__(self, tgt_file, feat_file, idx_col, tgt_col, 
-                 feat_columns=None, time_order_col=None, 
+    def __init__(self, 
+                 tgt_file, feat_file, idx_col, tgt_col, 
+                 feat_columns=None, 
+                 time_order_col=None, 
                  category_map=C.DEFAULT_MAP, 
-                 fill_value=0., flatten=C.DEFAULT_FLATTEN, 
+                 filter=DEFAULT_FILTER,
+                 fill_value=0.,
+                 flatten=C.DEFAULT_FLATTEN, 
                  cols_to_drop=C.DEFAULT_DROP_COLS,
-                 preprocessor=None):
+                 ):
 
         self._tgt_file = tgt_file
         self._feat_file = feat_file
@@ -50,56 +57,55 @@ class SKDataLoader(object):
         self._time_order_col= time_order_col
         self._category_map = category_map
         
-        self._filter_flatten_filled_drop_cols = filter_flatten_filled_drop_cols(cols_to_drop=cols_to_drop,
+        # Enforing a flatten function to make sure sklearn modules gets a
+        # flattended data
+        _filter_flatten_filled_drop_cols = filter_flatten_filled_drop_cols(cols_to_drop=cols_to_drop,
                                                                                 aggfunc=flatten,
                                                                                 fill_value=fill_value)
-        self._preprocessor = None
-        if preprocessor is not None:
-            if isinstance(preprocessor, (list, tuple)):
-                self._preprocessor = preprocessor
+        self._filter = []
+        if filter is not None:
+            if isinstance(filter, (list, tuple)):
+                self._filter += filter
             else:
-                self._preprocessor = [preprocessor]
+                self._filter.append(filter)
+        self._filter.append(_filter_flatten_filled_drop_cols)
+
+        # Reading data
+        self.read_data()
         return
 
-    def _get_data(self, preprocessor):
-        device = 'cpu'
-        transform = [ptd.identity_nd]
-        filters = []
-        if preprocessor is not None:
-            for s in preprocessor:
-                filters.append(filter_preproc_data(preprocessor=s))
-        filters.append(self._filter_flatten_filled_drop_cols)
+    def read_data(self):
+        device = DEFAULT_DEVICE
+        transform = DEFAULT_TRANSFORM
 
-        dataset = ptd.BaseDataset(self._tgt_file, 
+        self._dataset = ptd.BaseDataset(self._tgt_file, 
                                   self._feat_file, 
                                   self._idx_col, 
                                   self._tgt_col,
                                   feat_columns=self._feat_columns, 
                                   time_order_col=self._time_order_col,
                                   category_map=self._category_map,
-                                  filter=filters,
+                                  filter=self._filter,
                                   transform=transform,
                                   device=device
                                  )
+        return
 
-        X = dataset.data
-        y = dataset.target
+    @property
+    def shape(self):
+        return self._dataset.data.shape
+
+    def __len__(self):
+        return len(self._dataset)
+
+    def get_data(self):
+        X = self._dataset.data
+        y = self._dataset.target
         return X, y
 
-    def get_preprocessor(self, refit=False):
-        if refit:
-            if self._preprocessor is not None:
-                preprocessor = []
-                for p in reversed(self._preprocessor):
-                    X, _ = self._get_data(preprocessor)
-
-                    p.fit(X)
-                    preprocessor.insert(0, p)
-                self._preprocessor = preprocessor
-                log.info("preprocessors fitted")
-        return self._preprocessor
-
-    def read_data(self, refit=False):
-        preprocessor = self.get_preprocessor(refit=refit)
-        X, y = self._get_data(preprocessor)
-        return X, y
+    def get_patient(self, patient_id):
+        p_idx = self._dataset.sample_idx.index.get_loc(patient_id)
+        full_X, full_y = self.get_data()
+        p_X = full_X.iloc[[p_idx]]
+        p_y = full_y.iloc[[p_idx]]
+        return p_X, p_y

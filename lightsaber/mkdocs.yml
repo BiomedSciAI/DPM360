@@ -21,10 +21,13 @@ site_name: Lightsaber
 #   - codehilite
 
 nav:
-  - index.md
-  - user_guide.md
-  # - why_use_lightsaber.md
-  - IHM_Example_Using_LSTM.ipynb
+  - Home: 'index.md'
+  - User Guide:
+    - why_use_lightsaber.md
+    - Overview: 'user_guide.md'
+    # - researcher.md 
+  - Example:
+    - IHM_Example_using_LSTM.ipynb
 
 # extra:
 #   version:

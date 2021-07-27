@@ -3,9 +3,7 @@
 * Prithwish Chakraborty
 * Piyush Madan
 * Mohamed Ghalwash
+* Elif Eyigoz
 * Daby Sow
 * Sanjoy Dey
 
-# References
-
-Bi-weekly design sessions: https://ibm.ent.box.com/file/720023228571?s=i0clxgpqfuab6a6caszformppjrrhun5

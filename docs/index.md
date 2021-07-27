@@ -48,6 +48,19 @@ We use [GitHub issues](https://github.com/IBM/DPM360/issues) for tracking reques
 
 In becoming a committer, we expect you to help out on the development of patches, new features and actively participate in the user discussion lists, issues tracking and documentation.
 
+## Team
+* <a href="https://researcher.watson.ibm.com/researcher/view.php?person=ke-NELSONBO">Nelson Bore</a>
+* <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-ibuleje">Italo Buleje</a>
+* <a href="https://researcher.watson.ibm.com/researcher/view.php?person=ibm-Prithwish.Chakraborty">Prithwish Chaktraborty</a>
+* <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-rachitac">Rachita Chandra</a>
+* <a href="https://researcher.watson.ibm.com/researcher/view.php?person=ibm-Mohamed.Ghalwash">Mohamed Ghalwash</a>
+* <a href="https://researcher.watson.ibm.com/researcher/view.php?person=ibm-Piyush.Madan1">Piyush Madan</a> 
+* <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-mahatma">Shilpa Mahatma</a>
+* <a href="https://researcher.watson.ibm.com/researcher/view.php?person=ibm-William.Ogallo">William Ogallo</a>
+* <a href="https://researcher.watson.ibm.com/researcher/view.php?person=ke-Sekou.Lionel.Remy">Sekou Remy</a>
+* <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-pmeyerr">Pablo Meyer Rojas</a>
+* <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-psuryan">Parthasarathy Suryanarayanan</a>
+
 ## License
 [Apache License 2.0](https://github.ibm.com/IBM-Research-AI/dpm360/blob/master/LICENSE.txt)
 

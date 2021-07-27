@@ -1,25 +1,48 @@
 #!/usr/bin/env python
 # Author : James Codella<jvcodell@us.ibm.com>, Prithwish Chakraborty <prithwish.chakraborty@ibm.com>
 # date   : 2020-06-02
+## Copyright 2020 IBM Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 import numpy as np
+import os
+import json
+import pickle
 from pathlib import Path
 
 import sklearn
 from sklearn.calibration import CalibratedClassifierCV
-from sklearn.model_selection import GridSearchCV, PredefinedSplit
+from sklearn.model_selection import GridSearchCV, PredefinedSplit, KFold
 from sklearn.experimental import enable_hist_gradient_boosting
 
 import mlflow
+import mlflow.sklearn
+import time
+import six
+import warnings
 
 from lightsaber import constants as C
 from lightsaber.metrics import Metrics
+from lightsaber.trainers import helper
 from lightsaber.data_utils import sk_dataloader as skd
 from lightsaber.data_utils import utils as du
 from lightsaber.trainers.helper import (setup_mlflow, get_model, get_predefined_split,
                                         load_sk_model, save_sk_model, import_model_class)
 
 
+import logging
+log = logging.getLogger()
 # ***********************************************************************
 #         SK Model Trainer
 # ***********************************************************************
@@ -27,10 +50,13 @@ class SKModel(object):
     def __init__(self, 
                  base_model,
                  model_params=None, 
-                 name = "undefined_model_name"):
+                 name="undefined_model_name"):
         super(SKModel, self).__init__()
         self.model = base_model
-        self.model_params = model_params
+        try:
+            self.set_params(**model_params)
+        except Exception as e:
+            warnings.warn(f"couldnt set model params - base_model/model_params inconsitent with scikit-learn")
         self.__name__ = name
         
         self.metrics = {}
@@ -42,8 +68,14 @@ class SKModel(object):
         try:
             params = self.model.get_params()
         except AttributeError:
+            raise DeprecationWarning("This is deprecated. will be dropped in v0.3. models should be sklearn compatible i.e. should have get_params. moving forward but this will be inconsistent with tuning")
             params = self.model_params
         return params
+
+    def set_params(self, **parameters):
+        self.model.set_params(**parameters)
+        return self
+
 
     def fit(self, X, y, experiment_name=""): # default exp name is timestamp
         """
@@ -55,7 +87,7 @@ class SKModel(object):
         Returns np.array predictions for each instance in X.
         """
         self.model.fit(X,y)
-        self.params = self.model.get_params()
+        # self.params = self.model.get_params()
         return self
 
     def predict(self, X):
@@ -67,6 +99,7 @@ class SKModel(object):
         """
         return self.model.predict(X)
 
+
     def calibrate(self, X, y):
         ccc = CalibratedClassifierCV(self.model, method='isotonic', cv='prefit')
         ccc.fit(X, y)
@@ -74,11 +107,12 @@ class SKModel(object):
         #  self.params = self.model.get_params()
         return self
 
-    def tune(self, X, y,
+    def tune(self, 
+             X, y,
              hyper_params,
              experiment_name, 
              cv=C.DEFAULT_CV,
-             scoring='roc_auc',
+             scoring=C.DEFAULT_SCORING_CLASSIFIER,
             ):  ## NEEDS MODIFICATION
         """Tune hyperparameters for model. Uses mlflow to log best model, Gridsearch model, scaler, and best_score
         
@@ -102,7 +136,7 @@ class SKModel(object):
                           scoring=scoring)
         gs.fit(X, y)
         self.model = gs.best_estimator_
-        self.params = gs.best_params_
+        self.set_params(**gs.best_params_)
         return self.model, gs
 
     def predict_proba(self, X):
@@ -123,65 +157,9 @@ class SKModel(object):
     def score(self, X, y):
         return self.model.score(X,y)
 
-
-def model_init(hparams):
-    expt_conf = du.ConfReader(hparams.config)
-
-    idx_col = expt_conf['idx_col']
-    tgt_col = expt_conf['tgt_col']
-    feat_cols = expt_conf['feat_cols'] 
-    category_map = expt_conf.get('category_map', C.DEFAULT_MAP)
-
-    _data_conf = expt_conf.get('data', dict())
-    fill_value = _data_conf.get('fill_value', 0.)
-    preprocessor = _data_conf.get('preprocessor', None)
-    if preprocessor is not None:
-        for idx, p in preprocessor:
-            preprocessor[idx] = import_model_class(p)
-
-    flatten = _data_conf.get('flatten', C.DEFAULT_FLATTEN)
-
-    train_dataloader = skd.SKDataLoader(tgt_file=expt_conf['train']['tgt_file'],
-                                        feat_file=expt_conf['train']['feat_file'],
-                                        idx_col=idx_col,
-                                        tgt_col=tgt_col,
-                                        feat_columns=feat_cols,
-                                        category_map=category_map,
-                                        fill_value=fill_value,
-                                        flatten=flatten,
-                                        preprocessor=preprocessor)
-    fitted_preprocessor = train_dataloader.get_preprocessor(refit=True)
-
-    if 'val' in expt_conf:
-        val_dataloader = skd.SKDataLoader(tgt_file=expt_conf['val']['tgt_file'],
-                                          feat_file=expt_conf['val']['feat_file'],
-                                          idx_col=idx_col,
-                                          tgt_col=tgt_col,
-                                          feat_columns=feat_cols,
-                                          category_map=category_map,
-                                          fill_value=fill_value,
-                                          flatten=flatten,
-                                          preprocessor=fitted_preprocessor)
-    else:
-        val_dataloader = None
-        
-    print("Datasets ready")
-    payload = dict(train_dataloader=train_dataloader, 
-                   val_dataloader=val_dataloader)
-
-    sk_model_type = expt_conf['model']['type']
-    if hparams.load:
-        load_path = expt_conf['model']['model_path']
-        sk_model = load_sk_model(load_path)
-    else:
-        sk_model_parameters = expt_conf['model'].get('params', None)
-        sk_model = get_model(sk_model_type, sk_model_parameters)
-
-    if hparams.tune:
-        h_search = expt_conf['model']['hyperparams_search']
-        payload.update(dict(h_search=h_search))
-    print("*** Done processing data...")
-    return (sk_model, hparams.conf, payload)
+    def predict_patient(self, patient_id, test_dataloader):
+        p_X, _ = test_dataloader.get_patient(patient_id)
+        return self.predict_proba(p_X)
 
 
 def run_training_with_mlflow(mlflow_conf, 
@@ -190,8 +168,18 @@ def run_training_with_mlflow(mlflow_conf,
                              val_dataloader=None, 
                              test_dataloader=None,
                              **kwargs):
-    #  mlflow_conf = conf.get('mlflow', dict())
     tune = kwargs.get('tune', False)
+    if tune:
+        inner_cv = kwargs.get('inner_cv', C.DEFAULT_CV)
+        h_search = kwargs.pop('h_search', None)
+        if h_search is None:
+            raise AttributeError(f'if tuner is requested, h_search should be provided')
+        scoring = kwargs.get('scoring', C.DEFAULT_SCORING_CLASSIFIER)
+        
+    model_path = kwargs.pop('model_path', 'model')
+    # model_save_dir = Path(kwargs.get('model_save_dir', C.MODEL_SAVE_DIR))
+    # model_save_dir.mkdir(parents=True, exist_ok=True)
+    artifacts = kwargs.pop('artifacts', dict())
 
     mlflow_conf.setdefault('problem_type', 'classifier')
     mlflow_setup = setup_mlflow(**mlflow_conf)
@@ -199,68 +187,69 @@ def run_training_with_mlflow(mlflow_conf,
     calculate_metrics = Metrics(mlflow_conf['problem_type'])
     print(mlflow_setup, calculate_metrics)
 
-    model_save_dir = Path(kwargs.get('model_save_dir', C.MODEL_SAVE_DIR))
-    model_save_dir.mkdir(parents=True, exist_ok=True)
-
-    X_train, y_train = train_dataloader.read_data()
-    
-    if val_dataloader is not None:
-        X_val, y_val = val_dataloader.read_data()
-        cv, _X, _y = get_predefined_split(X_train, y_train, X_valid, y_valid)
-    else:
-        cv = kwargs.get('cv', C.DEFAULT_CV)
-        _X = X_train
-        _y = y_train
-
-    if test_dataloader is not None:
-        X_test, y_test = test_dataloader.read_data()
-
     experiment_name = mlflow_setup['experiment_name']
 
-    print(mlflow_setup)
+    experiment_tags = dict()
+    experiment_tags.update(**kwargs)
 
     with mlflow.start_run():
-        # mlflow.sklearn.log_model(sk_model.model, experiment_name)
-        # mlflow.log_params(sk_model.model.get_params())
+        run_id = mlflow.active_run().info.run_id 
+        _start_time = time.time()
 
+        X_train, y_train = train_dataloader.get_data()
+        
+        if val_dataloader is not None:
+            X_val, y_val = val_dataloader.get_data()
+            outer_cv, _X, _y = get_predefined_split(X_train, y_train, X_val, y_val)
+        else:
+            warnings.warn("This path is untested...use with caution")
+            outer_cv = kwargs.get('outer_cv', None)
+            if outer_cv is None:
+                warnings.warn(f'Neither validation, nor outer_cv provided. using KFold({C.DEFAULT_CV}) to get validation split')
+                outer_cv = KFold(C.DEFAULT_CV)
+            _X = X_train.values if hasattr(X_train, 'values') else X_train
+            _y = y_train.values if hasattr(y_train, 'values') else y_train
+
+        if test_dataloader is not None:
+            X_test, y_test = test_dataloader.get_data()
+
+        # mlflow.log_params(sk_model.model.get_params())
         if tune:
-            h_search = kwargs['h_search']
-            scoring = kwargs['scoring']
             m, gs = sk_model.tune(X=_X, y=_y,
                                   hyper_params=h_search,
-                                  cv=cv, 
+                                  cv=inner_cv, 
                                   experiment_name=experiment_name, 
                                   scoring=scoring)
             
             mlflow.sklearn.log_model(m, experiment_name + '_model')
             mlflow.sklearn.log_model(gs, experiment_name + '_GridSearchCV')
             
-            print("*** Experiment: " + experiment_name + " has finished hyperparameter tuning. ***")
-            print("Hyperparameter search space: " + str(h_search))
+            log.info(f"Experiment: {experiment_name} has finished hyperparameter tuning")
+            log.info("Hyperparameter search space: " + str(h_search))
             # log params
             mlflow.log_params(sk_model.params)
-            print("Best_params:")
-            print(gs.best_params_)
-            save_sk_model(sk_model, model_save_dir + "/" + experiment_name)
+            print(f"Best_params:\n {gs.best_params_}")
         else:
-            sk_model.fit(X=X_train,y=y_train)#, Xstd = X_train_std)
+            sk_model.fit(X=X_train, y=y_train)#, Xstd = X_train_std)
         
             mlflow.sklearn.log_model(sk_model.model, experiment_name)
             mlflow.log_params(sk_model.params)
-        
-            print("*** Experiment: " + experiment_name + " has finished training. ***")
-            save_sk_model(sk_model, model_save_dir + '/' + 'experiment_name')
+            log.info(f"Experiment: {experiment_name} has finished training")
 
-        for split_id, (train_index, val_index) in enumerate(cv):
-            _X_train, _X_val = _X[train_index,:], X[test_index,:]
-            _y_train, _y_val = _y[train_index], _y[test_index]
+        for split_id, (train_index, val_index) in enumerate(outer_cv.split(_X, _y)):
+            if split_id >= 1:
+                warnings.warn("Current logic for tune and implicit outer_cv not correct")
+                break
+
+            _X_train, _X_val = _X[train_index, :], _X[val_index, :]
+            _y_train, _y_val = _y[train_index], _y[val_index]
             
-            y_val_proba = sk_model.predict_proba(X_val)
+            y_val_proba = sk_model.predict_proba(_X_val)
             if y_val_proba.ndim > 1:
                 y_val_proba = y_val_proba[:,1]
 
-            y_val_hat = sk_model.predict(X_val)
-            val_score = sk_model.score(X_val, y_val)
+            y_val_hat = sk_model.predict(_X_val)
+            val_score = sk_model.score(_X_val, _y_val)
 
         if test_dataloader is not None:
             y_test_proba = sk_model.predict_proba(X_test)
@@ -284,16 +273,24 @@ def run_training_with_mlflow(mlflow_conf,
                                              y_test_hat=y_test_hat,
                                              test_score=test_score
                                             )
+        _end_time = time.time()
+        run_time = (_end_time - _start_time)
+        
         # log metrics
         mlflow.log_metrics(sk_model.metrics)
         print(sk_model.metrics)
 
-        payload = dict(mode=sk_model,
-                       y_val=y_val, 
-                       y_val_hat=y_val_hat,
-                       y_val_proba=y_val_proba,
-                       y_test=y_test, 
-                       y_test_hat=y_test_hat,
-                       y_test_proba=y_test_proba,
-                      )
-        return payload
+        experiment_tags.update(dict(run_time=run_time))
+        if experiment_tags is not None:
+            mlflow.set_tags(experiment_tags)
+
+        # Other artifacts
+        _tmp = {f"artifact/{art_name}": art_val 
+                for art_name, art_val in six.iteritems(artifacts)}
+        helper.log_artifacts(_tmp, run_id, mlflow_uri=mlflow_setup['mlflow_uri'], delete=True) 
+
+        return (run_id,
+                sk_model.metrics,
+                y_val, y_val_hat, y_val_proba,
+                y_test, y_test_hat, y_test_proba,
+                )

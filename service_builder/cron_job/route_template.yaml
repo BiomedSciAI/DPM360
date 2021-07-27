@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: <%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>-route
+  namespace: <%=ENV["K8S_NAME_SPACE"]%>
+spec:
+  host: <%=ENV["DPM360_SERVICE_BUILDER_HOST_NAME"]%>
+  path: /<%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>
+  to:
+    kind: Service
+    name: <%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>-service
+  port:
+    targetPort: <%=ENV["PORT"]%>

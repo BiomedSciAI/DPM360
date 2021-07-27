@@ -1,0 +1,5 @@
+site_name: CohortTools
+
+nav:
+  - index.md
+  - running-atlas.md

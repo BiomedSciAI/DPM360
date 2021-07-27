@@ -1,13 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ohdsi-ingress
-  namespace: ohdsi
-#  annotations:
-#    nginx.ingress.kubernetes.io/rewrite-target: /$1
+ name: ohdsi-stack
+ namespace: ohdsi
+ annotations:
+   kubernetes.io/ingress.class: "public-iks-k8s-nginx"
 spec:
+  defaultBackend:
+    service:
+      name: ohdsi-webapi
+      port:
+        number: 8080
   rules:
-    - host:  ohdsi.hcls-ibm.localmachine.io
+    - host: <link>
       http:
         paths:
 #          - path: /
@@ -25,10 +30,7 @@ spec:
                 name: ohdsi-atlas
                 port:
                   number: 8080
-          - path: /atlas-postgres
-            pathType: Prefix
-            backend:
-              service:
-                name: ohdsi-postgresql
-                port:
-                  number: 5432
+  tls:
+  - hosts:
+    - <extertnal link>
+    secretName: <secret - implementation may depend on cloud provider>

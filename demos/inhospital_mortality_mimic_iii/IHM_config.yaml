@@ -1,0 +1,51 @@
+# USER DEFINED
+tgt_col: y_true
+idx_cols: stayId
+time_order_col: 
+    - hours
+    - seqnum
+
+feat_cols: null
+
+train:
+    tgt_file: '{DATA_DIR}/y_train.csv'
+    feat_file: '{DATA_DIR}/X_train.csv'
+
+val:
+    tgt_file: '{DATA_DIR}/y_test.csv'
+    feat_file: '{DATA_DIR}/X_test.csv'
+
+test:
+    tgt_file: '{DATA_DIR}/y_test.csv'
+    feat_file: '{DATA_DIR}/X_test.csv'
+    
+
+
+# DATA DEFINITIONS
+category_map:
+  Glasgow coma score eye opening: ['No Response', 'To pain', 'To speech', 'Spontaneously'] 
+  Glasgow coma score motor: ['No response','Abnormal extension','Abnormal flexion','Flex-withdraws', 'Localizes pain','Obeys commands'] 
+  Glasgow coma scale: ['L3', 'L4', 'L5','L6','L7', 'L8','L9','L10','L11','L12','L13','L14','L15']
+  Glasgow coma score verbal: ['No response','Incomprensible sounds','Inappropriate words','Confused', 'Oriented'] 
+
+
+numerical: ['Heart rate','Inhaled oxygen concentration', 'Body weight', 'Respiratory rate', 
+            'Diastolic blood pressure','Systolic blood pressure',
+            'Body height', 'Oxygen saturation in Arterial blood','Body temperature','Mean blood pressure']
+
+normal_values:  
+  Systolic blood pressure: 118.0
+  Glasgow coma score motor: 'Obeys commands'
+  Glasgow coma score verbal: 'Oriented'
+  Diastolic blood pressure: 59.0
+  Glasgow coma score eye opening: 'Spontaneously'
+  Oxygen saturation in Arterial blood: 98.0
+  Inhaled oxygen concentration: 0.21
+  Body temperature: 36.6
+  Respiratory rate: 19
+  Body weight: 81.0
+  Heart rate: 86
+  Mean blood pressure: 77.0
+  Glasgow coma scale: 'L15'
+  Glucose [Mass/volume] in Capillary blood by Glucometer: 128.0
+  Body height: 170.0

@@ -1,4 +1,4 @@
-# User Guide
+# Overview
 
 
 At a high level, there are four components for `lightsaber`:
@@ -27,30 +27,30 @@ tgt_file:
     target file path
 feat_file:
     feature file path
-idx_col: 
+idx_col:
     columns to specify the unique examples from the feature and target set
-tgt_col: 
-    columns to specify the target column from the target set. 
+tgt_col:
+    columns to specify the target column from the target set.
 feat_columns:
     feature columns to select from. either list of columns (partials columns using `*` allowed) or a single regex
     Default: `None` -> implies all columns
 time_order_col:
     column(s) that signify the time ordering for a single example.
-    Default: `None` -> implies no columns 
+    Default: `None` -> implies no columns
 category_map:
     dictionary of column maps
 transform: single callable or list/tuple of callables
-    how to transform data. if list of callables provided eg `[f, g]`, `g(f(x))` used 
+    how to transform data. if list of callables provided eg `[f, g]`, `g(f(x))` used
     Default: drop `lightsaber.constants::DEFAULT_DROP_COLS` and fillna
 filter: single callable or list/tuple of callables
-    how to filter data. if list of callables provided eg `[f, g]`, `g(f(x))` used 
+    how to filter data. if list of callables provided eg `[f, g]`, `g(f(x))` used
     Default: no operation
 device: str
     valid pytorch device. `cpu` or `gpu`
 ```
 
-Speficically, `feat_columns` can take either a list of feature columns to be used or reg-ex specifying the sub-list of columns.
-It can also support a hybrid apporach such as:
+Specifically, `feat_columns` can take either a list of feature columns to be used or reg-ex specifying the sub-list of columns.
+It can also support a hybrid approach such as:
 
 ```python
 feat_columns = ['featA', 'b_feat*']
@@ -58,10 +58,10 @@ feat_columns = ['featA', 'b_feat*']
 
 ### Filters and Transforms
 
-In addition, `BaseDataset` supports a set of composible functions called `filters` and `transforms` that can be used 
-to transform the input data. 
+In addition, `BaseDataset` supports a set of compossible functions called `filters` and `transforms` that can be used
+to transform the input data.
 
-**Filters** accepts as arguments `(data, target)` and other keyword functions and always retuns `(data, target)`.
+**Filters** accepts as arguments `(data, target)` and other keyword functions and always returns `(data, target)`.
 An example filter to fill `NA` from the feature dataset is as follows:
 
 ```python
@@ -92,7 +92,7 @@ def filter_fillna(data, target, fill_value=0., time_order_col=None):
 
 Lightsaber comes pre-packaged with a set of filters:
 
-* `filter_fillna`: fill `NA` 
+* `filter_fillna`: fill `NA`
 * `filter_preprocessor`: to chain any `sklearn` pre-processor in the correct manner
 * `filter_flatten_filled_drop_cols`: to flatten temporal data, fill `NA`, and drop extra columns
 * `filt_get_last_index`: to get the last time point from each example for a temporal dataset (e.g. useful for training `Med2Vec` models)
@@ -101,12 +101,12 @@ Lightsaber comes pre-packaged with a set of filters:
 In addition, filters can be defined at run-time by a user
 
 
-**Transform** are functions that are applied at run-time while returning the data for a single 
-example. it accetps as arguments `(data)` and other keywords. It always returns `(data)`. 
+**Transform** are functions that are applied at run-time while returning the data for a single
+example. it accepts as arguments `(data)` and other keywords. It always returns `(data)`.
 
 Lightsaber comes pre-packaged with a set of transforms including flattening and dropping `NA` at runtime.
 
-_transforms_ are generally discouraged as these are applied at run time and can slow down data fetching. 
+_transforms_ are generally discouraged as these are applied at run time and can slow down data fetching.
 In general, if it is possible to load the entire data in memory use `filters` - else use `transforms`.
 
 
@@ -126,16 +126,16 @@ tgt_file:
     target file path
 feat_file:
     feature file path
-idx_col: 
+idx_col:
     columns to specify the unique examples from the feature and target set
-tgt_col: 
-    columns to specify the target column from the target set. 
+tgt_col:
+    columns to specify the target column from the target set.
 feat_columns:
     feature columns to select from. either list of columns (partials columns using `*` allowed) or a single regex
     Default: `None` -> implies all columns
 time_order_col:
     column(s) that signify the time ordering for a single example.
-    Default: `None` -> implies no columns 
+    Default: `None` -> implies no columns
 category_map:
     dictionary of column maps
 fill_value:
@@ -190,12 +190,12 @@ Model Training is supported for both `pytorch` and `scikit-learn` models.
 
 For scikit-learn, a simplified model training and hyper-parameter tuning framework is exposed via `ligthsaber`.
 
-It is provided by `lightsaber.trainers.sk_trainer`. 
+It is provided by `lightsaber.trainers.sk_trainer`.
 
 The three important functions are as follows:
 
-`SKModel`: A wrapper that connects eng backends to standard scikit-learn compatible mdoels.
-It accepts the following paramters:
+`SKModel`: A wrapper that connects eng backends to standard scikit-learn compatible models.
+It accepts the following parameters:
 
 ```
 Parameters
@@ -206,10 +206,10 @@ base_model:
 model_params:
   model hyper-params to init the model
 name: OPTIONAL
-  name to identifyt the model
+  name to identify the model
 ```
 
-Some of the important funcstions provided by `SKModel`:
+Some of the important functions provided by `SKModel`:
 
 * `fit`
 * `calibrate`: to provide post fitting calibration from calibration dataset
@@ -222,7 +222,7 @@ Some of the important funcstions provided by `SKModel`:
 
 `lightsaber.trainers.sk_trainer.run_training_with_mlflow`: run training of sklearn models with model tracking
 
-It accepts the following paramters:
+It accepts the following parameters:
 
 ```
 Parameters
@@ -243,13 +243,13 @@ kwargs:
 
 ### Pytorch Models
 
-For `pytorch` models a trainer using the SOTA methods is provided `lightsaber.trainers.pt_trainer` 
+For `pytorch` models a trainer using the SOTA methods is provided `lightsaber.trainers.pt_trainer`
 
 The most important modules is `PyModel`. It takes the following parameters
 
 
 ```
-hparams: 
+hparams:
   hyper-paramters. instance of NameSpace
 model:
   any standard pytorch-models

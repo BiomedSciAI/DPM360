@@ -4,8 +4,8 @@
 data_folder=$1
 
 ## this is hard coded as of now ; TODO: Remove later
-export MINIO_ROOT_USER=minioRoot
-export MINIO_ROOT_PASSWORD=minioRoot123
+export MINIO_ROOT_USER=
+export MINIO_ROOT_PASSWORD=
 
 
 export MINIO_HOST=`minikube service --url minio-mlflow-db-service -n ohdsi`

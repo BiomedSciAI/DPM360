@@ -2,15 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: <%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>
+  labels:
+    run: <%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: <%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>
+      run: <%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>
   template:
     metadata:
       labels:
-        app: <%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>
+        run: <%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>
     spec:
       containers:
       - name: dpm360-service-builder
@@ -18,20 +20,31 @@ spec:
         imagePullPolicy: Always
         env:
         - name: MODEL_NAME
-          value: <%=ENV["MODEL_NAME"]%>
+          value: <%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>
         - name: MODEL_VERSION
-          value: '1'
+          value: <%=ENV["MODEL_VERSION"]%>
         - name: MODEL_RUN_ID
           value: <%=ENV["MODEL_RUN_ID"]%>
         - name: MODEL_SOURCE
           value: <%=ENV["MODEL_SOURCE"]%>
         - name: MLFLOW_TRACKING_URI
-          value: <YOUR_VALUE_HERE>
+          value: <%=ENV["MLFLOW_TRACKING_URI"]%>
         - name: MLFLOW_S3_ENDPOINT_URL
-          value: <YOUR_VALUE_HERE>
+          value: <%=ENV["MLFLOW_S3_ENDPOINT_URL"]%>
         - name: AWS_SECRET_ACCESS_KEY
-          value: <YOUR_VALUE_HERE>
+          value: <%=ENV["AWS_SECRET_ACCESS_KEY"]%>
         - name: AWS_ACCESS_KEY_ID
-          value: <YOUR_VALUE_HERE>
+          value: <%=ENV["AWS_ACCESS_KEY_ID"]%>
+        - name: PORT
+          value: <%=ENV["PORT_NUMBER"]%>
+        - name: MODEL_REGISTRY_API
+          value:  <%=ENV["MLFLOW_API"]%>
         ports:
-        - containerPort: 8080
+        - containerPort: <%=ENV["PORT"]%>
+        resources:
+          limits:
+            cpu: "2"
+            memory: 4Gi
+          requests:
+            cpu: "2"
+            memory: 4Gi

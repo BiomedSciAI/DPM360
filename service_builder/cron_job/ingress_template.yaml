@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: <%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>-ingress
+  namespace: <%=ENV["K8S_NAME_SPACE"]%>
+  annotations:
+    ingress.kubernetes.io/allow-http: 'false'
+    kubernetes.io/ingress.class: f5
+    virtual-server.f5.com/balance: round-robin
+    virtual-server.f5.com/ip: 9.59.198.72
+    virtual-server.f5.com/partition: RIS3-INT-OCP-DAL12
+spec:
+  tls:
+    - secretName: /Common/BlueMix
+  rules:
+    - host: <%=ENV["DPM360_SERVICE_BUILDER_HOST_NAME"]%>
+      http:
+        paths:
+          - path: /<%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>
+            backend:
+              serviceName: <%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>-service
+              servicePort: <%=ENV["PORT"]%>

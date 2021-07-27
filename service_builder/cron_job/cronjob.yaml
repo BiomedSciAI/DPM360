@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: dpm360-cronjob
 spec:
-  schedule: "*/5 * * * *"
+  schedule: "*/2 * * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
@@ -12,17 +12,27 @@ spec:
         spec:
           containers:
           - name: dpm360-cronjob
-            image: ibmcom/dpm360-cronjob:1.0.1
-            imagePullPolicy: IfNotPresent
+            image: ibmcom/dpm360-cronjob
+            imagePullPolicy: Always
             env:
               - name: MLFLOW_API
                 value: <YOUR_VALUE_HERE>
-              - name: OPENSHIFT_CLUSTER
+              - name: K8s_CLUSTER
                 value: <YOUR_VALUE_HERE>
-              - name: OPENSHIFT_API_KEY
+              - name: K8S_API_KEY
                 value: <YOUR_VALUE_HERE>
-              - name: OPENSHIFT_API
+              - name: K8S_API
                 value: <YOUR_VALUE_HERE>
-              - name: OPENSHIFT_PROJECT
+              - name: K8S_NAME_SPACE
+                value: <YOUR_VALUE_HERE>
+              - name: DPM360_SERVICE_BUILDER_HOST_NAME
+                value: <YOUR_VALUE_HERE>
+              - name: MLFLOW_TRACKING_URI
+                value: <YOUR_VALUE_HERE>
+              - name: MLFLOW_S3_ENDPOINT_URL
+                value: <YOUR_VALUE_HERE>
+              - name: AWS_SECRET_ACCESS_KEY
+                value: <YOUR_VALUE_HERE>
+              - name: AWS_ACCESS_KEY_ID
                 value: <YOUR_VALUE_HERE>
           restartPolicy: OnFailure

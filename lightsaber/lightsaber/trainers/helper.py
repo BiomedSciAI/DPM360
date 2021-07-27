@@ -1,16 +1,37 @@
 #!/usr/bin/env python
-
+## Copyright 2020 IBM Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 import argparse
 import sys
 import os
+from pathlib import Path
+import six
+from tempfile import NamedTemporaryFile
+import shutil
 import pickle
 import numpy as np
 import mlflow
+from toolz import functoolz
+import warnings
+import importlib
 
 from sklearn.model_selection import PredefinedSplit
 
 from lightsaber import constants as C
 
+import logging
+log = logging.getLogger()
 
 # ***********************************************************************
 #         General Utils
@@ -21,8 +42,8 @@ def import_model_class(name):
     for comp in components[0:-1]:
         base = base + "." + comp
     base = base[1:]
-    print(base)
-    mod = __import__(base, fromlist=[components[-1]])
+    log.info(f'Loading {components[-1]} from {base}')
+    mod = importlib.__import__(base, fromlist=[components[-1]])
     mod = getattr(mod, components[-1])
     return mod
 
@@ -49,7 +70,7 @@ def get_model(model_type, model_params=None):
 # ***********************************************************************
 #         MLFlow
 # ***********************************************************************
-def get_experiment_name(conf):
+def get_experiment_name(**conf):
     experiment_name = '{}-{}-{}-{}'.format(os.getlogin(), 
                                            conf['problem_type'],
                                            conf['model_name'], 
@@ -102,6 +123,72 @@ def fetch_mlflow_experiment(experiment_name,
     run_df = mlflow.search_runs(experiment_id, **kwargs)
     return run_df
 
+def get_artifact_path(artifact_path,
+                      artifact_uri,
+                      ): 
+    artifact_path = Path(artifact_uri.lstrip('file:')) / str(artifact_path)
+    assert artifact_path.is_file()
+    return str(artifact_path)
+
+
+def safe_dumper(obj, obj_name):
+    """
+    If obj is not a file name dump it as a file. 
+    """
+    is_file = False
+    try:
+        is_file = Path(obj).is_file()
+    except Exception as e:
+        warnings.warn(f"problem during file checking: {e}\ncontinuing")
+
+    if not is_file:
+        assert not hasattr(obj, 'read'), "Object cannot be a open stream"
+        with NamedTemporaryFile(delete=False) as tmp_file:
+            pickle.dump(obj, open(tmp_file.name, "wb"))
+            tmp_filename = tmp_file.name
+    else:
+        tmp_filename = obj
+    art_name = obj_name
+    return tmp_filename, obj_name
+
+
+@functoolz.curry
+def model_register_dumper(obj, obj_name, registered_model_name=None):
+    """
+    If obj is not a file name dump it as a file. 
+    """
+    if (obj_name == 'test_feat_file'):
+        temp_filename = 'X_test.csv'
+    elif (obj_name == 'test_tgt_file'):
+        temp_filename = 'y_test.csv'
+    elif (obj_name == 'config'):
+        temp_filename = registered_model_name+'.yaml'
+    else:
+        temp_filename = None
+    if temp_filename is not None:
+        shutil.copy(obj, temp_filename)
+    art_name =  "features"
+    return temp_filename, art_name
+
+
+def log_artifacts(artifacts, 
+                  run_id, 
+                  mlflow_uri=C.MLFLOW_URI, 
+                  dumper=safe_dumper, 
+                  delete=False):
+    client = mlflow.tracking.MlflowClient(tracking_uri=mlflow_uri)
+    
+    ret_fnames = []
+    for art_name, art_val in six.iteritems(artifacts):
+        tmp_filename, art_name = dumper(art_val, art_name)
+        if tmp_filename is not None:
+            client.log_artifact(run_id, tmp_filename, f"{art_name}")
+        ret_fnames.append(tmp_filename)
+        log.info(f"Logged {art_name} to {ret_fnames[-1]}") 
+        if delete: 
+            os.remove(tmp_filename)
+    return ret_fnames
+
 # ***********************************************************************
 #         SK Model Utils
 # ***********************************************************************
@@ -125,11 +212,14 @@ def sk_parse_args():
 def get_predefined_split(X_train, y_train, X_val=None, y_val=None):
     # Using PredefinedSplits to separate training from validation
     # First merge data
-    X = X_train.append(X_val) if X_val is not None else X_train
-    y = np.append(y_train,y_val) if y_val is not None else y_train
+    X = np.vstack((X_train, X_val)) if X_val is not None else X_train
+    y = np.vstack((y_train, y_val)) if y_val is not None else y_train
 
     # Create a list where train data indices are -1 and validation data indices are 0
-    split_index = [-1 if x in X_train.index else 0 for x in X.index]
+    split_index = [-1] * len(X_train) 
+    if X_val is not None:
+        split_index += [0] * len(X_val)
+
     pre_split = PredefinedSplit(test_fold=split_index)
     return pre_split, X, y
 
@@ -158,7 +248,3 @@ def load_sk_model(model_path): # simple pickle implementation placeholder for mo
         with open(model_path, 'rb') as fid:
             sk_model = pickle.load(fid)
     return sk_model
-
-
-
-

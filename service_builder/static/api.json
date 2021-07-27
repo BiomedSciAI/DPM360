@@ -1,0 +1,94 @@
+{
+  "swagger": "2.0",
+  "paths": {
+    "/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "get_hello_world",
+        "tags": [
+          "DPM360"
+        ]
+      }
+    },
+    "/model/dataset": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Load patient id's",
+        "description": "View model dataset",
+        "operationId": "get_patient_dataset",
+        "tags": [
+          "DPM360"
+        ]
+      }
+    },
+    "/model/predict": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Predict using patient id",
+        "description": "This is used to submit a request to a given model.  Please provide a json (as the request body) containing patient id as input.",
+        "operationId": "post_model_input",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Resource"
+            }
+          }
+        ],
+        "tags": [
+          "DPM360"
+        ]
+      }
+    }
+  },
+  "info": {
+    "version": "1.0"
+  },
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "DPM360",
+      "description": "Model Serving APIs"
+    }
+  ],
+  "definitions": {
+    "Resource": {
+      "properties": {
+        "patient_id": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "responses": {
+    "ParseError": {
+      "description": "When a mask can't be parsed"
+    },
+    "MaskError": {
+      "description": "When any error occurs on mask"
+    }
+  }
+}

@@ -31,19 +31,19 @@ postgresql:
   existingSecret: ""
   resources:
     requests:
-      memory: 1Gi
-      cpu: "1"
+      memory: 2Gi
+      cpu: "3"
     limits:
-      cpu: "1"
-      memory: 1Gi
+      cpu: "3"
+      memory: 2Gi
   persistence:
     enabled: true
     existingClaim: "ohdsi-db-pvc"
     mountPath: /data 
     #mountPath: /bitnami/postgresql/data
   volumePermissions: # this is important
-    enabled: true 
-    securityContext: 
+    enabled: true
+    securityContext:
       runAsUser: 0
   shmVolume: # this as well
     chmod:
@@ -144,11 +144,11 @@ webApi:
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
      limits:
-       cpu: 3
-       memory: 2Gi
+       cpu: 5
+       memory: 5Gi
      requests:
-       cpu: 3
-       memory: 2Gi
+       cpu: 5
+       memory: 5Gi
 
   # readiness probe
   readinessProbe: # +doc-gen:break
@@ -217,9 +217,9 @@ atlas:
   # the base URL of the OHDSI WebAPI, e.g. https://example.com/WebAPI
   # if this value is not set but `webapi.ingress.enabled=true`, then this
   # URL is constructed from `webapi.ingress`
-  webApiUrl: "http://ohdsi.hcls-ibm.localmachine.io/WebAPI/"
+  webApiUrl: <extertnal link>/WebAPI
 
-  constructWebApiUrlFromIngress: true
+  constructWebApiUrlFromIngress: false
 
   # annotations for the pod
   podAnnotations: {}
@@ -251,12 +251,12 @@ atlas:
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
      limits:
-       cpu: "5"
-       memory: 3Gi
+       cpu: "8"
+       memory: 5Gi
      requests:
-       cpu: "5"
-       memory: 3Gi
-  
+       cpu: "8"
+       memory: 5Gi
+
   # readiness probe
   readinessProbe: # +doc-gen:break
     failureThreshold: 5
@@ -308,7 +308,7 @@ achilles:
     # name of the schema containing the OMOP CDM. Equivalent to the Achilles `ACHILLES_CDM_SCHEMA` env var.
     cdm: "cdm"
     # name of the schema containing the vocabulary. Equivalent to the Achilles `ACHILLES_VOCAB_SCHEMA` env var.
-    vocab: "webapi"
+    vocab: "cdm"
     # name of the schema containing the cohort generation results. Equivalent to the Achilles `ACHILLES_RES_SCHEMA` env var.
     res: "results"
 
@@ -318,18 +318,19 @@ achilles:
   # the CDM source name. Equivalent to the Achilles `ACHILLES_SOURCE` env var.
   sourceName: "synpuf-5.3.1"
   
-  # ContainerSecurityContext for the Achilles container
-  securityContext: # +doc-gen:break
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-        - ALL
-    runAsNonRoot: true
-    runAsUser: 101
+  extraEnv:
+    - name: "ACHILLES_DB_URI"
+      value: "postgresql://ohdsi-postgresql:5432/ohdsi"
+    - name: "ACHILLES_DB_PASSWORD"
+      valueFrom:
+        secretKeyRef:
+          name: ohdsi-postgresql
+          key: postgresql-password
+
 
 ingress:
   # whether to create an Ingress to expose the Atlas web interface
-  enabled: true
+  enabled: false
   # provide any additional annotations which may be required. Evaluated as a template.
   annotations:
     #nginx.ingress.kubernetes.io/rewrite-target: /
