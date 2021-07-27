@@ -18,7 +18,7 @@ markdown_extensions:
 
 nav:
   - Overview: 'index.md'
-  - DPM360 Components:
+  - Components:
     - Installer: 'installer.md'
     - Service Builder: 'serviceBuilder.md'
     - Cohort Tools: '!include ./cohort_tools/mkdocs.yml'

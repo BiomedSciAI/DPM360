@@ -1,4 +1,4 @@
-# Cohort-Tools
+# Cohort Tools
 The cohort_tools folder contains code related to the extraction of features related to cohorts defined via ATLAS or custom queries and used for developing deep learning DPM algorithms in Lightsaber using Python.
 
 Lightsaber integrates naturally with ATLAS using a client called Lightsaber Client for ATLAS(LCA), enabling automated extraction of features from the CDM  model, thus complementing the ease and flexibility of defining standardized cohorts using ATLAS graphical user interface with the ability to quickly develop deep learning algorithms for DPM in Lightsaber using Python.

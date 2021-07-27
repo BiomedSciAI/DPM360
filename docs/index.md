@@ -53,12 +53,15 @@ In becoming a committer, we expect you to help out on the development of patches
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-ibuleje">Italo Buleje</a>
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=ibm-Prithwish.Chakraborty">Prithwish Chaktraborty</a>
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-rachitac">Rachita Chandra</a>
+* <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-deysa">Sanjoy Dey</a>
+* <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-ekeyigoz">Elif K Eyigoz</a>
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=ibm-Mohamed.Ghalwash">Mohamed Ghalwash</a>
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=ibm-Piyush.Madan1">Piyush Madan</a> 
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-mahatma">Shilpa Mahatma</a>
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=ibm-William.Ogallo">William Ogallo</a>
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=ke-Sekou.Lionel.Remy">Sekou Remy</a>
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-pmeyerr">Pablo Meyer Rojas</a>
+* <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-sowdaby">Daby Dow</a>
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-psuryan">Parthasarathy Suryanarayanan</a>
 
 ## License
