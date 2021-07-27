@@ -61,7 +61,7 @@ In becoming a committer, we expect you to help out on the development of patches
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=ibm-William.Ogallo">William Ogallo</a>
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=ke-Sekou.Lionel.Remy">Sekou Remy</a>
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-pmeyerr">Pablo Meyer Rojas</a>
-* <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-sowdaby">Daby Dow</a>
+* <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-sowdaby">Daby Sow</a>
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-psuryan">Parthasarathy Suryanarayanan</a>
 
 ## License
