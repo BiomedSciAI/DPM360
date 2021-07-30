@@ -27,7 +27,7 @@ nav:
     - Overview: 'user_guide.md'
     # - researcher.md 
   - Example:
-    - IHM_Example_using_LSTM.ipynb
+    - IHM_Example_Using_LSTM.ipynb
 
 # extra:
 #   version:

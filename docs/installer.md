@@ -4,7 +4,7 @@ The **Installer** component installs the fully functional DPM60 into Kubernetes 
 
 ## Design of DPM360 Installer
 
-![architecture](installer-design.jpg)
+![architecture](./images/png/installer-design.png)
 
 ## Prerequisites
 
