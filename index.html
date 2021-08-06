@@ -222,6 +222,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#code" class="md-nav__link">
+    Code
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#roadmap" class="md-nav__link">
     Roadmap
   </a>
@@ -530,6 +537,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#code" class="md-nav__link">
+    Code
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#roadmap" class="md-nav__link">
     Roadmap
   </a>
@@ -581,24 +595,22 @@
 <p><img alt="architecture" src="images/png/dpm360-full-arch-public.png" /></p>
 <ol>
 <li>
-<p><strong>Lightsaber</strong>: an extensible training framework which provides blueprints for the development of disease progression models. It consists of pipelines for training, hyperparameter fine tuning, model calibration, and evaluation. Lightsaber comes with a reusable library of state-of-the-art machine and deep learning algorithms for DPM (e.g. LSTM for in-hospital mortality predictions). Lightsaber is built upon state-of-the-art open source community tools. Without Lightsaber, for each model and datasets, ML researchers have to write our their own custom training routines (more important for deep learning models where we extend <a href="https://pytorch-lightning.readthedocs.io">pytorch-lightning</a>), custom data processors to ingest data from extracted cohort, and custom model tracking (inbuilt in Lightsaber and valid for both sklearn and Pytorch). Also, without Lightsaber for every model and type of model ML researchers have to use in custom metrics and evaluations - Lightsaber standardizes and integrates all of these - e.g., for a classification metrics such as <code>AUC-ROC</code>, <code>AUC-PROC</code>, <code>Recall@K</code>, etc are automatically tracked. Lightsaber also integrates recalling such evaluations for post-hoc report generation and model maintenance by providing routines to interact with Model Registry. Without Lightsaber, all of these need to be custom built and repeated for each model. It also provides additional built-in utilities for model calibration. In summary, to develop and test a new deep learning model, we need to code:</p>
+<p><strong>Lightsaber</strong>: an extensible training framework which provides blueprints for the development of disease progression models. It consists of pipelines for training, hyperparameter fine tuning, model calibration, and evaluation. <code>lightsaber</code> comes with a reusable library of state-of-the-art machine and deep learning algorithms for DPM (e.g. LSTM for in-hospital mortality predictions). <code>lightsaber</code> is built upon state-of-the-art open source community tools. Without <code>lightsaber</code>, for each model and datasets, ML researchers have to write our their own custom training routines (more important for deep learning models where we extend <a href="https://pytorch-lightning.readthedocs.io">pytorch-lightning</a>), custom data processors to ingest data from extracted cohort, and custom model tracking (inbuilt in <code>lightsaber</code> and valid for both sklearn and Pytorch). Also, without <code>lightsaber</code> for every model and type of model ML researchers have to use in custom metrics and evaluations - <code>lightsaber</code> standardizes and integrates all of these - e.g., for a classification metrics such as <code>AUC-ROC</code>, <code>AUC-PROC</code>, <code>Recall@K</code>, etc are automatically tracked. <code>lightsaber</code> also integrates recalling such evaluations for post-hoc report generation and model maintenance by providing routines to interact with Model Registry. Without <code>lightsaber</code>, all of these need to be custom built and repeated for each model. It also provides additional built-in utilities for model calibration. In summary, to develop and test a new deep learning model, we need to code:</p>
 <ol>
 <li>network architecture and the loss function</li>
 <li>trainer to train the model on the training data and use the validation data for optimization of the model</li>
 <li>measures to prevent overfitting, such as early stopping</li>
 <li>tuning the model to find the optimal hyperparameters</li>
 <li>evaluating the model on the test data</li>
-<li>saving and deploying the model for later use.</li>
+<li>saving and deploying the model for later use.
+<code>lightsaber</code> isolates all engineering parts of training the model [steps 2-6] from the core model development [step 1] so the researcher needs to only focus on the architecture of the network as well as the loss function. All other steps are provided by the <code>lightsaber</code> framework in a standardized way for training/optimizing/evaluating/deploying the model. </li>
 </ol>
-<p>Lightsaber isolates all engineering parts of training the model [steps 2-6] from the core model development [step 1] so the researcher needs to only focus on the architecture of the network as well as the loss function. All other steps are provided by the Lightsaber framework in a standardized way for training/optimizing/evaluating/deploying the model. </p>
-<p>Lightsaber integrates naturally with the OHDSI stack. The ATLAS-Lightsaber integration combines the ease and flexibility of defining standardized cohorts using OHDSI’s ATLAS graphical user interface and the power of Lightsaber. The integration enables standardized and reproducible implementation of patient-level prediction tasks based on the OMOP CDM and in the Python programming language.
+<p><code>lightsaber</code> integrates naturally with the OHDSI stack. The ATLAS-<code>lightsaber</code> integration combines the ease and flexibility of defining standardized cohorts using OHDSI’s ATLAS graphical user interface and the power of <code>lightsaber</code>. The integration enables standardized and reproducible implementation of patient-level prediction tasks based on the OMOP CDM and in the Python programming language.
   1. Training data is pulled using the cohort definitions stored in the OMOP data store and OMOP Common Data Model (OMOP CDM) using Python APIs.
   2. The integration will provide a suite of custom queries and feature extraction algorithms for generating and transforming cohort features into formats necessary for complex machine learning tasks such as time-series modeling in ICU settings not currently supported by the OHDSI tools. 
-  3. Additionally, to further improve reuse and reproducibility, the integration will provide a standardized naming and versioning convention for features and data extracted from data in the OMOP CDM model and subsequently used in Lightsaber.</p>
+  3. Additionally, to further improve reuse and reproducibility, the integration will provide a standardized naming and versioning convention for features and data extracted from data in the OMOP CDM model and subsequently used in <code>lightsaber</code>.
+Tracking provenance of all aspects of model building is essential for reproducibility. Training experiments run using <code>lightsaber</code> are automatically tracked in a Model Registry including parameters, metrics and model binaries allowing ML researchers to identify algorithms and parameters that result in the best model performance.</p>
 </li>
-</ol>
-<p>Tracking provenance of all aspects of model building is essential for reproducibility. Training experiments run using Lightsaber are automatically tracked in a Model Registry including parameters, metrics and model binaries allowing ML researchers to identify algorithms and parameters that result in the best model performance.</p>
-<ol>
 <li>
 <p>The <strong>Service Builder</strong> component automatically converts models registered in the Model Registry into cloud-ready analytic microservices and serves them in the target execution environment (Kubernates or OpenShift) using KFServing. Thereafter users can test and/or interact with the deployed model microservice via a <a href="https://swagger.io/">Swagger</a> based interface. The service builder will provide intuitive flexibility to make it easy for everyone to develop, train, deploy, serve and scale Machine Learning (ML) models. These capabilities will assist in managing the full lifecycle of ML models by leveraging on various open source projects such as <a href="https://www.kubeflow.org/">Kubeflow</a>. </p>
 </li>
@@ -606,6 +618,8 @@
 <p>The <strong>Installer</strong> component installs the fully functional DPM60 into Kubernetes or OpenShift Container Platform using <a href="https://helm.sh/">Helm charts</a>. Upon installation, models for different endpoints are available for the user. Helm Charts are simply Kubernetes manifests combined into a single package that can be installed to Kubernetes clusters. Once packaged, installing a Helm Chart into a cluster is as easy as running a single helm install, which really simplifies the deployment of containerized applications.  </p>
 </li>
 </ol>
+<h2 id="code">Code</h2>
+<p>The code for DPM360 can be found at: <a href="https://github.com/IBM/DPM360">DPM360</a></p>
 <h2 id="roadmap">Roadmap</h2>
 <p><img alt="roadmap" src="images/png/dpm360_roadmap.png" /></p>
 <h2 id="contribute">Contribute</h2>
