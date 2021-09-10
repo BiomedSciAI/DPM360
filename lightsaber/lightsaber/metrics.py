@@ -58,7 +58,7 @@ def pr_at_k(y_true, y_hat, y_proba, pct, average='binary'):
         dict with precision_at_k and recall_at_k
     '''
     k = round(pct * len(y_true))
-    merged_values = np.array([y_true, y_hat, y_proba,]).T #np.hstack((y_true, probas_pred)) # concat y_true and prediction probabilities
+    merged_values = np.vstack([y_true.T, y_hat.T, y_proba.T]).T #np.hstack((y_true, probas_pred)) # concat y_true and prediction probabilities
     merged_values = merged_values[(-merged_values[:,2]).argsort()] # sort by probabilities
     top_k_true_proba = merged_values[:k,:] # select top k with highest probabilities
     y_true_top_k = top_k_true_proba[:,0] # seperate y_true, y_hat, preds for clarity

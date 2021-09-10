@@ -5,31 +5,13 @@ site_name: Lightsaber
 # edit_uri: edit/master/examples/execute_with_preamble/docs/
 # use_directory_urls: False
 
-# theme:
-#   name: material
-# 
-# 
-# plugins:
-#   - mknotebooks
-#   - search
-#   - mkdocstrings:
-#       default_handler: python
-#   # - pdf-export:
-#       # combined: true
-# 
-# markdown_extensions:
-#   - codehilite
-
 nav:
-  - Home: 'index.md'
-  - User Guide:
-    - why_use_lightsaber.md
-    - Overview: 'user_guide.md'
-    # - researcher.md 
-  - Example:
-    - IHM_Example_Using_LSTM.ipynb
+  - Introduction: 'index.md'
+  - Design and Usage:
+    - Getting Started: 'user_guide.md'
+    - Example:
+      - IHM_Example_Using_HistGBT.ipynb
+      - IHM_Example_Using_LSTM.ipynb
+    - API: 'api.md'
+  - Standalone Installation: 'install.md'
 
-# extra:
-#   version:
-#     provider: mike
-#     default: stable

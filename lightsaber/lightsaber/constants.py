@@ -54,3 +54,5 @@ PYTORCH_CLASS_DICT = {
     'LSTM': torch.nn.LSTM,
     'GRU': torch.nn.GRU,
 }
+
+_deprecation_warn_msg = "Function/module depcreated. will be dropped in version 0.3"

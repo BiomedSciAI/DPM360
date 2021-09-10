@@ -22,11 +22,17 @@ try:  # for pip >= 10
 except ImportError:  # for pip <= 9.0.3
     from pip.req import parse_requirements
 
-with open('./README.md') as f:
-    readme = f.read()
+try:
+    with open('./README.md') as f:
+        readme = f.read()
+except FileNotFoundError:
+    readme = ""
 
-with open('./LICENSE') as f:
-    license = f.read()
+try:
+    with open('./LICENSE') as f:
+        license = f.read()
+except FileNotFoundError:
+    license = ""
 
 install_reqs = parse_requirements(os.path.join(os.path.dirname(__file__), './requirements.txt'),
                                   session='hack')
@@ -42,12 +48,15 @@ except AttributeError:
 #  reqs = [str(ir.req) for ir in install_reqs]
 
 _t2e_deps = ["pysurvival==0.1.2"]
-_doc_deps = ["mkdocs==1.1.2", 
-             "mkdocs-material==7.0.6",
-             "mkdocstrings==0.15.0",
-             "mknotebooks==0.7.0"
+_doc_deps = ["mkdocs==1.2.2", 
+             "mkdocs-material==7.2.6",
+             "mkdocstrings==0.15.2",
+             "mknotebooks==0.7.0",
+			 "mkdocs-monorepo-plugin==0.4.16",
+             "pytkdocs[numpy-style]==0.11.1",
              #  "mkdocs-pdf-export-plugin==0.5.8"
             ]
+
 _full_deps = _t2e_deps + _doc_deps
 
 

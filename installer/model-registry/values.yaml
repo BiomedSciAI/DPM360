@@ -123,15 +123,14 @@ mlflow:
   image: # +doc-gen:break
     registry: docker.io
     repository: ibmcom/dpm360-model-registry
-    tag: "1.1"
+    tag: "1.2"
     pullPolicy: Always
-  
-  MLFLOW_HOST: ohdsi.hcls-ibm.localmachine.io
+  MLFLOW_HOST: https://<external link>/
   BACKEND_STORE_URI: postgresql://postgres:postgres@pg-mlflow-db-service:5452/postgres
-  POSTGRES_HOST: pg-mlflow-db-service
-  MINIO_HOST: ohdsi.hcls-ibm.localmachine.io
-  MLFLOW_TRACKING_URI: https://ohdsi.hcls-ibm.localmachine.io:5000
-  MLFLOW_S3_ENDPOINT_URL: https://ohdsi.hcls-ibm.localmachine.io
+  POSTGRES_HOST: pg-mlflow-db-service:5452
+  MINIO_HOST: <external link>/minio/
+  MLFLOW_TRACKING_URI: https://<external link>/
+  MLFLOW_S3_ENDPOINT_URL: http://minio-mlflow-db-service:9000
   AWS_ACCESS_KEY_ID: minioRoot
   AWS_SECRET_ACCESS_KEY: minioRoot123
   AWS_MLFLOW_BUCKET_NAME: mlflow-experiments
@@ -177,16 +176,18 @@ ingress:
   enabled: true
   # provide any additional annotations which may be required. Evaluated as a template.
   annotations:
-    ingress.kubernetes.io/allow-http: "true"
-    ingress.kubernetes.io/ssl-redirect: "true"
-    kubernetes.io/ingress.class: f5
-    virtual-server.f5.com/balance: round-robin
-    virtual-server.f5.com/ip: 9.12.240.50
-    virtual-server.f5.com/partition: RIS-INT-WDC07
+#    ingress.kubernetes.io/allow-http: "true"
+#    ingress.kubernetes.io/ssl-redirect: "true"
+#    kubernetes.io/ingress.class: f5
+#    virtual-server.f5.com/balance: round-robin
+#    virtual-server.f5.com/ip: 9.12.240.50
+#    virtual-server.f5.com/partition: RIS-INT-WDC07
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "public-iks-k8s-nginx"
+
   hosts:
-    - host: ohdsi.hcls-ibm.localmachine.io
+    - host: https://<external link>/
       pathType: ImplementationSpecific
   # ingress TLS config
   tls: []

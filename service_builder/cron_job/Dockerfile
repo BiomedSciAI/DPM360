@@ -24,6 +24,7 @@ COPY deployment_template.yaml /
 COPY service_template.yaml /
 COPY route_template.yaml /
 COPY ingress_template.yaml /
+COPY ingress_template_oc.yaml /
 RUN chmod +x /execute.sh
 
 ENTRYPOINT /bin/bash /execute.sh

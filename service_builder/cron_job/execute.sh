@@ -1,7 +1,6 @@
 #!/bin/bash
 
 echo -e  '\t' $(date) "EXPORT NEEDED VARIABLES"
-echo -e  '\t' $(date) "MLFLOW_API: $MLFLOW_API"
 echo -e  '\t' $(date) "K8S_CLUSTER: $K8S_CLUSTER"
 echo -e  '\t' $(date) "K8S_API: $K8S_API"
 echo -e  '\t' $(date) "K8S_NAME_SPACE: $K8S_NAME_SPACE"
@@ -10,6 +9,7 @@ echo -e  '\t' $(date) "MLFLOW_TRACKING_URI: $MLFLOW_TRACKING_URI"
 echo -e  '\t' $(date) "MLFLOW_S3_ENDPOINT_URL: $MLFLOW_S3_ENDPOINT_URL"
 echo -e  '\t' $(date) "AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY"
 echo -e  '\t' $(date) "AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID"
+echo -e  '\t' $(date) "CLUSTER_CLI: $CLUSTER_CLI"
 
 LOW="9001"
 HIGH="9999"
@@ -18,11 +18,11 @@ echo -e  '\t' $(date) $PORT
 
 # This is appended with '' due to K8S error with numbers
 export PORT_NUMBER=$(echo "'"$PORT"'")
-export MLFLOW_API=$(echo $MLFLOW_API)
+export MLFLOW_TRACKING_URI=$(echo $MLFLOW_TRACKING_URI)
 
-echo -e  '\t' $(date) "GET REGISTERED MODELS FROM MLFLOW_API"
+echo -e  '\t' $(date) "GET REGISTERED MODELS FROM MLFLOW_TRACKING_URI"
 
-content=$(curl -s -H "Accept: application/json" $MLFLOW_API"/api/2.0/preview/mlflow/registered-models/list")
+content=$(curl -s -H "Accept: application/json" $MLFLOW_TRACKING_URI"/api/2.0/preview/mlflow/registered-models/list")
 
 
 registered_models=$(echo $content | jq ".registered_models")
@@ -33,7 +33,7 @@ echo -e  '\t' $(date) "REGISTERED MODELS" $registered_models
 deploy_model() {
   # get model data
   # TODO: create a string from the returned json from mlflow
-#  export MODEL_METADATA=$(curl -s -H "Accept: application/json" $MLFLOW_API"/api/2.0/mlflow/runs/get?run_id="$MODEL_RUN_ID)
+#  export MODEL_METADATA=$(curl -s -H "Accept: application/json" $MLFLOW_TRACKING_URI"/api/2.0/mlflow/runs/get?run_id="$MODEL_RUN_ID)
 
   echo -e  '\t' $(date) "Compiling templates for the following moodel" $MODEL_NAME
 
@@ -46,21 +46,32 @@ deploy_model() {
 
   ibmcloud config --check-version=false
   ibmcloud login -a cloud.ibm.com -r us-east --apikey $K8S_API_KEY
-  echo -e  '\t' $(date) "Login to K8S using apikey "
-  # init OC
-  ibmcloud oc init
-  echo $(date) "Login to K8S using apikey"
-  oc login -u apikey -p $K8S_API_KEY --server=$K8S_API
 
-  echo -e  '\t' $(date) "choose namespace"
-  oc project $K8S_NAME_SPACE
-  if [ $? -ne 0 ]; then
-    echo -e  '\t' $(date) "Failed to authenticate to IBM Cloud"
-    #    exit 1
+#  echo -e  '\t' $(date) "Login to K8S using apikey "
+  if [[ $CLUSTER_CLI = "oc" ]]; then
+    echo -e  '\t' $(date) "running openshift specific cmds"
+    # init OC
+    ibmcloud oc init
+    echo $(date) "Login to K8S using apikey"
+    oc login -u apikey -p $K8S_API_KEY --server=$K8S_API
+
+    echo -e  '\t' $(date) "choose namespace"
+    oc project $K8S_NAME_SPACE
+    if [ $? -ne 0 ]; then
+      echo -e  '\t' $(date) "Failed to authenticate to IBM Cloud"
+      #    exit 1
+    fi
+  else
+    echo -e  '\t' $(date) "running kubectl specific cmds"
+    ibmcloud ks cluster config --cluster $K8S_CLUSTER
+    #RBAC operations are now performed asynchronously, so need to sleep
+    sleep 1    
+    eval $CLUSTER_CLI config current-context
+    sleep 1
   fi
 
   echo -e  '\t' $(date) "Moving on to deployment to "
-  oc create -f deployment_template_updated.yaml
+  eval $CLUSTER_CLI create -f deployment_template_updated.yaml
 
   echo -e  '\t' $(date) Create service
 
@@ -68,15 +79,24 @@ deploy_model() {
 
   echo $(date) "$(<service_template_updated.yaml)"
 
-  oc create -f service_template_updated.yaml
+  eval $CLUSTER_CLI create -f service_template_updated.yaml
 
   echo -e  '\t' $(date) Create ingress
 
-  erb ingress_template.yaml >ingress_template_updated.yaml
+  if [[ $CLUSTER_CLI = "oc" ]]; then
+    erb ingress_template_oc.yaml >ingress_template_oc_updated.yaml
 
-  echo $(date) "$(<ingress_template_updated.yaml)"
+    echo $(date) "$(<ingress_template_oc_updated.yaml)"
 
-  oc create -f ingress_template_updated.yaml
+    eval $CLUSTER_CLI create -f ingress_template_oc_updated.yaml
+  else
+    erb ingress_template.yaml >ingress_template_updated.yaml
+
+    echo $(date) "$(<ingress_template_updated.yaml)"
+
+    eval $CLUSTER_CLI create -f ingress_template_updated.yaml
+  fi
+
 
   echo -e  '\t' $(date) "MODEL NAME,VERSION,ROUTE: " $MODEL_NAME-$MODEL_VERSION-route
   # get model endpoint
@@ -85,10 +105,10 @@ deploy_model() {
   echo -e  '\t' $(date) "MODEL ENDPOINT " $model_endpoint
 
   # update mlflow
-  setDeployedTagResponse=$(curl -s -H "Accept: application/json" -d '{"name":"'$MODEL_NAME_ASIS'", "key":"deployed","value":"true"}' $MLFLOW_API"/api/2.0/preview/mlflow/registered-models/set-tag")
-  setDeployedVersionTagResponse=$(curl -s -H "Accept: application/json" -d '{"name":"'$MODEL_NAME_ASIS'", "key":"deployed version","value":"'$MODEL_VERSION_NUMBER'"}' $MLFLOW_API"/api/2.0/preview/mlflow/registered-models/set-tag")
-  setDeployedInVersionTagResponse=$(curl -s -H "Accept: application/json" -d '{"version":"'$MODEL_VERSION_NUMBER'","name":"'$MODEL_NAME_ASIS'", "key":"deployed","value":"true"}' $MLFLOW_API"/api/2.0/preview/mlflow/model-versions/set-tag")
-  setModelEndpointTagResponse=$(curl -s -H "Accept: application/json" -d '{"version":"'$MODEL_VERSION_NUMBER'","name":"'$MODEL_NAME_ASIS'", "key":"model_endpoint","value":"'$model_endpoint'"}' $MLFLOW_API"/api/2.0/preview/mlflow/model-versions/set-tag")
+  setDeployedTagResponse=$(curl -s -H "Accept: application/json" -d '{"name":"'$MODEL_NAME_ASIS'", "key":"deployed","value":"true"}' $MLFLOW_TRACKING_URI"/api/2.0/preview/mlflow/registered-models/set-tag")
+  setDeployedVersionTagResponse=$(curl -s -H "Accept: application/json" -d '{"name":"'$MODEL_NAME_ASIS'", "key":"deployed version","value":"'$MODEL_VERSION_NUMBER'"}' $MLFLOW_TRACKING_URI"/api/2.0/preview/mlflow/registered-models/set-tag")
+  setDeployedInVersionTagResponse=$(curl -s -H "Accept: application/json" -d '{"version":"'$MODEL_VERSION_NUMBER'","name":"'$MODEL_NAME_ASIS'", "key":"deployed","value":"true"}' $MLFLOW_TRACKING_URI"/api/2.0/preview/mlflow/model-versions/set-tag")
+  setModelEndpointTagResponse=$(curl -s -H "Accept: application/json" -d '{"version":"'$MODEL_VERSION_NUMBER'","name":"'$MODEL_NAME_ASIS'", "key":"model_endpoint","value":"'$model_endpoint'"}' $MLFLOW_TRACKING_URI"/api/2.0/preview/mlflow/model-versions/set-tag")
 
   # response from mlflow
   echo -e  '\t' $(date) "DEPLOYMENT OF MODEL COMPLETED " $setDeployedTagResponse $setModelEndpointTagResponse

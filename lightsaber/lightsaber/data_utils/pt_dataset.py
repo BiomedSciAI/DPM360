@@ -39,10 +39,35 @@ idx_slice = pd.IndexSlice
 #         Some basic utils
 # ----------------------------------------------------------------------------
 def identity_nd(*args):
+    """Identity functions
+
+    Args:
+        args: variable arguments
+
+    Returns:
+        args: same arguments
+    """
     return args
 
 
 def identity_2d(x, y):
+    """
+    Identity function for 2 variables
+
+    Parameters
+    ----------
+    x : 
+        first param
+    y : 
+        second param
+
+    Returns
+    -------
+    x : object
+        first param
+    y : object
+        second param
+    """
     return x, y
 
 
@@ -52,16 +77,22 @@ def identity_3d(x, y, z):
 
 def is_re(s:str, 
           strict:bool = False) -> bool:
-    """
-    checks if `s` is a valid regex.
+    """checks if `s` is a valid regex.
 
     Parameters
     ----------
-    s: string
-    parameter to check for being a valid regex
+    s: str
+      parameter to check for being a valid regex
     strict: bool
-    if strict mode used, anything except regex compile error will throw exception. else functions return False
+      if strict mode used, anything except regex compile error will throw exception. else functions return False
 
+    Returns
+    -------
+    bool
+        returns True is passed string `s` is a valid reg-ex
+
+    Note
+    ----
     ref: https://stackoverflow.com/a/19631067
     """
 
@@ -120,6 +151,9 @@ def _get_flatten_tx(data, method):
 
 @functoolz.curry
 def filter_fillna(data, target, fill_value=0., time_order_col=None):
+    """
+    Filter function to remove na
+    """
     data = data.copy()
     
     idx_cols = data.index.names
@@ -209,24 +243,28 @@ def filt_get_last_index(data, target,
                         idx_col=['DESY_SORT_KEY', 'INDEX_CLAIM_ORDER'],
                         min_occurence=4
                        ):
-    """
-    Filter to get last index claim for each patient.
+    """Filter to get last index claim for each patient.
 
-    Filters are designed to be composible functions such that one can chain filters
+    Filters are designed to be composible functions such that one can chain filters. 
+    Outputs 
+    filtered `data` and `target` with entries for only the last index claim
 
     Parameters
     ----------
-    data : feature data
-    target : target data
-
-    idx_col: index columns
-    min_occurence: number of minimum occurence required for an instance to be included
+    data : DataFrame
+        feature data
+    target : DataFrame 
+        target data
+    idx_col: str or int or List of str|int
+        index columns
+    min_occurence: int
+        number of minimum occurence required for an instance to be included
 
     Returns
     -------
-    filtered `data` and `target` with entries for only the last index claim
+    data: DataFrame
+    target: DataFrame
     """
-
     # last index claim for each patient
     last_claim_idx = (data.reset_index()[idx_col].groupby([idx_col[0]])   # Group by pateint id
                           .max()[idx_col[1]].to_frame()                   # take last index claim order for a patient
@@ -241,7 +279,8 @@ def filt_get_last_index(data, target,
     useful_claims_idx = temp[temp>=min_occurence].index 
 
     data = data[data.index.isin(useful_claims_idx)]
-    target = target[target.index.isin(data.index)]
+    if target is not None:
+        target = target[target.index.isin(data.index)]
 
     return data, target
 
@@ -307,7 +346,6 @@ class EmptyDataset(Dataset):
     
 
 class BaseDataset(Dataset):
-    """Base dataset"""
 
     def __init__(self, tgt_file, feat_file, 
                  idx_col, tgt_col, 
@@ -315,7 +353,7 @@ class BaseDataset(Dataset):
                  category_map=C.DEFAULT_MAP,
                  transform=DEFAULT_TRANSFORM, filter=DEFAULT_FILTER,
                  device='cpu'):
-        """Base Dataset
+        """Base dataset class
 
         Parameters
         ----------
@@ -323,6 +361,10 @@ class BaseDataset(Dataset):
             target file path
         feat_file:
             feature file path
+        idx_col: str or List[str]
+            index columns in the data. present in both `tgt_file` and `feat_file`
+        tgt_col: str or List[str]
+            target column present in `tgt_file` 
         feat_columns:
             feature columns to select from. either a single regex or list of columns (partial regex that matches the complete column name is ok. e.g. `CCS` would only match `CCS` whereas `CCS.*` will match `CCS_XYZ` and `CCS`) 
             Default: `None` -> implies all columns
@@ -373,7 +415,7 @@ class BaseDataset(Dataset):
         self.data = self.one_hot_encode(self.data, category_map)
 
         # Book-keeping of number of instances
-        self.sample_idx = self.target.index.to_series()
+        self.sample_idx = self.data.index.to_series().drop_duplicates()
 
         # Runtime configurations 
         self.device = device
@@ -417,14 +459,18 @@ class BaseDataset(Dataset):
 
     def read_data(self):
         tgt_file, feat_file = self._tgt_file, self._feat_file
-        self.target = pd.read_csv(tgt_file).set_index(self._idx_col)
-        try:
-            self.target = self.target[self._tgt_col].to_frame() 
-        except AttributeError:
-            self.target = self.target[self._tgt_col] 
+        if tgt_file is not None:
+            self.target = pd.read_csv(tgt_file).set_index(self._idx_col)
+            try:
+                self.target = self.target[self._tgt_col].to_frame() 
+            except AttributeError:
+                self.target = self.target[self._tgt_col] 
+        else:
+            self.target = None
     
         self.data = pd.read_csv(feat_file).set_index(self._idx_col)
-        self.data = self.data.loc[self.target.index, :]   # accounting for the option that target can have lesser number of index than data
+        if self.target is not None:
+            self.data = self.data.loc[self.target.index, :]   # accounting for the option that target can have lesser number of index than data
         self.data = self._select_features(self.data, self._feat_columns)
         return
 
@@ -463,8 +509,12 @@ class BaseDataset(Dataset):
         #     idx = idx.tolist()
         idx = self.sample_idx.iloc[i]
 
-        target = self.target.loc[[idx], :]
         data = self.data.loc[[idx], :]
+        if self.target is not None:
+            target = self.target.loc[[idx], :].astype('float')
+        else:
+            target = pd.DataFrame([np.nan]*len(data.index), index=data.index)
+
         # print(data.head())
         # import ipdb; ipdb.set_trace()
         
@@ -478,7 +528,7 @@ class BaseDataset(Dataset):
             if _sort:
                 data = data.sort_values(self._time_order_col)
 
-        data = self._transform(data)
+        data = self._transform(data).astype('float')
 
         data_t = T.FloatTensor(np.atleast_2d(data.values)).to(device)
         target_t = T.LongTensor(target.values).squeeze().to(device)
@@ -496,25 +546,23 @@ class BaseDataset(Dataset):
 # -----------------------------------------------------------------------------
 #        Some collate functions
 # ----------------------------------------------------------------------------
-def collate_fn(batch):
-    """
-    Provides mechanism to collate the batch
+def collate_fn(batch): 
+    """Provides mechanism to collate the batch
 
     ref: https://github.com/dhpollack/programming_notebooks/blob/master/pytorch_attention_audio.py#L245
+    
     Puts data, and lengths into a packed_padded_sequence then returns
     the packed_padded_sequence and the labels.
 
     Parameters
     ----------
-    batch: (list of tuples) [(*data, target)].
-         data: all the differnt data input from `__getattr__`
-         target: target y
+    batch : List[Tuples]
+        [(*data, target)] data: all the differnt data input from `__getattr__`  target: target y
 
     Returns
     -------
-    packed_batch: (PackedSequence), see torch.nn.utils.rnn.pack_padded_sequence
-    target: (Tensor).
-
+    Tuple
+        (dx, dy, lengths, idx)
     """
     pad = C.PAD
 
@@ -544,3 +592,5 @@ def collate_fn(batch):
         lengths = list(lengths)
         idx = np.vstack(idx) # bs * 1
     return dx_t, dy_t, lengths, idx
+
+

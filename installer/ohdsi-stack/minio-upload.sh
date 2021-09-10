@@ -1,39 +1,48 @@
 #!/bin/bash
 
-# Usage: ./minio-upload ~/data
-data_folder=$1
+# Usage: ./minio-upload <username> <password> <data_folder> 
+# eg. ./minio-upload minioRoot minioRoot123 ~/Downloads
+MINIO_ROOT_USER=$1
+MINIO_ROOT_PASSWORD=$2
+data_folder=$3
 
-## this is hard coded as of now ; TODO: Remove later
-export MINIO_ROOT_USER=
-export MINIO_ROOT_PASSWORD=
-
-
-export MINIO_HOST=`minikube service --url minio-mlflow-db-service -n ohdsi`
+export MINIO_HOST="https://`kubectl get ingress -n ohdsi minio -o=jsonpath='{.spec.rules..host}'`"
 
 echo ${MINIO_HOST}
 
-## install minio utiil
+## install minio utiil on Linux
 ## TODO: verify
-if !  mc --help &> /dev/null
-then
-    echo "mc could not be found in the path, time to install it"
+# if !  mc --help &> /dev/null
+# then
+#     echo "mc could not be found in the path, time to install it"
 
-    curl https://dl.min.io/client/mc/release/linux-amd64/mc \
-      --create-dirs \
-      -o $HOME/minio-binaries/mc
+#     curl https://dl.min.io/client/mc/release/linux-amd64/mc \
+#       --create-dirs \
+#       -o $HOME/minio-binaries/mc
 
-    chmod +x $HOME/minio-binaries/mc
-    export PATH=$PATH:$HOME/minio-binaries/
+#     chmod +x $HOME/minio-binaries/mc
+#     export PATH=$PATH:$HOME/minio-binaries/
 
-    mc --help
+#     mc --help
 
-fi
+# fi
+
+# install minio client on mac
+#go get github.com/minio/mc
+brew install minio/stable/mc
+#mc --help
 
 mc alias set minio-dpm360 ${MINIO_HOST}  ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD} --api S3v4
 
+# mlflow-experiments will allow mlflow to work as expected
+mc mb minio-dpm360/mlflow-experiments
+mc policy set readwrite minio-dpm360/mlflow-experiments
+
+echo "Not uploading data to minio for now, we continue to use COS"
+exit
+# Upload data
 mc mb minio-dpm360/1ksync
 mc cp "${data_folder}"/synpuf1k.tar.gz  minio-dpm360/1ksync
-mc cp "${data_folder}"/vocabulary-windows.tar  minio-dpm360/1ksync
 mc cp "${data_folder}"/vocabulary-windows.tar.gz  minio-dpm360/1ksync
 
 mc ls --recursive
@@ -50,5 +59,7 @@ mc admin info minio-dpm360
 #mc share download --recursive  minio-dpm360 1ksync/
 
 ## Setting them public for now (it can anyways be accessed within the cluster because no ingress is installed
-mc policy get minio-dpm360/1ksync
-mc policy set public minio-dpm360/1ksync
+## TODO: cdm init to use boto3 to download with access / secret key: 
+## Related Issue: https://github.ibm.com/IBM-Research-AI/dpm360/issues/47
+#mc policy get minio-dpm360/1ksync
+#mc policy set public minio-dpm360/1ksync

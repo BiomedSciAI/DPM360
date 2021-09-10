@@ -33,7 +33,7 @@ log = logging.getLogger()
 
 DEFAULT_DEVICE = 'cpu'
 DEFAULT_FILTER = None
-DEFAULT_TRANSFORM = [ptd.identity_2d]
+DEFAULT_TRANSFORM = [functoolz.identity]
 
 class SKDataLoader(object):
     """Custom data loaders for scikit-learn"""
@@ -48,6 +48,35 @@ class SKDataLoader(object):
                  flatten=C.DEFAULT_FLATTEN, 
                  cols_to_drop=C.DEFAULT_DROP_COLS,
                  ):
+        """
+        Parameters
+        ----------
+        tgt_file:
+            target file path
+        feat_file:
+            feature file path
+        idx_col:
+            columns to specify the unique examples from the feature and target set
+        tgt_col:
+            columns to specify the target column from the target set.
+        feat_columns:
+            feature columns to select from. either list of columns (partials columns using `*` allowed) or a single regex
+            Default: `None` -> implies all columns
+        time_order_col:
+            column(s) that signify the time ordering for a single example.
+            Default: `None` -> implies no columns
+        category_map:
+            dictionary of column maps
+        filter: single callable or list/tuple of callables
+            how to filter data. if list of callables provided eg `[f, g]`, `g(f(x))` used 
+            Default: no operation
+        fill_value:
+            pandas compatible function or value to fill missing data
+        flatten:
+            Functions to aggregate and flatten temporal data
+        cols_to_drop:
+            list of columns to drop
+        """
 
         self._tgt_file = tgt_file
         self._feat_file = feat_file
@@ -93,7 +122,11 @@ class SKDataLoader(object):
 
     @property
     def shape(self):
-        return self._dataset.data.shape
+        return self._dataset.shape
+
+    @property
+    def sample_idx(self):
+        return self._dataset.sample_idx
 
     def __len__(self):
         return len(self._dataset)
@@ -107,5 +140,8 @@ class SKDataLoader(object):
         p_idx = self._dataset.sample_idx.index.get_loc(patient_id)
         full_X, full_y = self.get_data()
         p_X = full_X.iloc[[p_idx]]
-        p_y = full_y.iloc[[p_idx]]
+        if full_y is not None:
+            p_y = full_y.iloc[[p_idx]]
+        else:
+            p_y = None
         return p_X, p_y

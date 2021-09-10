@@ -1,5 +1,6 @@
 language: python
 # branches: master
+cache: pip
 
 python:
   - '3.7'
@@ -8,27 +9,16 @@ install:
   - pip install .[full]
   - pip install mike
 
-# script:
-  # # - pytest --cov
-# # after_success:
-# #   - coverage run --source=httpsuite -m pytest tests/
-# #   - coveralls
-  # - mkdocs build --verbose --clean
-# #
-# # before-deploy:
-# #  - mkdocs build --verbose --clean --strict
+# Making sure its not a shallow clone
+git:
+  depth: false
 
-# deploy:
-#   - provider: pages:git
-#     verbose: true
-#     token: $GITHUB_TOKEN
-#     edge: true
-#     local_dir: site
-#     on:
-#       branch: master
-#     github_url: github.ibm.com
-#     skip_cleanup: true
-#     keep_history: true
+env:
+  global:
+  - GH_URL: github.ibm.com
+  - GH_REPO: CCHBAM/lightsaber.git
+  - STABLE_VERSION: 0.2
+  - DEV_VERSION: 0.2.rc
 
 stages:
   - name: doc_master
@@ -39,24 +29,24 @@ stages:
 jobs:
   include:
     - stage: doc_master
-      script: mike deploy --update-aliases 0.1 stable
-      deploy:
-        - provider: pages:git
-          verbose: true
-          token: $GITHUB_TOKEN
-          edge: true
-          local_dir: site
-          github_url: github.ibm.com
-          skip_cleanup: true
-          keep_history: true
+      script:
+        - git remote set-url origin https://${GITHUB_TOKEN}@${GH_URL}/${GH_REPO} > /dev/null 2>&1
+        - mike deploy --update-aliases "${STABLE_VERSION}" stable
+        - git checkout gh-pages
+        - git clean -fdx
+        - ls -ltr
+        - git push origin gh-pages
+      verbose: true
+      skip_cleanup: true
+      keep_history: true
     - stage: doc_dev
-      script: mike deploy --update-aliases 0.2.rc dev
-      deploy:
-        - provider: pages:git
-          verbose: true
-          token: $GITHUB_TOKEN
-          edge: true
-          local_dir: site
-          github_url: github.ibm.com
-          skip_cleanup: true
-          keep_history: true
+      script:
+        - git remote set-url origin https://${GITHUB_TOKEN}@${GH_URL}/${GH_REPO} > /dev/null 2>&1
+        - mike deploy --update-aliases "${DEV_VERSION}" dev
+        - git checkout gh-pages
+        - git clean -fdx
+        - ls -ltr
+        - git push origin gh-pages
+      verbose: true
+      skip_cleanup: true
+      keep_history: true

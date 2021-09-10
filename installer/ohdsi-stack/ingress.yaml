@@ -12,7 +12,7 @@ spec:
       port:
         number: 8080
   rules:
-    - host: <link>
+    - host: <external link>
       http:
         paths:
 #          - path: /
@@ -32,5 +32,5 @@ spec:
                   number: 8080
   tls:
   - hosts:
-    - <extertnal link>
+    - <external link>
     secretName: <secret - implementation may depend on cloud provider>

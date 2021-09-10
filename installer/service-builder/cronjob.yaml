@@ -1,24 +1,37 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: dpm360-cronjob-v3
+  name: dpm360-cronjob
 spec:
-  schedule: "*/5 * * * *"
-  successfulJobsHistoryLimit: 2
-  failedJobsHistoryLimit: 2
+  schedule: "*/2 * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-          - name: dpm360-cronjob-v3
-            image: kibnelson/dpm360_cronjob_v3
-            imagePullPolicy: IfNotPresent
+          - name: dpm360-cronjob
+            image: ibmcom/dpm360-cronjob:0.0.1
+            imagePullPolicy: Always
             env:
-              - name: MLFLOW_API
-                value: ""
+              - name: K8S_CLUSTER
+              - name: CLUSTER_CLI
+                value: kubectl
+              - name: K8S_API_KEY
+                value: <YOUR_VALUE_HERE>
               - name: K8S_API
-                value: ""
-              - name: TOKEN
-                value: ""
+                value: <YOUR_VALUE_HERE>
+              - name: K8S_NAME_SPACE
+                value: ohdsi
+              - name: DPM360_SERVICE_BUILDER_HOST_NAME
+                value: <external link>
+              - name: MLFLOW_TRACKING_URI
+                value: https://mlflow.<external link>/
+              - name: MLFLOW_S3_ENDPOINT_URL
+                value: https://minio.<external link>/
+              - name: AWS_SECRET_ACCESS_KEY
+                value: minioRoot123
+              - name: AWS_ACCESS_KEY_ID
+                value: minioRoot
           restartPolicy: OnFailure

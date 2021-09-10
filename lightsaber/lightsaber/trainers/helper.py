@@ -17,14 +17,16 @@ import sys
 import os
 from pathlib import Path
 import six
-from tempfile import NamedTemporaryFile
+from tempfile import NamedTemporaryFile, mkdtemp
 import shutil
 import pickle
 import numpy as np
 import mlflow
+from mlflow.tracking import artifact_utils
 from toolz import functoolz
 import warnings
 import importlib
+import ast
 
 from sklearn.model_selection import PredefinedSplit
 
@@ -97,19 +99,32 @@ def setup_mlflow(mlflow_uri=C.MLFLOW_URI,
 
 def fetch_mlflow_run(run_id, 
                      mlflow_uri=C.MLFLOW_URI,
-                     artifacts_prefix=['model']):
+                     artifacts_prefix=['model'],
+                     parse_params=False
+                    ):
     # ref: https://www.mlflow.org/docs/latest/python_api/mlflow.sklearn.html
     client = mlflow.tracking.MlflowClient(tracking_uri=mlflow_uri)
     run = client.get_run(run_id)
     info = run.info
     data = run.data
+    metrics = data.metrics
+
+    params = data.params
+    if parse_params:
+        params = _parse_logged_params(params)
+
     tags = {k: v for k, v in data.tags.items() if not k.startswith("mlflow.")}
-    artifacts = []
-    for _prefix in artifacts_prefix:
-        artifacts += [f.path for f in client.list_artifacts(run_id, _prefix)]
+   
+    if artifacts_prefix is None:
+        artifacts = [f.path for f in client.list_artifacts(run_id)]
+    else:
+        artifacts = []
+        for _prefix in artifacts_prefix:
+            artifacts += [f.path for f in client.list_artifacts(run_id, _prefix)]
+    
     return dict(info=info,
-                params=data.params,
-                metrics=data.metrics,
+                params=params,
+                metrics=metrics,
                 tags=tags, 
                 artifact_paths=artifacts)
 
@@ -123,12 +138,37 @@ def fetch_mlflow_experiment(experiment_name,
     run_df = mlflow.search_runs(experiment_id, **kwargs)
     return run_df
 
+def _parse_logged_params(params):
+    _params = dict()
+    for k, v in six.iteritems(params):
+        try:
+            val = ast.literal_eval(v)
+        except Exception:
+            val = v
+        _params.setdefault(k, val)
+    return _params
+
 def get_artifact_path(artifact_path,
                       artifact_uri,
+                      download=True
                       ): 
-    artifact_path = Path(artifact_uri.lstrip('file:')) / str(artifact_path)
-    assert artifact_path.is_file()
-    return str(artifact_path)
+    _artifact_path = Path(artifact_uri.lstrip('file:')) / str(artifact_path)
+    if not _artifact_path.is_file():
+        _throw_exception = True
+        _err_msg = f"File {_artifact_path} not found"
+        # Trying to download the artifact
+        if download:
+            try:
+                art_repo = artifact_utils.get_artifact_repository(artifact_uri=artifact_uri)
+                _artifact_path = art_repo.download_artifacts(artifact_path=artifact_path)
+                log.info(f"Downloading artifact to {_artifact_path}")
+                _throw_exception = not Path(_artifact_path).is_file()   # setting to false
+            except Exception as e:
+                _throw_exception = True
+                _err_msg = str(e)
+        if _throw_exception:
+            raise Exception(f"Couldn't find artifact: {artifact_path}.\n{_err_msg}")
+    return str(_artifact_path)
 
 
 def safe_dumper(obj, obj_name):
@@ -193,6 +233,7 @@ def log_artifacts(artifacts,
 #         SK Model Utils
 # ***********************************************************************
 def sk_parse_args():
+    warnings.warn(C._deprecation_warn_msg, DeprecationWarning)
     ap = argparse.ArgumentParser('program')
     ap.add_argument("-n", "--tune", dest='tune', required=False, action='store_true', help = "flag if tuning")
     ap.add_argument("-t", "--train", dest='train', required=False, action='store_true', help = "flag if train")
@@ -237,11 +278,13 @@ def get_predefined_split(X_train, y_train, X_val=None, y_val=None):
 
 
 def save_sk_model(skmodel, model_path): # simple pickle implementation placeholder for model saver
+    warnings.warn(C._deprecation_warn_msg, DeprecationWarning)
     with open(model_path, 'wb') as fid:
         pickle.dump(skmodel, fid)
 
 
 def load_sk_model(model_path): # simple pickle implementation placeholder for model loader
+    warnings.warn(C._deprecation_warn_msg, DeprecationWarning)
     if 'mlflow' in model_path:  #load from mlflow
         sk_model = mlflow.sklearn.load_model(model_path)
     else: # load from pkl file
