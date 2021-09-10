@@ -217,7 +217,7 @@ atlas:
   # the base URL of the OHDSI WebAPI, e.g. https://example.com/WebAPI
   # if this value is not set but `webapi.ingress.enabled=true`, then this
   # URL is constructed from `webapi.ingress`
-  webApiUrl: <extertnal link>/WebAPI
+  webApiUrl: "https://<external link>/WebAPI"
 
   constructWebApiUrlFromIngress: false
 

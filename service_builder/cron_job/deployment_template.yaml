@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: <%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>
+  namespace: <%=ENV["K8S_NAME_SPACE"]%>
   labels:
     run: <%=ENV["MODEL_NAME"]%>-<%=ENV["MODEL_VERSION"]%>
 spec:
@@ -38,7 +39,7 @@ spec:
         - name: PORT
           value: <%=ENV["PORT_NUMBER"]%>
         - name: MODEL_REGISTRY_API
-          value:  <%=ENV["MLFLOW_API"]%>
+          value:  <%=ENV["MLFLOW_TRACKING_URI"]%>
         ports:
         - containerPort: <%=ENV["PORT"]%>
         resources:

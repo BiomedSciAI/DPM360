@@ -8,7 +8,7 @@ cdmInitJob:
   image: # +doc-gen:break
     registry: docker.io
     repository: ibmcom/dpm360-cdm_init
-    tag: "1.0"
+    tag: "1.1"
     pullPolicy: Always
 
 
@@ -26,9 +26,11 @@ cdmInitJob:
   # extra environment variables to set
   extraEnv:
     - name: "CDM_URL"
-      value: "http://minio-mlflow-db-service:9000/1ksync/vocabulary-windows.tar.gz"
+      value: "https://s3.us-east.cloud-object-storage.appdomain.cloud/<bucket-name>/vocabs.tar.gz"
     - name: "SYNPUF1K_URL"
-      value: "http://minio-mlflow-db-service:9000/1ksync/synpuf1k.tar.gz"
+      value: "https://s3.us-east.cloud-object-storage.appdomain.cloud/<bucket-name>/synpuf1k.tar.gz"
+    - name: "API_KEY"
+      value: "<Cloud object storage key>            
     - name: "RESULTS_TABLE_URL"
       value: "ohdsi-webapi:8080/WebAPI/ddl/results?dialect=postgresql&schema=results&vocabSchema=cmd&tempSchema=temp&initConceptHierarchy=true"
     - name: "CDM_SCHEMA"
@@ -41,5 +43,8 @@ cdmInitJob:
       value: "temp"
     - name: "PGHOST"
       value: "ohdsi-postgresql"
-    - name: "PGPASSWORD"
-      value: ""
+    - name: PGPASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: ohdsi-postgresql
+          key: postgresql-password

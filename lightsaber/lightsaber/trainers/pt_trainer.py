@@ -56,6 +56,7 @@ from lightsaber.trainers.components import BaseModel    # importing for backward
 from functools import partial
 import copy
 from tempfile import NamedTemporaryFile
+import warnings
 
 import logging
 log = logging.getLogger()
@@ -69,11 +70,42 @@ def load_model(model, ckpt_path):
     return model
 
 class PyModel(pl.LightningModule):
+    """PyModel"""
     def __init__(self, hparams, model,
                  train_dataset, val_dataset,
                  cal_dataset=None, test_dataset=None,
                  collate_fn=None, optimizer=None,
                  loss_func=None, out_transform=None, num_workers=0, **kwargs):
+        """
+        Parameters
+        ----------
+        hparams: Namespace
+            hyper-paramters for base model
+        model: 
+            base pytorch model defining the model logic. model forward should output logit for classfication and accept
+            a single positional tensor (`x`) for input data and keyword tensors for `length` atleast. 
+            Optinally can provide `hidden` keyword argument for sequential models to ingest past hidden state.
+        train_dataset: torch.utils.data.Dataset
+            training dataset 
+        val_dataset: torch.utils.data.Dataset
+            validation dataset 
+        cal_dataset: torch.utils.data.Dataset, optional
+            calibration dataset - if provided post-hoc calibration is performed
+        test_dataset: torch.utils.data.Dataset, optional
+            test dataset - if provided, training also report test peformance
+        collate_fn: 
+            collate functions to handle inequal sample sizes in batch
+        optimizer: torch.optim.Optimizer, optional
+            pytorch optimizer. If not provided, Adam is used with standard parameters
+        loss_func: callable
+            if provided, used to compute the loss. Default: cross entropy loss
+        out_transform: callable
+            if provided, convert logit to expected format. Default, softmax
+        num_workers: int, Default: 0
+            if provided sets the numer of workers used by the DataLoaders. 
+        kwargs: dict, optional
+            other parameters accepted by pl.LightningModule
+        """
         super(PyModel, self).__init__()
         self.bk_hparams = hparams
         self.model = model
@@ -473,16 +505,23 @@ def _find_checkpoint(model, checkpoint_path=None):
 
 def run_training_with_mlflow(mlflow_conf, trainer, wrapped_model, **kwargs):
     """
-    Function to run supervised training on  cms data
+    Function to run supervised training for classifcation
 
     Parameters
     ----------
-    TBD
-
+    mlflow_conf: dict
+        mlflow configuration e,g, MLFLOW_URI
+    trainer: pl.Trainer
+        a pytorch lightning trainer implementing `fit` function
+    wrapped_model: PyModel
+        wrapped PyModel 
+    kwargs: dict of dicts, optional
+        can contain `artifacts` to log with models, `model_path` to specify model output path, and remianing used as experiment tags
+        
     Returns
     -------
-    trained `base_model` wrapped as `CmsModel`
-
+    tuple:
+        (run_id, run_metrics, val_y, val_yhat, val_pred_proba, test_y, test_yhat, test_pred_proba)
     """
     model_path = kwargs.pop('model_path', 'model')
     artifacts = kwargs.pop('artifacts', dict())
@@ -565,10 +604,15 @@ def run_training_with_mlflow(mlflow_conf, trainer, wrapped_model, **kwargs):
             test_y, test_pred_proba, test_yhat = None, None, None
             y_test, y_test_proba, y_test_hat = None, None, None 
 
-        run_metrics = calculate_metrics(y_val, y_val_hat, y_val_proba=y_val_proba, 
-                                        y_test=y_test, y_test_hat=y_test_hat, y_test_proba=y_test_proba)
+        try:
+            run_metrics = calculate_metrics(y_val, y_val_hat, y_val_proba=y_val_proba, 
+                                            y_test=y_test, y_test_hat=y_test_hat, y_test_proba=y_test_proba)
 
-        mlflow.log_metrics(run_metrics)
+            mlflow.log_metrics(run_metrics)
+        except Exception as e:
+            warnings.warn(f"{e}")
+            log.warning(f"something went wrong while computing metrics: {e}")
+            run_metrics = None
 
         _end_time = time.time()
         run_time = (_end_time - _start_time)
@@ -593,25 +637,82 @@ def run_training_with_mlflow(mlflow_conf, trainer, wrapped_model, **kwargs):
             test_y, test_yhat, test_pred_proba)
 
 
-def register_model_with_mlflow(run_id, 
-                               mlflow_conf,
-                               wrapped_model,
-                               registered_model_name,
-                               model_path='model',
-                               **artifacts
-                               ):
-    # Getting run info
+def load_model_from_mlflow(run_id, 
+                           mlflow_conf,
+                           wrapped_model,
+                           model_path="model_checkpoint",
+                           ):
+    """Method to load a trained model from mlflow
+
+    Parameters
+    ----------
+    run_id: str
+        mlflow run id for the trained model
+    mlflow_conf: dict
+        mlflow configuration e,g, MLFLOW_URI
+    wrapped_model: PyModel
+        model architecture to be logged
+    model_path: str
+        output path where model checkpoints are logged
+
+    Returns
+    -------
+    PyModel:
+        wrapped model with saved weights and parameters from the run
+    """
     mlflow_setup = helper.setup_mlflow(**mlflow_conf)
+    #  model_uri = f"runs:/{run_id}/{mlflow_setup['experiment_name']}_{model_path}"
+    # run_data = helper.fetch_mlflow_run(run_id, 
+    #                                    mlflow_uri=mlflow_setup['mlflow_uri'],
+    #                                    parse_params=True
+    #                                    )
+
+    # hparams = run_data['params']
+    # model_name = run_data['tags']['model']
+    # if wrapped_model is None:
+    #     base_model = mlflow.sklearn.load_model(model_uri)
+    #     wrapped_model = SKModel(base_model, hparams, name=model_name)
+
     run_data = helper.fetch_mlflow_run(run_id, 
                                        mlflow_uri=mlflow_setup['mlflow_uri'],
-                                       artifacts_prefix=['model_checkpoint'])
+                                       artifacts_prefix=[model_path])
 
     ckpt_path = helper.get_artifact_path(run_data['artifact_paths'][0], 
                                          artifact_uri=run_data['info'].artifact_uri)
     wrapped_model = load_model(wrapped_model, ckpt_path)
+    return wrapped_model
+
+
+def register_model_with_mlflow(run_id, 
+                               mlflow_conf,
+                               wrapped_model,
+                               registered_model_name,
+                               model_path='model_checkpoint',
+                               **artifacts
+                               ):
+    """Method to register a trained model
+
+    Parameters
+    ----------
+    run_id: str
+        mlflow run id for the trained model
+    mlflow_conf: dict
+        mlflow configuration e,g, MLFLOW_URI
+    wrapped_model: PyModel
+        model architecture to be logged
+    registered_model_name: str
+        name for registering the model
+    model_path: str
+        output path where model will be logged
+    artifacts: dict
+        dictionary of objects to log with the model
+    """
+    # Getting run info
+    mlflow_setup = helper.setup_mlflow(**mlflow_conf)
+    wrapped_model = load_model_from_mlflow(run_id, mlflow_conf, wrapped_model, model_path)
     # Registering model
     try:
-        mlflow.pytorch.log_model(wrapped_model, model_path, registered_model_name=registered_model_name)
+        mlflow.pytorch.log_model(wrapped_model, model_path.rstrip('_checkpoint'), registered_model_name=registered_model_name)
     except Exception as e:
         log.error(f'Exception during logging model: {e}. Continuing to dump artifacts')
 

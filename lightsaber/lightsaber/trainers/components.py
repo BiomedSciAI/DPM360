@@ -15,7 +15,7 @@ class BaseModel(nn.Module, ABC):
     @staticmethod
     def add_model_specific_args(parent_parser):
         """
-        Specify the hyperparams for this CmsTrainer
+        Specify the hyperparams for this model
         """
         # MODEL specific
         parser = ArgumentParser(parents=[parent_parser])

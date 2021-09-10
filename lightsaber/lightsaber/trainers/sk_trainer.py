@@ -47,16 +47,29 @@ log = logging.getLogger()
 #         SK Model Trainer
 # ***********************************************************************
 class SKModel(object):
+    """SKModel
+    """
     def __init__(self, 
                  base_model,
                  model_params=None, 
                  name="undefined_model_name"):
+        """
+        Parameters
+        ----------
+        base_model:
+            base scikit-learn compatible model (classifier) defining model logic
+        model_params:
+            if provided, sets the model parameters for base_model
+        name:
+            name of the model
+        """
         super(SKModel, self).__init__()
         self.model = base_model
-        try:
-            self.set_params(**model_params)
-        except Exception as e:
-            warnings.warn(f"couldnt set model params - base_model/model_params inconsitent with scikit-learn")
+        if model_params is not None:
+            try:
+                self.set_params(**model_params)
+            except Exception as e:
+                warnings.warn(f"couldnt set model params - base_model/model_params inconsitent with scikit-learn")
         self.__name__ = name
         
         self.metrics = {}
@@ -163,11 +176,34 @@ class SKModel(object):
 
 
 def run_training_with_mlflow(mlflow_conf, 
-                             sk_model,
+                             wrapped_model,
                              train_dataloader, 
                              val_dataloader=None, 
                              test_dataloader=None,
                              **kwargs):
+    """
+    Function to run supervised training for classifcation
+
+    Parameters
+    ----------
+    mlflow_conf: dict
+        mlflow configuration e,g, MLFLOW_URI
+    wrapped_model: SKModel
+        wrapped SKModel 
+    train_dataloader:
+        training dataloader
+    val_dataloader:
+        validation dataloader, optional
+    test_dataloader:
+        optional
+    kwargs: dict of dicts, optional
+        can contain `artifacts` to log with models, `model_path` to specify model output path, and remianing used as experiment tags
+        
+    Returns
+    -------
+    tuple:
+        (run_id, run_metrics, val_y, val_yhat, val_pred_proba, test_y, test_yhat, test_pred_proba)
+    """
     tune = kwargs.get('tune', False)
     if tune:
         inner_cv = kwargs.get('inner_cv', C.DEFAULT_CV)
@@ -185,7 +221,8 @@ def run_training_with_mlflow(mlflow_conf,
     mlflow_setup = setup_mlflow(**mlflow_conf)
 
     calculate_metrics = Metrics(mlflow_conf['problem_type'])
-    print(mlflow_setup, calculate_metrics)
+    log.debug(f"Mlflow setup: {mlflow_setup}")
+    log.debug(f"Used metrics: {calculate_metrics}")
 
     experiment_name = mlflow_setup['experiment_name']
 
@@ -213,13 +250,13 @@ def run_training_with_mlflow(mlflow_conf,
         if test_dataloader is not None:
             X_test, y_test = test_dataloader.get_data()
 
-        # mlflow.log_params(sk_model.model.get_params())
+        # mlflow.log_params(wrapped_model.model.get_params())
         if tune:
-            m, gs = sk_model.tune(X=_X, y=_y,
-                                  hyper_params=h_search,
-                                  cv=inner_cv, 
-                                  experiment_name=experiment_name, 
-                                  scoring=scoring)
+            m, gs = wrapped_model.tune(X=_X, y=_y,
+                                       hyper_params=h_search,
+                                       cv=inner_cv, 
+                                       experiment_name=experiment_name, 
+                                       scoring=scoring)
             
             mlflow.sklearn.log_model(m, experiment_name + '_model')
             mlflow.sklearn.log_model(gs, experiment_name + '_GridSearchCV')
@@ -227,13 +264,13 @@ def run_training_with_mlflow(mlflow_conf,
             log.info(f"Experiment: {experiment_name} has finished hyperparameter tuning")
             log.info("Hyperparameter search space: " + str(h_search))
             # log params
-            mlflow.log_params(sk_model.params)
+            mlflow.log_params(wrapped_model.params)
             print(f"Best_params:\n {gs.best_params_}")
         else:
-            sk_model.fit(X=X_train, y=y_train)#, Xstd = X_train_std)
+            wrapped_model.fit(X=X_train, y=y_train)#, Xstd = X_train_std)
         
-            mlflow.sklearn.log_model(sk_model.model, experiment_name)
-            mlflow.log_params(sk_model.params)
+            mlflow.sklearn.log_model(wrapped_model.model, experiment_name + '_model')
+            mlflow.log_params(wrapped_model.params)
             log.info(f"Experiment: {experiment_name} has finished training")
 
         for split_id, (train_index, val_index) in enumerate(outer_cv.split(_X, _y)):
@@ -244,19 +281,19 @@ def run_training_with_mlflow(mlflow_conf,
             _X_train, _X_val = _X[train_index, :], _X[val_index, :]
             _y_train, _y_val = _y[train_index], _y[val_index]
             
-            y_val_proba = sk_model.predict_proba(_X_val)
+            y_val_proba = wrapped_model.predict_proba(_X_val)
             if y_val_proba.ndim > 1:
                 y_val_proba = y_val_proba[:,1]
 
-            y_val_hat = sk_model.predict(_X_val)
-            val_score = sk_model.score(_X_val, _y_val)
+            y_val_hat = wrapped_model.predict(_X_val)
+            val_score = wrapped_model.score(_X_val, _y_val)
 
         if test_dataloader is not None:
-            y_test_proba = sk_model.predict_proba(X_test)
+            y_test_proba = wrapped_model.predict_proba(X_test)
             if y_test_proba.ndim > 1:
                 y_test_proba = y_test_proba[:, 1]
-            y_test_hat = sk_model.predict(X_test)
-            test_score = sk_model.score(X_test, y_test)
+            y_test_hat = wrapped_model.predict(X_test)
+            test_score = wrapped_model.score(X_test, y_test)
         else:
             y_test=None
             y_test_hat=None
@@ -264,7 +301,7 @@ def run_training_with_mlflow(mlflow_conf,
             test_score =None
 
         # Calculate metrics
-        sk_model.metrics = calculate_metrics(y_val=y_val, 
+        wrapped_model.metrics = calculate_metrics(y_val=y_val, 
                                              y_val_proba=y_val_proba, 
                                              y_val_hat=y_val_hat,
                                              val_score=val_score, 
@@ -277,8 +314,7 @@ def run_training_with_mlflow(mlflow_conf,
         run_time = (_end_time - _start_time)
         
         # log metrics
-        mlflow.log_metrics(sk_model.metrics)
-        print(sk_model.metrics)
+        mlflow.log_metrics(wrapped_model.metrics)
 
         experiment_tags.update(dict(run_time=run_time))
         if experiment_tags is not None:
@@ -290,7 +326,93 @@ def run_training_with_mlflow(mlflow_conf,
         helper.log_artifacts(_tmp, run_id, mlflow_uri=mlflow_setup['mlflow_uri'], delete=True) 
 
         return (run_id,
-                sk_model.metrics,
+                wrapped_model.metrics,
                 y_val, y_val_hat, y_val_proba,
                 y_test, y_test_hat, y_test_proba,
                 )
+
+def load_model_from_mlflow(run_id, 
+                           mlflow_conf,
+                           wrapped_model=None,
+                           model_path="model",
+                           ):
+    """Method to load a trained model from mlflow
+
+    Parameters
+    ----------
+    run_id: str
+        mlflow run id for the trained model
+    mlflow_conf: dict
+        mlflow configuration e,g, MLFLOW_URI
+    wrapped_model: SKModel
+        model architecture to be logged
+    model_path: str
+        output path where model checkpoints are logged
+
+    Returns
+    -------
+    SKModel:
+        wrapped model with saved weights and parameters from the run
+    """
+    mlflow_setup = helper.setup_mlflow(**mlflow_conf)
+    model_uri = f"runs:/{run_id}/{mlflow_setup['experiment_name']}_{model_path}"
+    run_data = helper.fetch_mlflow_run(run_id, 
+                                       mlflow_uri=mlflow_setup['mlflow_uri'],
+                                       parse_params=True
+                                       )
+
+    hparams = run_data['params']
+
+    # ckpt_path = helper.get_artifact_path(run_data['artifact_paths'][0], 
+    #                                      artifact_uri=run_data['info'].artifact_uri)
+    #  wrapped_model = load_model(wrapped_model, ckpt_path)
+    model_name = run_data['tags']['model']
+    if wrapped_model is None:
+        base_model = mlflow.sklearn.load_model(model_uri)
+        wrapped_model = SKModel(base_model, hparams, name=model_name)
+    return wrapped_model
+
+def register_model_with_mlflow(run_id, 
+                               mlflow_conf,
+                               wrapped_model=None,
+                               registered_model_name=None,
+                               model_path='model',
+                               **artifacts
+                               ):
+    """Method to register a trained model
+
+    Parameters
+    ----------
+    run_id: str
+        mlflow run id for the trained model
+    mlflow_conf: dict
+        mlflow configuration e,g, MLFLOW_URI
+    wrapped_model: SKModel, optional
+        model architecture to be logged. If not provided, the model is directly read from mlflow
+    registered_model_name: str
+        name for registering the model
+    model_path: str
+        output path where model will be logged
+    artifacts: dict
+        dictionary of objects to log with the model
+    """
+    # Getting run info
+    mlflow_setup = helper.setup_mlflow(**mlflow_conf)
+    wrapped_model = load_model_from_mlflow(run_id, mlflow_conf, 
+                                           wrapped_model=wrapped_model, model_path=model_path)
+
+    if registered_model_name is None:
+        model_name = wrapped_model.__name__
+        registered_model_name = f"{mlflow_setup['experiment_name']}_{model_name}_v{uuid.uuid3()}"
+
+    # Registering model
+    with mlflow.start_run(run_id):
+        try:
+            mlflow.sklearn.log_model(wrapped_model.model, model_path, registered_model_name=registered_model_name)
+        except Exception as e:
+            log.error(f'Exception during logging model: {e}. Continuing to dump artifacts')
+
+    # logging other artifacts
+    dumper = helper.model_register_dumper(registered_model_name=registered_model_name)
+    helper.log_artifacts(artifacts, run_id, mlflow_uri=mlflow_setup['mlflow_uri'], dumper=dumper, delete=True)
+    return 

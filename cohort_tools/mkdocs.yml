@@ -1,5 +1,5 @@
 site_name: CohortTools
 
 nav:
-  - index.md
-  - running-atlas.md
+  - Overview: 'index.md'
+  - User Guide: 'user_guide.md'

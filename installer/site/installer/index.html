@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Introduction - Installer</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Installer</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#installer" class="nav-link">Installer</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#design-of-dpm360-installer" class="nav-link">Design of DPM360 Installer</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#prerequisites" class="nav-link">Prerequisites</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#installing-the-chart" class="nav-link">Installing the Chart</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#dpm360-ohdsi-stack-installer" class="nav-link">DPM360 - OHDSI stack installer</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#introduction" class="nav-link">Introduction</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link"></a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#prerequisites_1" class="nav-link">Prerequisites</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link"></a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#installing-the-chart_1" class="nav-link">Installing the Chart</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#uninstalling-the-chart" class="nav-link">Uninstalling the Chart</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#configuration" class="nav-link">Configuration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link"></a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#initialize-the-cdm-using-a-custom-container" class="nav-link">Initialize the CDM using a custom container</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#troubleshooting" class="nav-link">Troubleshooting</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#mlflow-and-dependcies" class="nav-link">MLFlow and dependcies</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#pre-requisites" class="nav-link">Pre-requisites</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#introduction_1" class="nav-link">Introduction</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#prerequisites_2" class="nav-link">Prerequisites</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#installing-the-chart_2" class="nav-link">Installing the Chart</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#uninstalling-the-chart_1" class="nav-link">Uninstalling the Chart</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#configuration_1" class="nav-link">Configuration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="installer">Installer</h1>
+<p>The <strong>Installer</strong> component installs the fully functional DPM60 into Kubernetes or OpenShift Container Platform using <a href="https://helm.sh/">Helm charts</a>. Upon installation, models for different endpoints are available for the user. Helm Charts are simply Kubernetes manifests combined into a single package that can be installed to Kubernetes clusters. Once packaged, installing a Helm Chart into a cluster is as easy as running a single helm install, which really simplifies the deployment of containerized applications.</p>
+<h2 id="design-of-dpm360-installer">Design of DPM360 Installer</h2>
+<figure><center><img src="../resources/installer_design.png" width="400"/></center></figure>
+
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Kubernetes v1.18+</li>
+<li>Helm v3</li>
+<li>Persistent Volume claims for Postgres Database ( Refer to the Configuration section in each of the charts)</li>
+</ul>
+<h2 id="installing-the-chart">Installing the Chart</h2>
+<ul>
+<li>Update installer/1-cluster-get-context.sh with your k8s config / cloud cli login</li>
+<li>Replace <code>&lt;external link&gt;</code> with cluster endpoint. eg. <code>dpm360-2-9ca4d14d48413d18ce61b80811ba4308-0000.us-south.containers.appdomain.cloud</code> (no quotes or https) based on your cloud provider</li>
+<li>
+<p>Replace <code>&lt;secret - implementation may depend on cloud provider&gt;</code>  with secret provided your cloud provider. For demo cluster we use : <code>dpm360-2-9ca4d14d48413d18ce61b80811ba4308-0000</code></p>
+<ul>
+<li>
+<p>To generate secret in IBM cloud following steps may be helpful:</p>
+</li>
+<li>
+<p>Make sure to install ks plugin if not available already </p>
+</li>
+</ul>
+<p><code>ibmcloud plugin install container-service</code></p>
+<ul>
+<li>Get current secret's CRN</li>
+</ul>
+<p><code>ibmcloud ks ingress secret get -c &lt;cluster&gt; --name &lt;secret_name&gt; --namespace default</code></p>
+<p>eg. <code>ibmcloud ks ingress secret get -c c363nc6d0rggvcphtom0 --name dpm360-2-1ca4d14d48413d18ce61b80811ba4308-0000 --namespace default  | grep crn</code></p>
+<p>CRN: <code>crn:v1:bluemix:public:cloudcerts:us-south:a/045077ab9f1a4dcfafa2c58389d3e639:daf653b8-467a-4ffa-a38e-a4d2c2aa8990:certificate:bf042354f07903169fc0a6aab2ca0cc1</code>   </p>
+<ul>
+<li>You will need to create a copy of secret to new namespace</li>
+</ul>
+<p><code>ibmcloud ks ingress secret create --cluster &lt;cluster_name_or_ID&gt; --cert-crn &lt;CRN&gt; --name &lt;secret_name&gt; --namespace &lt;namespace&gt;</code></p>
+<p>eg. <code>ibmcloud ks ingress secret create --cluster c363nc6d0rggvcphtom0 --cert-crn crn:v1:bluemix:public:cloudcerts:us-south:a/045077ab9f1a4dcfava2c58389d3d639:daf653b8-467a-4ffa-a38e-a4d2c2aa8390:certificate:bf042354f07903149f20a6aab2ca0cc1 --name dpm360-2-1ca4d14d48413d18ce61b80811ba4308-0000 --namespace ohdsi</code></p>
+</li>
+<li>
+<p>Update <code>installer/service-builder/cronjob.yaml</code> . Readme in installer/service-builder explains each variable</p>
+</li>
+<li>
+<p>Get k8s context and start services</p>
+</li>
+</ul>
+<pre><code>cd installer
+sh 1-cluster-get-context.sh
+sh 2-cluster-run-services.sh
+</code></pre>
+<ul>
+<li>
+<p>Go to k8s dashboard to verify if deployment, services and ingress are healthy. If you are using IBM Cloud, you will get link through  https://cloud.ibm.com/kubernetes/clusters </p>
+</li>
+<li>
+<p>To ETL, vocab and data file should be accessible to the job. Please upload it to object storage or minio. You may pass API_KEY if files are saved in IBM cloud object storage. </p>
+</li>
+<li>[Not preferred way] If you don't want to save it to cloud object storage, you may choose minio method. Use <code>minio.&lt;external link&gt;</code> to access files using web browser.<ul>
+<li>create bucket: mlflow-experiments with read &amp; write priviledges 
+OR use following script</li>
+</ul>
+</li>
+</ul>
+<pre><code>sh ohdsi-stack/minio-upload.sh &lt;username&gt; &lt;password&gt; &lt;data_folder&gt;
+eg. sh ohdsi-stack/minio-upload.sh minioRoot minioRoot123 ~/Downloads
+
+</code></pre>
+<ul>
+<li>Data can be loaded using the following cmd. Make sure to update "CDM_URL" and "SYNPUF1K_URL" in installer/ohdsi-stack/synpuf1k-etl.yaml. "API_KEY" is also required in the same yaml file if files are not publicly accesible.</li>
+</ul>
+<pre><code>sh 3-cluster-load-data.sh
+</code></pre>
+<p><strong>Step 1:  Install the OHDSI Stack by following the instructions below.  This will install the OHDSI components ( Atlas, WebAPI, a Postgres Database, and Achilles)</strong></p>
+<h2 id="dpm360-ohdsi-stack-installer">DPM360 - OHDSI stack installer</h2>
+<p>This chart is an adaptation of chart listed by <a href="https://github.com/chgl/charts/tree/master/charts/ohdsi">chgl/ohdsi</a></p>
+<p>A sample values.yaml file is provided in the repository <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/master/installer/ohdsi-stack/values.yaml">here</a>.</p>
+<h2 id="introduction">Introduction</h2>
+<p>This chart deploys the OHDSI WebAPI and ATLAS app. on a <a href="http://kubernetes.io">Kubernetes</a> cluster using the <a href="https://helm.sh">Helm</a> package manager.</p>
+<h2 id="_1"></h2>
+<h2 id="prerequisites_1">Prerequisites</h2>
+<ul>
+<li>Kubernetes v1.18+</li>
+<li>Helm v3</li>
+<li>Persistent Volume claims for Postgres Database ( Refer to the Configuration section below)</li>
+</ul>
+<h2 id="_2"></h2>
+<h2 id="installing-the-chart_1">Installing the Chart</h2>
+<p>To install the chart with the release name <code>ohdsi</code>:</p>
+<pre><code>$ helm repo add chgl https://chgl.github.io/charts
+$ helm repo update
+$ helm install ohdsi chgl/ohdsi -n &lt;your workspace&gt; --values values.yaml
+</code></pre>
+<p>The command deploys the OHDSI WebAPI and ATLAS app. on the Kubernetes cluster in the default configuration. The <a href="https://github.com/chgl/charts/tree/master/charts/ohdsi#configuration">configuration</a> section lists the parameters that can be configured during installation.</p>
+<blockquote>
+<p><strong>Tip</strong>: List all releases using <code>helm list</code></p>
+</blockquote>
+<h2 id="uninstalling-the-chart">Uninstalling the Chart</h2>
+<p>To uninstall/delete the <code>ohdsi</code>:</p>
+<pre>$ <span class="pl-s1">helm delete ohdsi -n ohdsi</span></pre>
+
+<p>The command removes all the Kubernetes components associated with the chart and deletes the release.</p>
+<h2 id="configuration">Configuration</h2>
+<p>The following table lists the configurable parameters of the <code>ohdsi</code> chart and their default values.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>imagePullSecrets</td>
+<td>image pull secrets used by all pods</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>nameOverride</td>
+<td>partially override the release name</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>fullnameOverride</td>
+<td>fully override the release name</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>commonAnnotations</td>
+<td>annotations applied to all deployments and jobs</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>postgresql.enabled</td>
+<td>enable an included PostgreSQL DB. if set to<code>false</code>, the values under <code>webApi.db</code> are used</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>postgresql.postgresqlDatabase</td>
+<td>name of the database to create see:<a href="https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md#creating-a-database-on-first-run">https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md#creating-a-database-on-first-run</a></td>
+<td><code>"ohdsi"</code></td>
+</tr>
+<tr>
+<td>postgresql.existingSecret</td>
+<td>Name of existing secret to use for PostgreSQL passwords. The secret has to contain the keys<code>postgresql-password</code> which is the password for <code>postgresqlUsername</code> when it is different of <code>postgres</code>, <code>postgresql-postgres-password</code> which will override <code>postgresqlPassword</code>, <code>postgresql-replication-password</code> which will override <code>replication.password</code> and <code>postgresql-ldap-password</code> which will be sed to authenticate on LDAP. The value is evaluated as a template.</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>postgresql.replication.enabled</td>
+<td>should be true for production use</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>postgresql.replication.readReplicas</td>
+<td>number of read replicas</td>
+<td><code>2</code></td>
+</tr>
+<tr>
+<td>postgresql.replication.synchronousCommit</td>
+<td>set synchronous commit mode: on, off, remote_apply, remote_write and local</td>
+<td><code>"on"</code></td>
+</tr>
+<tr>
+<td>postgresql.replication.numSynchronousReplicas</td>
+<td>from the number of<code>readReplicas</code> defined above, set the number of those that will have synchronous replication</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td>postgresql.metrics.enabled</td>
+<td>should also be true for production use</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>webApi.enabled</td>
+<td>enable the OHDSI WebAPI deployment</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>webApi.replicaCount</td>
+<td>number of pod replicas for the WebAPI</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td>webApi.db.host</td>
+<td>database hostname</td>
+<td><code>"host.example.com"</code></td>
+</tr>
+<tr>
+<td>webApi.db.port</td>
+<td>port used to connect to the postgres DB</td>
+<td><code>5432</code></td>
+</tr>
+<tr>
+<td>webApi.db.database</td>
+<td>name of the database inside. If postgresql.enabled=true, then postgresql.postgresqlDatabase is used</td>
+<td><code>"ohdsi"</code></td>
+</tr>
+<tr>
+<td>webApi.db.username</td>
+<td>username used to connect to the DB. Note that this name is currently used even if postgresql.enabled=true</td>
+<td><code>"postgres"</code></td>
+</tr>
+<tr>
+<td>webApi.db.password</td>
+<td>the database password. Only used if postgresql.enabled=false, otherwise the secret created by the postgresql chart is used</td>
+<td><code>"postgres"</code></td>
+</tr>
+<tr>
+<td>webApi.db.existingSecret</td>
+<td>name of an existing secret containing the password to the DB.</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>webApi.db.existingSecretKey</td>
+<td>name of the key in<code>webApi.db.existingSecret</code> to use as the password to the DB.</td>
+<td><code>"postgresql-postgres-password"</code></td>
+</tr>
+<tr>
+<td>webApi.db.schema</td>
+<td>schema used for the WebAPI's tables. Also referred to as the "OHDSI schema"</td>
+<td><code>"ohdsi"</code></td>
+</tr>
+<tr>
+<td>webApi.podAnnotations</td>
+<td>annotations applied to the pod</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>webApi.cors.enabled</td>
+<td>whether CORS is enabled for the WebAPI. Sets the<code>security.cors.enabled</code> property.</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>webApi.cors.allowedOrigin</td>
+<td>value of the<code>Access-Control-Allow-Origin</code> header. Sets the <code>security.origin</code> property. set to <code>*</code> to allow requests from all origins. if <code>cors.enabled=true</code>, <code>cors.allowedOrigin=""</code> and <code>ingress.enabled=true</code>, then <code>ingress.hosts[0].host</code> is used.</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>webApi.podSecurityContext</td>
+<td>security context for the pod</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>webApi.service</td>
+<td>the service used to expose the WebAPI web port</td>
+<td><code>{"port":8080,"type":"ClusterIP"}</code></td>
+</tr>
+<tr>
+<td>webApi.resources</td>
+<td>resource requests and limits for the container.<br/> 2Gi+ of RAM are recommended (<a href="https://github.com/OHDSI/WebAPI/issues/1811#issuecomment-792988811">https://github.com/OHDSI/WebAPI/issues/1811#issuecomment-792988811</a>) <br/> You might also want to use <code>webApi.extraEnv</code> to set <code>MinRAMPercentage</code> and <code>MaxRAMPercentage</code>: <br/> Example: <br/> <code>helm template charts/ohdsi \</code> <br/> <code>--set webApi.extraEnv[0].name="JAVA_OPTS" \</code> <br/> <code>--set webApi.extraEnv[0].value="-XX:MinRAMPercentage=60.0 -XX:MaxRAMPercentage=80.0"</code></td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>webApi.nodeSelector</td>
+<td>node labels for pods assignment see:<a href="https://kubernetes.io/docs/user-guide/node-selection/">https://kubernetes.io/docs/user-guide/node-selection/</a></td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>webApi.tolerations</td>
+<td>tolerations for pods assignment see:<a href="https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/">https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/</a></td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>webApi.affinity</td>
+<td>affinity for pods assignment see:<a href="https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity">https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity</a></td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>webApi.extraEnv</td>
+<td>extra environment variables</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>atlas.enabled</td>
+<td>enable the OHDSI Atlas deployment</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>atlas.replicaCount</td>
+<td>number of replicas</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td>atlas.webApiUrl</td>
+<td>the base URL of the OHDSI WebAPI, e.g.<a href="https://example.com/WebAPI">https://example.com/WebAPI</a> if this value is not set but <code>ingress.enabled=true</code> and <code>constructWebApiUrlFromIngress=true</code>, then this URL is constructed from <code>ingress</code></td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>atlas.constructWebApiUrlFromIngress</td>
+<td>if enabled, sets the WebAPI URL to<code>http://ingress.hosts[0]/WebAPI</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>atlas.podAnnotations</td>
+<td>annotations for the pod</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>atlas.podSecurityContext</td>
+<td>security context for the pod</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>atlas.service</td>
+<td>the service used to expose the Atlas web port</td>
+<td><code>{"port":8080,"type":"ClusterIP"}</code></td>
+</tr>
+<tr>
+<td>atlas.resources</td>
+<td>resource requests and limits for the container</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>atlas.nodeSelector</td>
+<td>node labels for pods assignment see:<a href="https://kubernetes.io/docs/user-guide/node-selection/">https://kubernetes.io/docs/user-guide/node-selection/</a></td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>atlas.tolerations</td>
+<td>tolerations for pods assignment see:<a href="https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/">https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/</a></td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>atlas.affinity</td>
+<td>affinity for pods assignment see:<a href="https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity">https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity</a></td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>atlas.extraEnv</td>
+<td>extra environment variables</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>atlas.config.local</td>
+<td>this value is expected to contain the config-local.js contents</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>cdmInitJob.enabled</td>
+<td>if enabled, create a Kubernetes Job running the specified container see<a href="https://github.com/chgl/charts/blob/master/charts/ohdsi/templates/cdm-init-job.yaml">cdm-init-job.yaml</a> for the env vars that are passed by default</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>cdmInitJob.image</td>
+<td>the container image used to create the CDM initialization job</td>
+<td><code>{"pullPolicy":"Always","registry":"docker.io","repository":"docker/whalesay","tag":"latest"}</code></td>
+</tr>
+<tr>
+<td>cdmInitJob.podAnnotations</td>
+<td>annotations set on the cdm-init pod</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>cdmInitJob.podSecurityContext</td>
+<td>PodSecurityContext for the cdm-init pod</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>cdmInitJob.securityContext</td>
+<td>ContainerSecurityContext for the cdm-init container</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>cdmInitJob.extraEnv</td>
+<td>extra environment variables to set</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>achilles.enabled</td>
+<td>whether or not to enable the Achilles cron job</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>achilles.schedule</td>
+<td>when to run the Achilles job. See<a href="https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#cron-schedule-syntax">https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#cron-schedule-syntax</a></td>
+<td><code>"@daily"</code></td>
+</tr>
+<tr>
+<td>achilles.schemas.cdm</td>
+<td>name of the schema containing the OMOP CDM. Equivalent to the Achilles<code>ACHILLES_CDM_SCHEMA</code> env var.</td>
+<td><code>"synpuf_cdm"</code></td>
+</tr>
+<tr>
+<td>achilles.schemas.vocab</td>
+<td>name of the schema containing the vocabulary. Equivalent to the Achilles<code>ACHILLES_VOCAB_SCHEMA</code> env var.</td>
+<td><code>"synpuf_vocab"</code></td>
+</tr>
+<tr>
+<td>achilles.schemas.res</td>
+<td>name of the schema containing the cohort generation results. Equivalent to the Achilles<code>ACHILLES_RES_SCHEMA</code> env var.</td>
+<td><code>"synpuf_results"</code></td>
+</tr>
+<tr>
+<td>achilles.cdmVersion</td>
+<td>version of the CDM. Equivalent to the Achilles<code>ACHILLES_CDM_VERSION</code> env var.</td>
+<td><code>"5.3.1"</code></td>
+</tr>
+<tr>
+<td>achilles.sourceName</td>
+<td>the CDM source name. Equivalent to the Achilles<code>ACHILLES_SOURCE</code> env var.</td>
+<td><code>"synpuf-5.3.1"</code></td>
+</tr>
+<tr>
+<td>ingress.enabled</td>
+<td>whether to create an Ingress to expose the Atlas web interface</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>ingress.annotations</td>
+<td>provide any additional annotations which may be required. Evaluated as a template.</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>ingress.tls</td>
+<td>ingress TLS config</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td><code>CDM_URL</code></td>
+<td>Location of Athena Vocabulary file in tar.gz format.  It could be either a s3 url or a local file</td>
+<td></td>
+</tr>
+<tr>
+<td><code>SYNPUF1K_URL</code></td>
+<td>Location of Synthetic 1K data file in tar.gz format.  It could be either a s3 url or a local file.  You can download this from<a href="https://caruscloud.uniklinikum-dresden.de/index.php/s/teddxwwa2JipbXH/download">here</a>.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>RESULTS_TABLE_URL</code></td>
+<td>This will be the URL to get the Results schema.<br />Example:<br />http://<a href="server:port">server:port</a>/WebAPI/ddl/results?dialect=<your_cdm_database_dialect>&amp;schema=<your_results_schema>&amp;vocabSchema=<your_vocab_schema>&amp;tempSchema=<your_temp_schema>&amp;initConceptHierarchy=true</td>
+<td></td>
+</tr>
+<tr>
+<td><code>CDM_SCHEMA</code></td>
+<td>Value of the CDM_SCHEMA in your CDM Database</td>
+<td></td>
+</tr>
+<tr>
+<td><code>OHDSI_WEBAPI_SCHEMA</code></td>
+<td>Value of the WebAPI Schema in your database</td>
+<td></td>
+</tr>
+<tr>
+<td><code>RESULTS_SCHEMA</code></td>
+<td>Value of Results Schema in your daabase</td>
+<td></td>
+</tr>
+<tr>
+<td><code>TEMP_SCHEMA</code></td>
+<td>Value of Temp schema in your database</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Specify each parameter using the <code>--set key=value[,key=value]</code> argument to <code>helm install</code>. For example:</p>
+<pre>$ <span class="pl-s1">helm install ohdsi chgl/ohdsi -n ohdsi --set postgresql.postgresqlDatabase=<span class="pl-s"><span class="pl-pds">"</span>ohdsi<span class="pl-pds">"</span></span></span></pre>
+
+<p>Alternatively, a YAML file that specifies the values for the parameters can be provided while
+installing the chart. For example:</p>
+<pre>$ <span class="pl-s1">helm install ohdsi chgl/ohdsi -n ohdsi --values values.yaml</span></pre>
+
+<h2 id="_3"></h2>
+<h2 id="initialize-the-cdm-using-a-custom-container">Initialize the CDM using a custom container</h2>
+<ol>
+<li>A custom docker image to initialize the CDM database with Athena Vocabularies and Synthetic 1K patient data is built based on the broad guidelines outlined <a href="https://github.com/IBM/DPM360">here</a>.
+   This custom image is utilized in the cdmInitJob.image parameter in the values.yaml.</li>
+</ol>
+<p>The cdmInit container takes in the following parameters to initialize the data:</p>
+<p><code>CDM_URL</code>Location of Athena Vocabulary file in tar.gz format.  It could be either a s3 url or a local file <code>SYNPUF1K_URL</code>Location of Synthetic 1K data file in tar.gz format.  It could be either a s3 url or a local file.  You can download this from<a href="https://caruscloud.uniklinikum-dresden.de/index.php/s/teddxwwa2JipbXH/download">here</a>. <code>RESULTS_TABLE_URL</code>This will be the URL to get the Results schema.
+   Example:
+   http://<a href="server:port">server:port</a>/WebAPI/ddl/results?dialect=<your_cdm_database_dialect>&amp;schema=<your_results_schema>&amp;vocabSchema=<your_vocab_schema>&amp;tempSchema=<your_temp_schema>&amp;initConceptHierarchy=true</p>
+<p><code>CDM_SCHEMA</code> Name of the schema that contains the CDM tables in your database.</p>
+<p><code>OHDSI_WEBAPI_SCHEMA</code> Name of the schema that contains the WebAPI tables in your database.</p>
+<p><code>RESULTS_SCHEMA</code>Name of the schema that contains the results tables in your database.
+   <code>TEMP_SCHEMA</code> Name of the schema that contains the temp results table in your database.</p>
+<h1 id="troubleshooting">Troubleshooting</h1>
+<p>If the deployment does not work, possible todo following this https://www.kubeflow.org/docs/started/workstation/minikube-linux/</p>
+<p><strong>Step 2: Install the Model Registry by following the instructions below.  This will install Mlflow with a Postgres and Minio backend.</strong></p>
+<h1 id="mlflow-and-dependcies">MLFlow and dependcies</h1>
+<p><a href="https://github.com/ibm/dpm360">DPM360</a> - Helm chart for deploying Disease progression model framework including OHDSI tools ( Atlas, WebAPI), MLFlow and its dependencies ( minio for object storage and postgresql for relational database).</p>
+<h2 id="pre-requisites">Pre-requisites</h2>
+<pre><code class="language-console">Download the chart repo
+In your cloud environment, create 3 persistent volume claims ( one for OHDSI postgres, one for minio-mlflow and one for postgres-mlflow)
+Update the values.yaml with paramters matching your cloud environment
+
+
+</code></pre>
+<h2 id="introduction_1">Introduction</h2>
+<p>This chart deploys the MLFlow along with a minio based storage and postgesql database on a <a href="http://kubernetes.io">Kubernetes</a> cluster using the <a href="https://helm.sh">Helm</a> package manager.</p>
+<h2 id="prerequisites_2">Prerequisites</h2>
+<ul>
+<li>Kubernetes v1.18+</li>
+<li>Helm v3</li>
+</ul>
+<h2 id="installing-the-chart_2">Installing the Chart</h2>
+<pre><code class="language-console">Once you have cloned the repo (https://github.com/IBM/DPM360)
+
+$ cd to the folder where you have installer/
+$ helm install modelregistry ./model-registry -n &lt;your namespace&gt; --values ./model-registry/values.yaml
+This will create 3 deployments in your kubernetes cluster ( mlflow, minio and postgresql)
+
+Update your ingress to allow access to the services created by the helm chart.
+
+</code></pre>
+<p>The command deploys the MLFlow (version 1.14.1) along with minio for storage and postgresql on the Kubernetes cluster in the default configuration. The <a href="#configuration">configuration</a> section lists the parameters that can be configured during installation.</p>
+<blockquote>
+<p><strong>Tip</strong>: List all releases using <code>helm list</code></p>
+</blockquote>
+<h2 id="uninstalling-the-chart_1">Uninstalling the Chart</h2>
+<p>To uninstall/delete the <code>modelregistry</code>:</p>
+<pre><code class="language-console">$ helm delete modelregistry -n &lt;yournamespace&gt;
+</code></pre>
+<p>The command removes all the Kubernetes components associated with the chart and deletes the release.</p>
+<h2 id="configuration_1">Configuration</h2>
+<p>The following table lists the configurable parameters of the <code>model-registry</code> chart and their default values.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MINIO</td>
+<td>This section is for minio configuration</td>
+<td></td>
+</tr>
+<tr>
+<td>minio.image</td>
+<td>minio images used for this installation</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>minio.accessKey</td>
+<td>access key ( usename) required by minio</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>minio.secretKey</td>
+<td>secret key required by minio</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>minio.rootuser</td>
+<td>minio console user</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>minio.rootpassword</td>
+<td>minio console user password</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>minio.resources</td>
+<td>section used to configure your pod memory and cpu settings</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>minio.persistence</td>
+<td>This section specifies the PVC that you had created a part of the pre-requisites</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>minio.container port</td>
+<td>container port ( typically set to 9000)</td>
+<td><code>9000</code></td>
+</tr>
+<tr>
+<td>minio.httpport</td>
+<td>port that is exposed in your service specification. Typcially set to 9000</td>
+<td><code>"9000"</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Postgres for MLFlow</td>
+<td>This section describes Postgres for MLFlow configuration</td>
+<td></td>
+</tr>
+<tr>
+<td>pgmlflow.enabled</td>
+<td>enable the postgres deployment for mlflow</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>pgmlflow.image</td>
+<td>postgres images used ( 12.5 in this example)</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td>pgmlflow.POSTGRES_USER</td>
+<td>postgres user used for the installation</td>
+<td><code>"postgres"</code></td>
+</tr>
+<tr>
+<td>pgmlflow.POSTGRES_PASSWORD</td>
+<td>password for the postgres user</td>
+<td><code>postgres</code></td>
+</tr>
+<tr>
+<td>pgmlflow.resources</td>
+<td>use this section to specify the pod memery and cpu limits</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>pgmlflow.containerport</td>
+<td>container port for postgres db</td>
+<td><code>"5432"</code></td>
+</tr>
+<tr>
+<td>pgmlflow.httpport</td>
+<td>port for running the postgres service.  If you have multiple postgres instances, this will be different from the container port</td>
+<td><code>"5452"</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>MLFlow</td>
+<td>This section lists the configuration for MLFlow</td>
+<td></td>
+</tr>
+<tr>
+<td>mlflow.enabled</td>
+<td>enable the mlflow for this deployment</td>
+<td><code>"true"</code></td>
+</tr>
+<tr>
+<td>mlflow.image</td>
+<td>specifies the mlflow image used</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>mlflow.MLFLOW_HOST</td>
+<td>MLFlow host name</td>
+<td>``</td>
+</tr>
+<tr>
+<td>mlflow.BACKEND_STORE_URI</td>
+<td>datastore used for backend.  In our case we have used postgresql</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td>mlflow.POSTGRES_HOST</td>
+<td>postgres service name</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>mlflow.MINIO_HOST</td>
+<td>minio endpoint that will be exposed by the ingress</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>mlflow.MLFLOW_TRACKING_URI</td>
+<td>mlflow endpoit that will exposed by the ingress</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>mlflow.MLFLOW_S3_ENDPOINT_URL</td>
+<td>minio endpoint that will be exposed by the ingress.</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>mlflow.AWS_ACCESS_KEY_ID</td>
+<td>minio user id</td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td>mlflow.AWS_SECRET_ACCESS_KEY</td>
+<td>minio access key for the user</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>mlflow.AWS_MLFLOW_BUCKET_NAME<br />mlflow.AWS_BUCKET  / AWS_MLFLOW_BUCKET</td>
+<td>name of the bucket used for mlflow experiments<br /></td>
+<td><code>mlflow-experiments</code></td>
+</tr>
+<tr>
+<td>mlflow.resources</td>
+<td>use this section to define the memory and cpu for the pod</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td>mlflow.containerport</td>
+<td>port number of the container. Typically it is 5000</td>
+<td><code>"9000"</code></td>
+</tr>
+<tr>
+<td>mlflow.httpport</td>
+<td>port number that the service listens.  Typically same as containerport</td>
+<td><code>"9000"</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Specify each parameter using the  YAML file that specifies the values for the parameters while installing the chart. For example:</p>
+<pre><code class="language-console">$ helm install modelregistry ./model-registry -n &lt;your namespace&gt; --values ./model-registry/values.yaml
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

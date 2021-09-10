@@ -1,26 +1,38 @@
 site_name: DPM360
 
+repo_url: https://github.com/IBM/DPM360
+repo_name: IBM/DPM360
 
 theme:
   name: material
+  features:
+    - navigation.expand
+  icon:
+    repo: fontawesome/brands/git-alt
 
 plugins:
   - monorepo
   - mknotebooks
   - search
   - mkdocstrings:
+      watch:
+        - lightsaber/
       default_handler: python
-  # - pdf-export:
-      # combined: true
-
-markdown_extensions:
-  - codehilite
+      handlers:
+        python:
+          selection:
+            docstring_style: numpy
+          rendering:
+            show_root_heading: true
+            show_if_no_docstring: true
 
 nav:
   - Overview: 'index.md'
   - Components:
     - Installer: 'installer.md'
-    - Service Builder: 'serviceBuilder.md'
+    # - Installer: '!include ./installer/mkdocs.yml'
+    - Service Builder: 'service_builder.md'
+    # - Service Builder: '!include ./service_builder/mkdocs.yml'
     - Cohort Tools: '!include ./cohort_tools/mkdocs.yml'
     - Lightsaber: '!include ./lightsaber/mkdocs.yml'    
 
