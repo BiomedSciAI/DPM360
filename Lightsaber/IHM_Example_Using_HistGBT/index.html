@@ -14,7 +14,7 @@
     
     
       
-        <title>IHM Example Using LSTM - DPM360</title>
+        <title>IHM Example Using HistGBT - DPM360</title>
       
     
     
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ihm-example-using-lstm" class="md-skip">
+        <a href="#ihm-example-using-histgbt" class="md-skip">
           Skip to content
         </a>
       
@@ -99,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              IHM Example Using LSTM
+              IHM Example Using HistGBT
             
           </span>
         </div>
@@ -413,18 +413,6 @@
             
   
   
-  
-    <li class="md-nav__item">
-      <a href="../IHM_Example_Using_HistGBT/" class="md-nav__link">
-        IHM Example Using HistGBT
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
     
   
   
@@ -437,12 +425,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          IHM Example Using LSTM
+          IHM Example Using HistGBT
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        IHM Example Using LSTM
+        IHM Example Using HistGBT
       </a>
       
         
@@ -481,15 +469,42 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#training-a-single-model" class="md-nav__link">
+    Training a Single Model
+  </a>
+  
+    <nav class="md-nav" aria-label="Training a Single Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-definition" class="md-nav__link">
+    Model definition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-training-with-in-built-model-tracking-and-evaluation" class="md-nav__link">
+    Model training with in-built model tracking and evaluation
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#single-run" class="md-nav__link">
-    Single Run
+        
+          <li class="md-nav__item">
+  <a href="#hyper-parameter-search" class="md-nav__link">
+    Hyper-parameter Search
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -511,6 +526,18 @@
   
 </nav>
       
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IHM_Example_Using_LSTM/" class="md-nav__link">
+        IHM Example Using LSTM
+      </a>
     </li>
   
 
@@ -610,15 +637,42 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#training-a-single-model" class="md-nav__link">
+    Training a Single Model
+  </a>
+  
+    <nav class="md-nav" aria-label="Training a Single Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-definition" class="md-nav__link">
+    Model definition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-training-with-in-built-model-tracking-and-evaluation" class="md-nav__link">
+    Model training with in-built model tracking and evaluation
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#single-run" class="md-nav__link">
-    Single Run
+        
+          <li class="md-nav__item">
+  <a href="#hyper-parameter-search" class="md-nav__link">
+    Hyper-parameter Search
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -648,7 +702,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/IBM/DPM360/edit/master/docs/Lightsaber/IHM_Example_Using_LSTM.ipynb" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/IBM/DPM360/edit/master/docs/Lightsaber/IHM_Example_Using_HistGBT.ipynb" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
@@ -683,8 +737,8 @@
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="ihm-example-using-lstm">IHM Example Using LSTM</h1>
-<p>This notebook shows an example of using <code>LSTM</code> to model In-hospital mortality from MIMIC-III dataset.</p>
+<h1 id="ihm-example-using-histgbt">IHM Example Using HistGBT</h1>
+<p>This notebook shows an example of using <code>HistGBT</code> to model In-hospital mortality from MIMIC-III dataset.</p>
 <p>Data is presumed to have been already extracted from cohort and defined via a yaml configuration as below:</p>
 <pre><code class="language-yaml"># USER DEFINED
 tgt_col: y_true
@@ -779,26 +833,15 @@ import argparse
 from sklearn.preprocessing import StandardScaler
 from sklearn.exceptions import NotFittedError
 
-import torch as T
-from torch import nn
-from pytorch_lightning import Trainer
-
 from lightsaber import constants as C
 import lightsaber.data_utils.utils as du
-from lightsaber.data_utils import pt_dataset as ptd
-from lightsaber.trainers import pt_trainer as ptr
+from lightsaber.data_utils.pt_dataset import (filter_preprocessor)
+from lightsaber.data_utils import sk_dataloader as skd
+from lightsaber.trainers import sk_trainer as skr
 
-from lightsaber.model_lib.pt_sota_models import rnn
-</code></pre>
+from sklearn.ensemble import HistGradientBoostingClassifier
 
-
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-
-<pre><code class="language-python">import logging
+import logging
 log = logging.getLogger()
 </code></pre>
 
@@ -824,7 +867,7 @@ expt_conf = du.yaml.load(open(conf_path).read().format(DATA_DIR=data_dir),
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="ihm-model-training">IHM Model Training</h2>
-<p>In general, user need to follow the following steps to train a <code>HistGBT</code> for IHM model.</p>
+<p>In general, we need to follow the following steps to train a <code>HistGBT</code> for IHM model.</p>
 <ul>
 <li>
 <p><em>Data Ingestion</em>: The first step involves setting up the pre-processors to train an IHM model. In this example, we will use a <code>StandardScaler</code> from <code>scikit-learn</code> using filters defined within lightsaber.</p>
@@ -833,10 +876,13 @@ expt_conf = du.yaml.load(open(conf_path).read().format(DATA_DIR=data_dir),
 <p>We would next read the train, test, and validation dataset. In some cases, users may also want to define a calibration dataset</p>
 </li>
 <li>
-<p><em>Model Definition</em>: We would next need to define a base model for classification. In this example, we will use a pre-packaged <code>LSTM</code> model from  <code>lightsaber</code></p>
+<p><em>Model Definition</em>: We would next need to define a base model for classification. In this example, we will use a standard <code>scikit-learn::HistGBT</code> model </p>
 </li>
 <li>
-<p><em>Model Training</em>: Once the models are defined, we can use <code>lightsaber</code> to train the model via the pre-packaged <code>PyModel</code> and the corresponding trainer code. This step will also generate the relevant <code>metrics</code> for this problem.</p>
+<p><em>Model Training</em>: Once the models are defined, we can use <code>lightsaber</code> to train the model via the pre-packaged <code>SKModel</code> and the corresponding trainer code. This step will also generate the relevant <code>metrics</code> for this problem.</p>
+</li>
+<li>
+<p>we will also show how to train a single hyper-parameter setting as well as a grid search over a pre-specified hyper-parameter space.</p>
 </li>
 </ul>
 </div>
@@ -854,93 +900,56 @@ expt_conf = du.yaml.load(open(conf_path).read().format(DATA_DIR=data_dir),
 <div class="input">
 
 
-<pre><code class="language-python">preprocessor = StandardScaler()
-train_filter = [ptd.filter_preprocessor(cols=expt_conf['numerical'], 
-                                        preprocessor=preprocessor,
-                                        refit=True),
-                ptd.filter_fillna(fill_value=expt_conf['normal_values'],
-                                  time_order_col=expt_conf['time_order_col'])
-                ]
-transform = ptd.transform_drop_cols(cols_to_drop=expt_conf['time_order_col'])
-</code></pre>
+<pre><code class="language-python">flatten = 'sum'
+preprocessor = StandardScaler()
+train_filter = [filter_preprocessor(cols=expt_conf['numerical'], 
+                                    preprocessor=preprocessor,
+                                    refit=True),
+               ]
 
+train_dataloader = skd.SKDataLoader(tgt_file=expt_conf['train']['tgt_file'],
+                                    feat_file=expt_conf['train']['feat_file'],
+                                    idx_col=expt_conf['idx_cols'],
+                                    tgt_col=expt_conf['tgt_col'],
+                                    feat_columns=expt_conf['feat_cols'],
+                                    time_order_col=expt_conf['time_order_col'],
+                                    category_map=expt_conf['category_map'],
+                                    filter=train_filter,
+                                    fill_value=expt_conf['normal_values'],
+                                    flatten=flatten,
+                                   )
+print(train_dataloader.shape, len(train_dataloader))
 
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-
-<pre><code class="language-python">train_dataset = ptd.BaseDataset(tgt_file=expt_conf['train']['tgt_file'],
-                                feat_file=expt_conf['train']['feat_file'],
-                                idx_col=expt_conf['idx_cols'],
-                                tgt_col=expt_conf['tgt_col'],
-                                feat_columns=expt_conf['feat_cols'],
-                                time_order_col=expt_conf['time_order_col'],
-                                category_map=expt_conf['category_map'],
-                                transform=transform,
-                                filter=train_filter,
-                               )
-# print(train_dataset.data.head())
-print(train_dataset.shape, len(train_dataset))
-</code></pre>
-
-
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-
-<pre><code class="language-python"># For other datasets use fitted preprocessors
-fitted_filter = [ptd.filter_preprocessor(cols=expt_conf['numerical'], 
-                                         preprocessor=preprocessor, refit=False),
-                 ptd.filter_fillna(fill_value=expt_conf['normal_values'],
-                                   time_order_col=expt_conf['time_order_col'])
+# For other datasets use fitted preprocessors
+fitted_filter = [filter_preprocessor(cols=expt_conf['numerical'], 
+                                     preprocessor=preprocessor, refit=False),
                  ]
+val_dataloader = skd.SKDataLoader(tgt_file=expt_conf['val']['tgt_file'],
+                                  feat_file=expt_conf['val']['feat_file'],
+                                  idx_col=expt_conf['idx_cols'],
+                                  tgt_col=expt_conf['tgt_col'],
+                                  feat_columns=expt_conf['feat_cols'],
+                                  time_order_col=expt_conf['time_order_col'],
+                                  category_map=expt_conf['category_map'],
+                                  filter=fitted_filter,
+                                  fill_value=expt_conf['normal_values'],
+                                  flatten=flatten,
+                                )
 
-val_dataset = ptd.BaseDataset(tgt_file=expt_conf['val']['tgt_file'],
-                              feat_file=expt_conf['val']['feat_file'],
-                              idx_col=expt_conf['idx_cols'],
-                              tgt_col=expt_conf['tgt_col'],
-                              feat_columns=expt_conf['feat_cols'],
-                              time_order_col=expt_conf['time_order_col'],
-                              category_map=expt_conf['category_map'],
-                              transform=transform,
-                              filter=fitted_filter,
-                              )
+test_dataloader = skd.SKDataLoader(tgt_file=expt_conf['test']['tgt_file'],
+                                  feat_file=expt_conf['test']['feat_file'],
+                                  idx_col=expt_conf['idx_cols'],
+                                  tgt_col=expt_conf['tgt_col'],
+                                  feat_columns=expt_conf['feat_cols'],
+                                  time_order_col=expt_conf['time_order_col'],
+                                  category_map=expt_conf['category_map'],
+                                  filter=fitted_filter,
+                                  fill_value=expt_conf['normal_values'],
+                                  flatten=flatten,
+                                )
 
-test_dataset = ptd.BaseDataset(tgt_file=expt_conf['test']['tgt_file'],
-                               feat_file=expt_conf['test']['feat_file'],
-                               idx_col=expt_conf['idx_cols'],
-                               tgt_col=expt_conf['tgt_col'],
-                               feat_columns=expt_conf['feat_cols'],
-                               time_order_col=expt_conf['time_order_col'],
-                               category_map=expt_conf['category_map'],
-                               transform=transform,
-                               filter=fitted_filter,
-                               )
-
-print(val_dataset.shape, len(val_dataset))
-print(test_dataset.shape, len(test_dataset))
-</code></pre>
-
-
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-
-<pre><code class="language-python"># Handling imbala
-input_dim, target_dim = train_dataset.shape
-output_dim = 2
-
-weight_labels = train_dataset.target.iloc[:, 0].value_counts()
-weight_labels = (weight_labels.max() / ((weight_labels + 0.0000001) ** (1)))
-weight_labels.sort_index(inplace=True)
-weights = T.FloatTensor(weight_labels.values).to(train_dataset.device)
-print(weights)
+print(val_dataloader.shape, len(val_dataloader))
+print(test_dataloader.shape, len(test_dataloader))
 </code></pre>
 
 
@@ -949,7 +958,15 @@ print(weights)
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="single-run">Single Run</h2>
+<h3 id="training-a-single-model">Training a Single Model</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="model-definition">Model definition</h4>
+<p>We can define a base classification model using standard <code>scikit-learn</code> workflow as below:</p>
 </div>
 </div>
 </div>
@@ -957,68 +974,85 @@ print(weights)
 <div class="input">
 
 
-<pre><code class="language-python"># For most models you need to change only this part
-hparams = argparse.Namespace(gpus=[0],
-                             lr=0.01,
-                             max_epochs=50,
-                             batch_size=32,
-                             hidden_dim=32,
-                             rnn_class='LSTM',
-                             n_layers=2,
-                             dropout=0.1,
-                             recurrent_dropout=0.1,
-                             bidirectional=False,
+<pre><code class="language-python">model_name = 'HistGBT'
+hparams = argparse.Namespace(learning_rate=0.01,
+                             max_iter=100,
+                             l2_regularization=0.01
                              )
 
-hparams.rnn_class = C.PYTORCH_CLASS_DICT[hparams.rnn_class]
+base_model = HistGradientBoostingClassifier(learning_rate=hparams.learning_rate, 
+                                            l2_regularization=hparams.l2_regularization, 
+                                            max_iter=hparams.max_iter)
 
-base_model = rnn.RNNClassifier(input_dim, output_dim, 
-                               hidden_dim=hparams.hidden_dim,
-                               rnn_class=hparams.rnn_class,
-                               n_layers=hparams.n_layers,
-                               dropout=hparams.dropout,
-                               recurrent_dropout=hparams.recurrent_dropout,
-                               bidirectional=hparams.bidirectional
-                              )
-
-criterion = nn.CrossEntropyLoss(weight=weights)
-# optimizer = T.optim.Adam(base_model.parameters(),
-#                          lr=hparams.lr,
-#                          weight_decay=1e-5  # standard value)
-#                          )
-
-# scheduler = T.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min')
-
-# Creating the wrapped model
-wrapped_model = ptr.PyModel(hparams, base_model,
-                            train_dataset=train_dataset,
-                            val_dataset=val_dataset, # None
-                            test_dataset=None, #test_dataset, # test_dataset
-                            #optimizer=optimizer,
-                            loss_func=criterion,
-                            #scheduler=scheduler,
-                            collate_fn=ptd.collate_fn
-                            )
+wrapped_model = skr.SKModel(base_model, hparams, name=model_name)
 </code></pre>
 
 
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="model-training-with-in-built-model-tracking-and-evaluation">Model training with in-built model tracking and evaluation</h4>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 
-<pre><code class="language-python"># Training 
-overfit_pct, fast_dev_run, terminate_on_nan, auto_lr_find = 0, False, False, False
+<pre><code class="language-python">mlflow_conf = dict(experiment_name=f'classifier_ihm')
+artifacts = dict(preprocessor=preprocessor)
+experiment_tags = dict(model=model_name, 
+                       tune=False)
 
-trainer = Trainer(max_epochs=hparams.max_epochs, 
-                  gpus=hparams.gpus,
-                  default_root_dir=os.path.join('./out/', 'classifier_ihm'),
-                  terminate_on_nan=terminate_on_nan,
-                  auto_lr_find=auto_lr_find,
-                  overfit_pct=overfit_pct,
-                  fast_dev_run=fast_dev_run #True if devugging
-                 )
+(run_id, metrics, 
+ val_y, val_yhat, val_pred_proba, 
+ test_y, test_yhat, test_pred_proba) = skr.run_training_with_mlflow(mlflow_conf, 
+                                                                    wrapped_model,
+                                                                    train_dataloader=train_dataloader,
+                                                                    val_dataloader=val_dataloader,
+                                                                    test_dataloader=test_dataloader,
+                                                                    artifacts=artifacts,
+                                                                    **experiment_tags)
+
+print(f&quot;MLFlow Experiment: {mlflow_conf['experiment_name']} \t | Run ID: {run_id}&quot;)
+print(metrics)
+</code></pre>
+
+
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="hyper-parameter-search">Hyper-parameter Search</h3>
+<p><code>lightsaber</code> also naturally supports hyper-parameter search to find the best model w.r.t.\ a pre-defined metric using the similar trace as above. </p>
+<p>To conduct a grid-search we follow two steps:</p>
+<ul>
+<li>we define a grid <code>h_search</code> over the model parameter space</li>
+<li>We pass an experiment tag <code>tune</code> set to <code>True</code> along with the grid <code>h_search</code> to the trainer code</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<pre><code class="language-python">model_name = 'HistGBT'
+hparams = argparse.Namespace(learning_rate=0.01,
+                             max_iter=100,
+                             l2_regularization=0.01
+                             )
+h_search = dict(
+    learning_rate=[0.01, 0.1, 0.02],
+    max_iter=[50, 100]
+)
+
+base_model = HistGradientBoostingClassifier(**vars(hparams))
+
+wrapped_model = skr.SKModel(base_model, hparams, name=model_name)
 </code></pre>
 
 
@@ -1029,21 +1063,19 @@ trainer = Trainer(max_epochs=hparams.max_epochs,
 
 
 <pre><code class="language-python">mlflow_conf = dict(experiment_name=f'classifier_ihm')
-artifacts = dict(preprocessor=preprocessor, 
-                 weight_labels=weight_labels,
-                )
-experiment_tags = dict(model='RNNClassifier',
-                       input_dim=input_dim,
-                       output_dim=output_dim
-                      )
+artifacts = dict(preprocessor=preprocessor)
+experiment_tags = dict(model=model_name, 
+                       tune=True)
 
 (run_id, metrics, 
  val_y, val_yhat, val_pred_proba, 
- test_y, test_yhat, test_pred_proba) = ptr.run_training_with_mlflow(mlflow_conf, 
-                                                                    trainer, 
-                                                                    wrapped_model, 
-                                                                    overfit_pct=overfit_pct,
+ test_y, test_yhat, test_pred_proba) = skr.run_training_with_mlflow(mlflow_conf, 
+                                                                    wrapped_model,
+                                                                    train_dataloader=train_dataloader,
+                                                                    val_dataloader=val_dataloader,
+                                                                    test_dataloader=test_dataloader,
                                                                     artifacts=artifacts,
+                                                                    h_search=h_search,
                                                                     **experiment_tags)
 
 print(f&quot;MLFlow Experiment: {mlflow_conf['experiment_name']} \t | Run ID: {run_id}&quot;)
@@ -1072,19 +1104,7 @@ print(metrics)
 
 
 <pre><code class="language-python">print(f&quot;Registering model for run: {run_id}&quot;)
-</code></pre>
-
-
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-
-<pre><code class="language-python"># Reading things from mlflow
-# Model coders can create functions to repeat this - part of model init
-import torch
-from lightsaber.trainers import helper
+# Reading from yaml to log other artifacts
 data_dir = Path(os.environ.get('LS_DATA_PATH', './data'))
 assert data_dir.is_dir()
 
@@ -1093,79 +1113,9 @@ expt_conf = du.yaml.load(open(conf_path).read().format(DATA_DIR=data_dir),
                          Loader=du._Loader)
 
 mlflow_conf = dict(experiment_name=f'classifier_ihm')
-registered_model_name = 'classifier_ihm_rnn_v0'
+registered_model_name = 'classifier_ihm_HistGBT_v0'
 
-## Loading model attributes from mlflow
-mlflow_setup = helper.setup_mlflow(**mlflow_conf)
-run_data = helper.fetch_mlflow_run(run_id, 
-                                   mlflow_uri=mlflow_setup['mlflow_uri'],
-                                   artifacts_prefix=['artifact/weight_labels'],
-                                   parse_params=True
-                                  )
-hparams = run_data['params']
-
-hparams = argparse.Namespace(**hparams)
-hparams.rnn_class = helper.import_model_class(hparams.rnn_class.split(&quot;'&quot;)[1::2][0])
-
-weight_labels = pickle.load(open(helper.get_artifact_path(run_data['artifact_paths'][0],
-                                   artifact_uri=run_data['info'].artifact_uri), 'rb'))
-
-weights = T.FloatTensor(weight_labels.values)
-
-## Setting model weights
-base_model = rnn.RNNClassifier(input_dim=input_dim, 
-                               output_dim=output_dim, 
-                               hidden_dim=hparams.hidden_dim,
-                               rnn_class=hparams.rnn_class,
-                               n_layers=hparams.n_layers,
-                               dropout=hparams.dropout,
-                               recurrent_dropout=hparams.recurrent_dropout,
-                               bidirectional=hparams.bidirectional
-                              )
-
-criterion = nn.CrossEntropyLoss(weight=weights)
-
-wrapped_model = ptr.PyModel(hparams, base_model,
-                            train_dataset=None,
-                            val_dataset=None, # None
-                            test_dataset=None, # test_dataset
-                            #optimizer=optimizer,
-                            loss_func=criterion,
-                            #scheduler=scheduler,
-                            collate_fn=ptd.collate_fn
-                            )
-</code></pre>
-
-
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-
-<pre><code class="language-python"># Recreate models
-base_model = rnn.RNNClassifier(input_dim=int(run_data['tags']['input_dim']),
-                               output_dim=int(run_data['tags']['output_dim']), 
-                               hidden_dim=hparams.hidden_dim,
-                               rnn_class=hparams.rnn_class,
-                               n_layers=hparams.n_layers,
-                               dropout=hparams.dropout,
-                               recurrent_dropout=hparams.recurrent_dropout,
-                               bidirectional=hparams.bidirectional
-                               )
-criterion = nn.CrossEntropyLoss(weight=weights)
-
-
-# Creating the wrapped model
-wrapped_model = ptr.PyModel(hparams, base_model,
-                            train_dataset=None,
-                            val_dataset=None, # None
-                            test_dataset=None, # test_dataset
-                            cal_dataset=None,
-                            loss_func=criterion,
-                            collate_fn=ptd.collate_fn
-                            )
-print('model ready for logging')
+print(&quot;model ready to be registered&quot;) 
 </code></pre>
 
 
@@ -1176,12 +1126,11 @@ print('model ready for logging')
 
 
 <pre><code class="language-python"># Register model
-ptr.register_model_with_mlflow(run_id, mlflow_conf, wrapped_model, 
+skr.register_model_with_mlflow(run_id, mlflow_conf, 
                                registered_model_name=registered_model_name,
                                test_feat_file=expt_conf['test']['feat_file'],
                                test_tgt_file=expt_conf['test']['tgt_file'],
-                               config=os.path.abspath('./ihm_expt_config.yml'),
-                               model_path='model_checkpoint'
+                               config=os.path.abspath('./ihm_expt_config.yml')
                               )
 </code></pre>
 
@@ -1195,10 +1144,9 @@ ptr.register_model_with_mlflow(run_id, mlflow_conf, wrapped_model,
 <p><code>Lightsaber</code> also natively supports conducting inferences on new patients using the registered model. The key steps involve:</p>
 <ul>
 <li>loading the registerd model from mlflow</li>
-<li>Ingest the new test data using <code>BaseDataset</code> in inference mode (setting <code>tgt_file</code> to <code>None</code>)</li>
-<li>Use the <code>PyModel.predict_patient</code> method to generate inference for the patient of interest </li>
+<li>Ingest the new test data using <code>SKDataLoader</code> in inference mode (setting <code>tgt_file</code> to <code>None</code>)</li>
+<li>Use the <code>SKModel.predict_patient</code> method to generate inference for the patient of interest </li>
 </ul>
-<p>It is to be noted, for the first step, users may need to perform additional setup as show below</p>
 </div>
 </div>
 </div>
@@ -1216,10 +1164,7 @@ ptr.register_model_with_mlflow(run_id, mlflow_conf, wrapped_model,
 <div class="input">
 
 
-<pre><code class="language-python"># Reading things from mlflow
-# Model coders can create functions to repeat this - part of model init
-import torch
-from lightsaber.trainers import helper
+<pre><code class="language-python"># Reading from yaml to log other artifacts
 data_dir = Path(os.environ.get('LS_DATA_PATH', './data'))
 assert data_dir.is_dir()
 
@@ -1228,47 +1173,10 @@ expt_conf = du.yaml.load(open(conf_path).read().format(DATA_DIR=data_dir),
                          Loader=du._Loader)
 
 mlflow_conf = dict(experiment_name=f'classifier_ihm')
-registered_model_name = 'classifier_ihm_rnn_v0'
+registered_model_name = 'classifier_ihm_HistGBT_v0'
 
-## Loading model attributes from mlflow
-mlflow_setup = helper.setup_mlflow(**mlflow_conf)
-run_data = helper.fetch_mlflow_run(run_id, 
-                                   mlflow_uri=mlflow_setup['mlflow_uri'],
-                                   artifacts_prefix=['artifact/weight_labels'],
-                                   parse_params=True
-                                  )
-hparams = run_data['params']
-
-hparams = argparse.Namespace(**hparams)
-hparams.rnn_class = helper.import_model_class(hparams.rnn_class.split(&quot;'&quot;)[1::2][0])
-
-weight_labels = pickle.load(open(helper.get_artifact_path(run_data['artifact_paths'][0],
-                                   artifact_uri=run_data['info'].artifact_uri), 'rb'))
-
-weights = T.FloatTensor(weight_labels.values)
-
-## Setting model weights
-base_model = rnn.RNNClassifier(input_dim=input_dim, 
-                               output_dim=output_dim, 
-                               hidden_dim=hparams.hidden_dim,
-                               rnn_class=hparams.rnn_class,
-                               n_layers=hparams.n_layers,
-                               dropout=hparams.dropout,
-                               recurrent_dropout=hparams.recurrent_dropout,
-                               bidirectional=hparams.bidirectional
-                              )
-
-criterion = nn.CrossEntropyLoss(weight=weights)
-
-wrapped_model = ptr.PyModel(hparams, base_model,
-                            train_dataset=None,
-                            val_dataset=None, # None
-                            test_dataset=None, # test_dataset
-                            #optimizer=optimizer,
-                            loss_func=criterion,
-                            #scheduler=scheduler,
-                            collate_fn=ptd.collate_fn
-                            )
+wrapped_model = skr.load_model_from_mlflow(run_id, mlflow_conf)
+print(&quot;model ready to be inferred from&quot;) 
 </code></pre>
 
 
@@ -1278,27 +1186,17 @@ wrapped_model = ptr.PyModel(hparams, base_model,
 <div class="input">
 
 
-<pre><code class="language-python"># Loading saved model from mlflow
-wrapped_model = ptr.load_model_from_mlflow(run_id, mlflow_conf, wrapped_model)
-</code></pre>
-
-
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-
-<pre><code class="language-python">inference_dataloader = ptd.BaseDataset(tgt_file=None,
-                                       feat_file=expt_conf['test']['feat_file'],
-                                       idx_col=expt_conf['idx_cols'],
-                                       tgt_col=expt_conf['tgt_col'],
-                                       feat_columns=expt_conf['feat_cols'],
-                                       time_order_col=expt_conf['time_order_col'],
-                                       category_map=expt_conf['category_map'],
-                                       transform=transform,
-                                       filter=fitted_filter,
-                                       )
+<pre><code class="language-python">inference_dataloader = skd.SKDataLoader(tgt_file=None,
+                                        feat_file=expt_conf['test']['feat_file'],
+                                        idx_col=expt_conf['idx_cols'],
+                                        tgt_col=expt_conf['tgt_col'],
+                                        feat_columns=expt_conf['feat_cols'],
+                                        time_order_col=expt_conf['time_order_col'],
+                                        category_map=expt_conf['category_map'],
+                                        filter=fitted_filter,
+                                        fill_value=expt_conf['normal_values'],
+                                        flatten=flatten,
+                                        )
 
 print(inference_dataloader.shape, len(inference_dataloader))
 </code></pre>
@@ -1339,7 +1237,7 @@ wrapped_model.predict_patient(patient_id, inference_dataloader)
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../IHM_Example_Using_HistGBT/" class="md-footer__link md-footer__link--prev" aria-label="Previous: IHM Example Using HistGBT" rel="prev">
+        <a href="../user_guide/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Getting Started" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1348,20 +1246,20 @@ wrapped_model.predict_patient(patient_id, inference_dataloader)
               <span class="md-footer__direction">
                 Previous
               </span>
-              IHM Example Using HistGBT
+              Getting Started
             </div>
           </div>
         </a>
       
       
         
-        <a href="../api/" class="md-footer__link md-footer__link--next" aria-label="Next: API" rel="next">
+        <a href="../IHM_Example_Using_LSTM/" class="md-footer__link md-footer__link--next" aria-label="Next: IHM Example Using LSTM" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              API
+              IHM Example Using LSTM
             </div>
           </div>
           <div class="md-footer__button md-icon">

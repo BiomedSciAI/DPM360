@@ -10,18 +10,18 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.6">
     
     
       
-        <title>Running Atlas-Lightsaber - DPM360</title>
+        <title>Standalone Installation - DPM360</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.2c0c5eaf.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.802231af.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.7fa14f5b.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
         
       
     
@@ -46,6 +46,8 @@
     
     
       
+
+
     
     
   </head>
@@ -57,8 +59,9 @@
     
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
-      
   
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -66,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#running-atlas-lightsaber" class="md-skip">
+        <a href="#standalone-installation" class="md-skip">
           Skip to content
         </a>
       
@@ -96,15 +99,14 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Running Atlas-Lightsaber
+              Standalone Installation
             
           </span>
         </div>
       </div>
     </div>
-    <div class="md-header__options">
-      
-    </div>
+    
+    
     
       <label class="md-header__button md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
@@ -114,14 +116,18 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
@@ -136,6 +142,19 @@
   </div>
 </div>
     
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/IBM/DPM360/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    IBM/DPM360
+  </div>
+</a>
+      </div>
     
   </nav>
 </header>
@@ -166,6 +185,19 @@
     </a>
     DPM360
   </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/IBM/DPM360/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    IBM/DPM360
+  </div>
+</a>
+    </div>
   
   <ul class="md-nav__list" data-md-scrollfix>
     
@@ -227,7 +259,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../serviceBuilder/" class="md-nav__link">
+      <a href="../../service_builder/" class="md-nav__link">
         Service Builder
       </a>
     </li>
@@ -237,14 +269,12 @@
             
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" data-md-state="indeterminate" type="checkbox" id="__nav_2_3" checked>
       
       <label class="md-nav__link" for="__nav_2_3">
         Cohort Tools
@@ -262,8 +292,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
-        Cohort Tools
+      <a href="../../CohortTools/" class="md-nav__link">
+        Overview
       </a>
     </li>
   
@@ -272,20 +302,11 @@
             
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        Running Atlas-Lightsaber
+    <li class="md-nav__item">
+      <a href="../../CohortTools/user_guide/" class="md-nav__link">
+        User Guide
       </a>
-      
     </li>
   
 
@@ -299,12 +320,14 @@
             
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" checked>
       
       <label class="md-nav__link" for="__nav_2_4">
         Lightsaber
@@ -322,8 +345,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Lightsaber/" class="md-nav__link">
-        Home
+      <a href="../" class="md-nav__link">
+        Introduction
       </a>
     </li>
   
@@ -337,16 +360,16 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4_2" type="checkbox" id="__nav_2_4_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4_2" data-md-state="indeterminate" type="checkbox" id="__nav_2_4_2" checked>
       
       <label class="md-nav__link" for="__nav_2_4_2">
-        User Guide
+        Design and Usage
         <span class="md-nav__icon md-icon"></span>
       </label>
-      <nav class="md-nav" aria-label="User Guide" data-md-level="3">
+      <nav class="md-nav" aria-label="Design and Usage" data-md-level="3">
         <label class="md-nav__title" for="__nav_2_4_2">
           <span class="md-nav__icon md-icon"></span>
-          User Guide
+          Design and Usage
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -355,27 +378,9 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Lightsaber/why_use_lightsaber/" class="md-nav__link">
-        Why use lightsaber
+      <a href="../user_guide/" class="md-nav__link">
+        Getting Started
       </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../Lightsaber/user_guide/" class="md-nav__link">
-        Overview
-      </a>
-    </li>
-  
-
-          
-        </ul>
-      </nav>
     </li>
   
 
@@ -388,14 +393,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4_3" type="checkbox" id="__nav_2_4_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4_2_2" data-md-state="indeterminate" type="checkbox" id="__nav_2_4_2_2" checked>
       
-      <label class="md-nav__link" for="__nav_2_4_3">
+      <label class="md-nav__link" for="__nav_2_4_2_2">
         Example
         <span class="md-nav__icon md-icon"></span>
       </label>
-      <nav class="md-nav" aria-label="Example" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_4_3">
+      <nav class="md-nav" aria-label="Example" data-md-level="4">
+        <label class="md-nav__title" for="__nav_2_4_2_2">
           <span class="md-nav__icon md-icon"></span>
           Example
         </label>
@@ -406,7 +411,19 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Lightsaber/IHM_Example_Using_LSTM/" class="md-nav__link">
+      <a href="../IHM_Example_Using_HistGBT/" class="md-nav__link">
+        IHM Example Using HistGBT
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IHM_Example_Using_LSTM/" class="md-nav__link">
         IHM Example Using LSTM
       </a>
     </li>
@@ -415,6 +432,76 @@
           
         </ul>
       </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        API
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Standalone Installation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Standalone Installation
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation-instructions" class="md-nav__link">
+    Installation Instructions
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -446,8 +533,24 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation-instructions" class="md-nav__link">
+    Installation Instructions
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -459,75 +562,22 @@
             <article class="md-content__inner md-typeset">
               
                 
+                  <a href="https://github.com/IBM/DPM360/edit/master/docs/Lightsaber/install.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
                 
-                <h1 id="running-atlas-lightsaber">Running Atlas-Lightsaber</h1>
-<p>The cohort_tools folder contains code related to the extraction of features related to cohorts defined via ATLAS or custom queries and used for developing deep learning DPM algorithms in Lightsaber using Python.</p>
-<p>The inhospital_mortality_mimic_iii folder under the demos folder contains Jupyter notebooks illustrating code related to running specific models for prediction tasks. </p>
-<p>These are the steps required to run the feature extraction from Atlas and the training/registration of the model.</p>
-<p><b>Step 1: Running feature extraction to generate files needed for training model with Lightsaber</b></p>
-<p><b>Pre-requisites:</b>
-Ensure the environment is setup using the requirements.txt file in the cohort_tools folder
-Some of the pre-requisites may need to be modified to suit your environment. 
-Specifically you would need to install R, and the rpy2 version may need to be modified depending on your OS. 
-The requirements file provided are more as a guideline and not definitive.</p>
-<p><b>Execution:</b></p>
-<ol>
-<li>
-<p>Ensure that you are using the environment created using the requirements file. </p>
-</li>
-<li>
-<p>Run the IHM_MIMIC_III_feature_extraction.ipynb notebook from demos folder</p>
-<ol>
-<li>
-<p>Ensure you know the unique identifiers of the target and outcome cohorts defined in ATLAS. Optionally, generate new cohorts using custom queries as illustrated in the IHM_MIMIC_III_custom_cohort_definition.ipynb Jupyter notebook in the demos file</p>
-</li>
-<li>
-<p>Create an instance of the CohortConnector class by specifying the connection details via a json file or passing the required arguments. This object is used to connect to specific target and outcome cohorts in an OMOP CDM database</p>
-</li>
-<li>
-<p>Create an instance of the FeatureExtractor class by passing a previously created CohortConnector object as an argument along with the feature extraction settings specified in a json file or passed as arguments. This will be used to extract features from the cohorts.</p>
-</li>
-<li>
-<p>Extract features for training using the 'extract_features' function and specifying setup='train' as an argument to the function.  </p>
-</li>
-<li>Extract features for prediction using the 'extract_features' function and specifying setup='prediction' as an argument to the function.</li>
-</ol>
-</li>
-</ol>
-<p><b>Outputs:</b></p>
-<ol>
-<li>
-<p>Data folder containing CSV files for model training and validation 
-These map to the features and output for train and test files</p>
-</li>
-<li>
-<p>Generated experiment configuration (YAML) file. </p>
-</li>
-</ol>
-<p><b>Step 2: Training and registering model using features from atlas</b></p>
-<p>Pre-requisites:
-Run the conda.yaml file to setup the environment
-Export the following variables with the appropriate values, these need to be set prior to running the notebook in
-export AWS_ACCESS_KEY_ID=''
-export AWS_SECRET_ACCESS_KEY=''
-export MLFLOW_S3_ENDPOINT_URL=''
-export MLFLOW_URI=''</p>
-<p>Execution Via Jupyter notebook
-Run the Exp_LSTM.ipynb from demos folder after setting the following variables</p>
-<ol>
-<li>
-<p>Ensure the configurations for MLFlow are setup correctly</p>
-</li>
-<li>
-<p>Ensure Minio password/username/url/other credentials are setup correctly</p>
-</li>
-<li>
-<p>Make sure the lightsaber mlflow path is setup correctly so that the registration/logging of model works</p>
-</li>
-</ol>
-<p>Outputs of this step are:
-You should be able to see the model created in the MLFlow UI
-If you logged any artifacts, they would be available in the MLFlow UI as well</p>
+                
+                <h1 id="standalone-installation">Standalone Installation</h1>
+<p><code>Lightsaber</code> is an integral part of the overall DPM360 pipeline. However, by design, <code>Lightsaber</code> can also be used standalone as a python package. </p>
+<h2 id="installation-instructions">Installation Instructions</h2>
+<p><code>Lightsaber</code> is installable as a python package from source using <code>pip</code>. (currently,  its not on <code>pypi</code>/<code>conda</code>) as follows:</p>
+<ul>
+<li>barebones install of <code>Lightsaber</code>: <code>pip install .</code> </li>
+<li>with doc support: <code>pip install .[doc]</code></li>
+<li>with time-to-event modeling (T2E) support: <code>pip install .[t2e]</code></li>
+<li>full install with all components: <code>pip install .[full]</code></li>
+</ul>
+<p>For convenience, an example conda environment compatible with <code>Lightsaber</code> is available in <a href="https://github.com/IBM/DPM360/blob/main/environment.yaml">github</a>.</p>
                 
               
               
@@ -538,6 +588,7 @@ If you logged any artifacts, they would be available in the MLFlow UI as well</p
             </article>
           </div>
         </div>
+        
       </main>
       
         
@@ -545,7 +596,8 @@ If you logged any artifacts, they would be available in the MLFlow UI as well</p
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../" class="md-footer__link md-footer__link--prev" rel="prev">
+        
+        <a href="../api/" class="md-footer__link md-footer__link--prev" aria-label="Previous: API" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -554,25 +606,11 @@ If you logged any artifacts, they would be available in the MLFlow UI as well</p
               <span class="md-footer__direction">
                 Previous
               </span>
-              Cohort Tools
+              API
             </div>
           </div>
         </a>
       
-      
-        <a href="../../Lightsaber/" class="md-footer__link md-footer__link--next" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Home
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-          </div>
-        </a>
       
     </nav>
   
@@ -595,10 +633,10 @@ If you logged any artifacts, they would be available in the MLFlow UI as well</p
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fb4a9340.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.a1c7c35e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.756773cc.min.js"></script>
       
     
   </body>

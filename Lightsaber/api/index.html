@@ -1,0 +1,2331 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.6">
+    
+    
+      
+        <title>API - DPM360</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.802231af.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../css/ansi-colours.css">
+    
+      <link rel="stylesheet" href="../../css/jupyter-cells.css">
+    
+      <link rel="stylesheet" href="../../css/pandas-dataframe.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api-documentation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="DPM360" class="md-header__button md-logo" aria-label="DPM360" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DPM360
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/IBM/DPM360/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    IBM/DPM360
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="DPM360" class="md-nav__button md-logo" aria-label="DPM360" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    DPM360
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/IBM/DPM360/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    IBM/DPM360
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Components
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Components" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installer/" class="md-nav__link">
+        Installer
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../service_builder/" class="md-nav__link">
+        Service Builder
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" data-md-state="indeterminate" type="checkbox" id="__nav_2_3" checked>
+      
+      <label class="md-nav__link" for="__nav_2_3">
+        Cohort Tools
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Cohort Tools" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Cohort Tools
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CohortTools/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CohortTools/user_guide/" class="md-nav__link">
+        User Guide
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" checked>
+      
+      <label class="md-nav__link" for="__nav_2_4">
+        Lightsaber
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Lightsaber" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Lightsaber
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4_2" type="checkbox" id="__nav_2_4_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2_4_2">
+        Design and Usage
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Design and Usage" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          Design and Usage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_guide/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4_2_2" data-md-state="indeterminate" type="checkbox" id="__nav_2_4_2_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2_4_2_2">
+        Example
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Example" data-md-level="4">
+        <label class="md-nav__title" for="__nav_2_4_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Example
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IHM_Example_Using_HistGBT/" class="md-nav__link">
+        IHM Example Using HistGBT
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IHM_Example_Using_LSTM/" class="md-nav__link">
+        IHM Example Using LSTM
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          API
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        API
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#data-ingestion" class="md-nav__link">
+    Data Ingestion
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Ingestion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.data_utils.pt_dataset.BaseDataset" class="md-nav__link">
+    BaseDataset
+  </a>
+  
+    <nav class="md-nav" aria-label="BaseDataset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.data_utils.pt_dataset.BaseDataset.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.data_utils.pt_dataset.collate_fn" class="md-nav__link">
+    collate_fn()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.data_utils.sk_dataloader.SKDataLoader" class="md-nav__link">
+    SKDataLoader
+  </a>
+  
+    <nav class="md-nav" aria-label="SKDataLoader">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.data_utils.sk_dataloader.SKDataLoader.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filters-and-transforms" class="md-nav__link">
+    Filters and Transforms
+  </a>
+  
+    <nav class="md-nav" aria-label="Filters and Transforms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.data_utils.pt_dataset.identity_2d" class="md-nav__link">
+    identity_2d()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-training" class="md-nav__link">
+    Model Training
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Training">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.pt_trainer.PyModel" class="md-nav__link">
+    PyModel
+  </a>
+  
+    <nav class="md-nav" aria-label="PyModel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.pt_trainer.PyModel.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.pt_trainer.run_training_with_mlflow" class="md-nav__link">
+    run_training_with_mlflow()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.sk_trainer.SKModel" class="md-nav__link">
+    SKModel
+  </a>
+  
+    <nav class="md-nav" aria-label="SKModel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.sk_trainer.SKModel.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.sk_trainer.run_training_with_mlflow" class="md-nav__link">
+    run_training_with_mlflow()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-registration-and-load" class="md-nav__link">
+    Model Registration and Load
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Registration and Load">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch" class="md-nav__link">
+    PyTorch
+  </a>
+  
+    <nav class="md-nav" aria-label="PyTorch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.pt_trainer.register_model_with_mlflow" class="md-nav__link">
+    register_model_with_mlflow()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.pt_trainer.load_model_from_mlflow" class="md-nav__link">
+    load_model_from_mlflow()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scikit-learn" class="md-nav__link">
+    Scikit-learn
+  </a>
+  
+    <nav class="md-nav" aria-label="Scikit-learn">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.sk_trainer.register_model_with_mlflow" class="md-nav__link">
+    register_model_with_mlflow()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.sk_trainer.load_model_from_mlflow" class="md-nav__link">
+    load_model_from_mlflow()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        Standalone Installation
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#data-ingestion" class="md-nav__link">
+    Data Ingestion
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Ingestion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.data_utils.pt_dataset.BaseDataset" class="md-nav__link">
+    BaseDataset
+  </a>
+  
+    <nav class="md-nav" aria-label="BaseDataset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.data_utils.pt_dataset.BaseDataset.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.data_utils.pt_dataset.collate_fn" class="md-nav__link">
+    collate_fn()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.data_utils.sk_dataloader.SKDataLoader" class="md-nav__link">
+    SKDataLoader
+  </a>
+  
+    <nav class="md-nav" aria-label="SKDataLoader">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.data_utils.sk_dataloader.SKDataLoader.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filters-and-transforms" class="md-nav__link">
+    Filters and Transforms
+  </a>
+  
+    <nav class="md-nav" aria-label="Filters and Transforms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.data_utils.pt_dataset.identity_2d" class="md-nav__link">
+    identity_2d()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-training" class="md-nav__link">
+    Model Training
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Training">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.pt_trainer.PyModel" class="md-nav__link">
+    PyModel
+  </a>
+  
+    <nav class="md-nav" aria-label="PyModel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.pt_trainer.PyModel.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.pt_trainer.run_training_with_mlflow" class="md-nav__link">
+    run_training_with_mlflow()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.sk_trainer.SKModel" class="md-nav__link">
+    SKModel
+  </a>
+  
+    <nav class="md-nav" aria-label="SKModel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.sk_trainer.SKModel.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.sk_trainer.run_training_with_mlflow" class="md-nav__link">
+    run_training_with_mlflow()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-registration-and-load" class="md-nav__link">
+    Model Registration and Load
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Registration and Load">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pytorch" class="md-nav__link">
+    PyTorch
+  </a>
+  
+    <nav class="md-nav" aria-label="PyTorch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.pt_trainer.register_model_with_mlflow" class="md-nav__link">
+    register_model_with_mlflow()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.pt_trainer.load_model_from_mlflow" class="md-nav__link">
+    load_model_from_mlflow()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scikit-learn" class="md-nav__link">
+    Scikit-learn
+  </a>
+  
+    <nav class="md-nav" aria-label="Scikit-learn">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.sk_trainer.register_model_with_mlflow" class="md-nav__link">
+    register_model_with_mlflow()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lightsaber.trainers.sk_trainer.load_model_from_mlflow" class="md-nav__link">
+    load_model_from_mlflow()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/IBM/DPM360/edit/master/docs/Lightsaber/api.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="api-documentation">API documentation</h1>
+<h2 id="data-ingestion">Data Ingestion</h2>
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 id="lightsaber.data_utils.pt_dataset.BaseDataset" class="doc doc-heading">
+        <code>lightsaber.data_utils.pt_dataset.BaseDataset</code>
+
+
+
+</h3>
+
+    <div class="doc doc-contents first">
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="lightsaber.data_utils.pt_dataset.BaseDataset.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tgt_file</span><span class="p">,</span> <span class="n">feat_file</span><span class="p">,</span> <span class="n">idx_col</span><span class="p">,</span> <span class="n">tgt_col</span><span class="p">,</span> <span class="n">feat_columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">time_order_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category_map</span><span class="o">=</span><span class="p">{},</span> <span class="n">transform</span><span class="o">=</span><span class="p">[</span><span class="o">&lt;</span><span class="n">function</span> <span class="n">transform_drop_cols</span> <span class="n">at</span> <span class="mh">0x7f954724df70</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">transform_fillna</span> <span class="n">at</span> <span class="mh">0x7f9547246040</span><span class="o">&gt;</span><span class="p">],</span> <span class="nb">filter</span><span class="o">=</span><span class="p">[</span><span class="o">&lt;</span><span class="n">function</span> <span class="n">identity_nd</span> <span class="n">at</span> <span class="mh">0x7f953e30f670</span><span class="o">&gt;</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Base dataset class</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>tgt_file</code></td>
+        <td><code></code></td>
+        <td><p>target file path</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>feat_file</code></td>
+        <td><code></code></td>
+        <td><p>feature file path</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>idx_col</code></td>
+        <td><code>str or List[str]</code></td>
+        <td><p>index columns in the data. present in both <code>tgt_file</code> and <code>feat_file</code></p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>tgt_col</code></td>
+        <td><code>str or List[str]</code></td>
+        <td><p>target column present in <code>tgt_file</code></p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>feat_columns</code></td>
+        <td><code></code></td>
+        <td><p>feature columns to select from. either a single regex or list of columns (partial regex that matches the complete column name is ok. e.g. <code>CCS</code> would only match <code>CCS</code> whereas <code>CCS.*</code> will match <code>CCS_XYZ</code> and <code>CCS</code>) 
+Default: <code>None</code> -&gt; implies all columns</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>time_order_col</code></td>
+        <td><code></code></td>
+        <td><p>column(s) that signify the time ordering for a single example.
+Default: <code>None</code> -&gt; implies no columns</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>category_map</code></td>
+        <td><code></code></td>
+        <td><p>dictionary of column maps</p></td>
+        <td><code>{}</code></td>
+      </tr>
+      <tr>
+        <td><code>transform</code></td>
+        <td><code>single callable or list/tuple of callables</code></td>
+        <td><p>how to transform data. if list of callables provided eg <code>[f, g]</code>, <code>g(f(x))</code> used 
+Default: drop <code>lightsaber.constants::DEFAULT_DROP_COLS</code> and fillna</p></td>
+        <td><code>[&lt;function transform_drop_cols at 0x7f954724df70&gt;, &lt;function transform_fillna at 0x7f9547246040&gt;]</code></td>
+      </tr>
+      <tr>
+        <td><code>filter</code></td>
+        <td><code>single callable or list/tuple of callables</code></td>
+        <td><p>how to filter data. if list of callables provided eg <code>[f, g]</code>, <code>g(f(x))</code> used 
+Default: no operation</p></td>
+        <td><code>[&lt;function identity_nd at 0x7f953e30f670&gt;]</code></td>
+      </tr>
+      <tr>
+        <td><code>device</code></td>
+        <td><code>str</code></td>
+        <td><p>valid pytorch device. <code>cpu</code> or <code>gpu</code></p></td>
+        <td><code>&#39;cpu&#39;</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Examples:</strong></p>
+    <p>Example of feature columns.</p>
+    <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CCS_128&#39;</span><span class="p">,</span> <span class="s1">&#39;CCS&#39;</span><span class="p">,</span> <span class="s1">&#39;AGE&#39;</span><span class="p">,</span> <span class="s1">&#39;GENDER&#39;</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">feat_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CCS_.*&#39;</span><span class="p">,</span> <span class="s1">&#39;AGE&#39;</span><span class="p">]</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">BaseDataset</span><span class="o">.</span><span class="n">_select_features</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">feat_columns</span><span class="p">)</span>
+<span class="p">[</span><span class="s1">&#39;CCS_128&#39;</span><span class="p">,</span> <span class="s1">&#39;AGE&#39;</span><span class="p">]</span>
+</code></pre></div>
+    <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">feat_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CCS&#39;</span><span class="p">,</span> <span class="s1">&#39;AGE&#39;</span><span class="p">]</span> <span class="c1"># would select &#39;CCS&#39; and &#39;AGE&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">BaseDataset</span><span class="o">.</span><span class="n">_select_features</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">feat_columns</span><span class="p">)</span>
+<span class="p">[</span><span class="s1">&#39;CCS&#39;</span><span class="p">,</span> <span class="s1">&#39;AGE&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="lightsaber.data_utils.pt_dataset.collate_fn" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">lightsaber</span><span class="o">.</span><span class="n">data_utils</span><span class="o">.</span><span class="n">pt_dataset</span><span class="o">.</span><span class="n">collate_fn</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents first">
+
+      <p>Provides mechanism to collate the batch</p>
+<p>ref: https://github.com/dhpollack/programming_notebooks/blob/master/pytorch_attention_audio.py#L245</p>
+<p>Puts data, and lengths into a packed_padded_sequence then returns
+the packed_padded_sequence and the labels.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>batch</code></td>
+        <td><code>List[Tuples]</code></td>
+        <td><p>[(*data, target)] data: all the differnt data input from <code>__getattr__</code>  target: target y</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Tuple</code></td>
+      <td><p>(dx, dy, lengths, idx)</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>lightsaber/data_utils/pt_dataset.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">collate_fn</span><span class="p">(</span><span class="n">batch</span><span class="p">):</span> 
+    <span class="sd">&quot;&quot;&quot;Provides mechanism to collate the batch</span>
+
+<span class="sd">    ref: https://github.com/dhpollack/programming_notebooks/blob/master/pytorch_attention_audio.py#L245</span>
+
+<span class="sd">    Puts data, and lengths into a packed_padded_sequence then returns</span>
+<span class="sd">    the packed_padded_sequence and the labels.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    batch : List[Tuples]</span>
+<span class="sd">        [(*data, target)] data: all the differnt data input from `__getattr__`  target: target y</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Tuple</span>
+<span class="sd">        (dx, dy, lengths, idx)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pad</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">PAD</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">dx_t</span><span class="p">,</span> <span class="n">dy_t</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1">#  sigs = sigs.t()</span>
+        <span class="n">dx_t</span><span class="o">.</span><span class="n">unsqueeze_</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">dy_t</span><span class="o">.</span><span class="n">unsqueeze_</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">lengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">lengths</span><span class="p">]</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dx_t</span><span class="p">,</span> <span class="n">dy_t</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+                                         <span class="k">for</span> <span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                                                                             <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)])</span>
+        <span class="n">max_len</span><span class="p">,</span> <span class="n">n_feats</span> <span class="o">=</span> <span class="n">dx_t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+        <span class="n">device</span> <span class="o">=</span> <span class="n">dx_t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">device</span>
+
+        <span class="n">dx_t</span> <span class="o">=</span> <span class="p">[</span><span class="n">T</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">s</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">max_len</span> <span class="o">-</span> <span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">n_feats</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="n">pad</span><span class="p">)),</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="n">max_len</span> <span class="k">else</span> <span class="n">s</span>
+                <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">dx_t</span><span class="p">]</span>
+        <span class="n">dx_t</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">dx_t</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>  <span class="c1"># bs * max_seq_len * n_feat</span>
+
+        <span class="n">dy_t</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">dy_t</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>  <span class="c1"># bs * n_out</span>
+
+        <span class="c1"># Handling the other variables</span>
+        <span class="n">lengths</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="c1"># bs * 1</span>
+    <span class="k">return</span> <span class="n">dx_t</span><span class="p">,</span> <span class="n">dy_t</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">idx</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 id="lightsaber.data_utils.sk_dataloader.SKDataLoader" class="doc doc-heading">
+        <code>lightsaber.data_utils.sk_dataloader.SKDataLoader</code>
+
+
+
+</h3>
+
+    <div class="doc doc-contents first">
+
+      <p>Custom data loaders for scikit-learn</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="lightsaber.data_utils.sk_dataloader.SKDataLoader.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tgt_file</span><span class="p">,</span> <span class="n">feat_file</span><span class="p">,</span> <span class="n">idx_col</span><span class="p">,</span> <span class="n">tgt_col</span><span class="p">,</span> <span class="n">feat_columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">time_order_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category_map</span><span class="o">=</span><span class="p">{},</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">flatten</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="n">cols_to_drop</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;INDEX_CLAIM_THRU_DT&#39;</span><span class="p">,</span> <span class="s1">&#39;INDEX_CLAIM_ORDER&#39;</span><span class="p">,</span> <span class="s1">&#39;CLAIM_NO&#39;</span><span class="p">,</span> <span class="s1">&#39;CLM_ADMSN_DT&#39;</span><span class="p">,</span> <span class="s1">&#39;CLM_THRU_DT&#39;</span><span class="p">,</span> <span class="s1">&#39;CLAIM_ORDER&#39;</span><span class="p">])</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>tgt_file</code></td>
+        <td><code></code></td>
+        <td><p>target file path</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>feat_file</code></td>
+        <td><code></code></td>
+        <td><p>feature file path</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>idx_col</code></td>
+        <td><code></code></td>
+        <td><p>columns to specify the unique examples from the feature and target set</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>tgt_col</code></td>
+        <td><code></code></td>
+        <td><p>columns to specify the target column from the target set.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>feat_columns</code></td>
+        <td><code></code></td>
+        <td><p>feature columns to select from. either list of columns (partials columns using <code>*</code> allowed) or a single regex
+Default: <code>None</code> -&gt; implies all columns</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>time_order_col</code></td>
+        <td><code></code></td>
+        <td><p>column(s) that signify the time ordering for a single example.
+Default: <code>None</code> -&gt; implies no columns</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>category_map</code></td>
+        <td><code></code></td>
+        <td><p>dictionary of column maps</p></td>
+        <td><code>{}</code></td>
+      </tr>
+      <tr>
+        <td><code>filter</code></td>
+        <td><code>single callable or list/tuple of callables</code></td>
+        <td><p>how to filter data. if list of callables provided eg <code>[f, g]</code>, <code>g(f(x))</code> used 
+Default: no operation</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>fill_value</code></td>
+        <td><code></code></td>
+        <td><p>pandas compatible function or value to fill missing data</p></td>
+        <td><code>0.0</code></td>
+      </tr>
+      <tr>
+        <td><code>flatten</code></td>
+        <td><code></code></td>
+        <td><p>Functions to aggregate and flatten temporal data</p></td>
+        <td><code>&#39;sum&#39;</code></td>
+      </tr>
+      <tr>
+        <td><code>cols_to_drop</code></td>
+        <td><code></code></td>
+        <td><p>list of columns to drop</p></td>
+        <td><code>[&#39;INDEX_CLAIM_THRU_DT&#39;, &#39;INDEX_CLAIM_ORDER&#39;, &#39;CLAIM_NO&#39;, &#39;CLM_ADMSN_DT&#39;, &#39;CLM_THRU_DT&#39;, &#39;CLAIM_ORDER&#39;]</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>lightsaber/data_utils/sk_dataloader.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+             <span class="n">tgt_file</span><span class="p">,</span> <span class="n">feat_file</span><span class="p">,</span> <span class="n">idx_col</span><span class="p">,</span> <span class="n">tgt_col</span><span class="p">,</span> 
+             <span class="n">feat_columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+             <span class="n">time_order_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+             <span class="n">category_map</span><span class="o">=</span><span class="n">C</span><span class="o">.</span><span class="n">DEFAULT_MAP</span><span class="p">,</span> 
+             <span class="nb">filter</span><span class="o">=</span><span class="n">DEFAULT_FILTER</span><span class="p">,</span>
+             <span class="n">fill_value</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
+             <span class="n">flatten</span><span class="o">=</span><span class="n">C</span><span class="o">.</span><span class="n">DEFAULT_FLATTEN</span><span class="p">,</span> 
+             <span class="n">cols_to_drop</span><span class="o">=</span><span class="n">C</span><span class="o">.</span><span class="n">DEFAULT_DROP_COLS</span><span class="p">,</span>
+             <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    tgt_file:</span>
+<span class="sd">        target file path</span>
+<span class="sd">    feat_file:</span>
+<span class="sd">        feature file path</span>
+<span class="sd">    idx_col:</span>
+<span class="sd">        columns to specify the unique examples from the feature and target set</span>
+<span class="sd">    tgt_col:</span>
+<span class="sd">        columns to specify the target column from the target set.</span>
+<span class="sd">    feat_columns:</span>
+<span class="sd">        feature columns to select from. either list of columns (partials columns using `*` allowed) or a single regex</span>
+<span class="sd">        Default: `None` -&gt; implies all columns</span>
+<span class="sd">    time_order_col:</span>
+<span class="sd">        column(s) that signify the time ordering for a single example.</span>
+<span class="sd">        Default: `None` -&gt; implies no columns</span>
+<span class="sd">    category_map:</span>
+<span class="sd">        dictionary of column maps</span>
+<span class="sd">    filter: single callable or list/tuple of callables</span>
+<span class="sd">        how to filter data. if list of callables provided eg `[f, g]`, `g(f(x))` used </span>
+<span class="sd">        Default: no operation</span>
+<span class="sd">    fill_value:</span>
+<span class="sd">        pandas compatible function or value to fill missing data</span>
+<span class="sd">    flatten:</span>
+<span class="sd">        Functions to aggregate and flatten temporal data</span>
+<span class="sd">    cols_to_drop:</span>
+<span class="sd">        list of columns to drop</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_tgt_file</span> <span class="o">=</span> <span class="n">tgt_file</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_feat_file</span> <span class="o">=</span> <span class="n">feat_file</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_idx_col</span> <span class="o">=</span> <span class="n">idx_col</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_tgt_col</span> <span class="o">=</span> <span class="n">tgt_col</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_feat_columns</span> <span class="o">=</span> <span class="n">feat_columns</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_time_order_col</span><span class="o">=</span> <span class="n">time_order_col</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_category_map</span> <span class="o">=</span> <span class="n">category_map</span>
+
+    <span class="c1"># Enforing a flatten function to make sure sklearn modules gets a</span>
+    <span class="c1"># flattended data</span>
+    <span class="n">_filter_flatten_filled_drop_cols</span> <span class="o">=</span> <span class="n">filter_flatten_filled_drop_cols</span><span class="p">(</span><span class="n">cols_to_drop</span><span class="o">=</span><span class="n">cols_to_drop</span><span class="p">,</span>
+                                                                            <span class="n">aggfunc</span><span class="o">=</span><span class="n">flatten</span><span class="p">,</span>
+                                                                            <span class="n">fill_value</span><span class="o">=</span><span class="n">fill_value</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_filter</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">filter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">filter</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_filter</span> <span class="o">+=</span> <span class="nb">filter</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_filter</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_filter</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_filter_flatten_filled_drop_cols</span><span class="p">)</span>
+
+    <span class="c1"># Reading data</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">read_data</span><span class="p">()</span>
+    <span class="k">return</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<h3 id="filters-and-transforms">Filters and Transforms</h3>
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="lightsaber.data_utils.pt_dataset.identity_2d" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">lightsaber</span><span class="o">.</span><span class="n">data_utils</span><span class="o">.</span><span class="n">pt_dataset</span><span class="o">.</span><span class="n">identity_2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents first">
+
+      <p>Identity function for 2 variables</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>x</code></td>
+        <td><code></code></td>
+        <td><p>first param</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>y</code></td>
+        <td><code></code></td>
+        <td><p>second param</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>object</code></td>
+      <td><p>first param</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>lightsaber/data_utils/pt_dataset.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">identity_2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Identity function for 2 variables</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : </span>
+<span class="sd">        first param</span>
+<span class="sd">    y : </span>
+<span class="sd">        second param</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    x : object</span>
+<span class="sd">        first param</span>
+<span class="sd">    y : object</span>
+<span class="sd">        second param</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+<h2 id="model-training">Model Training</h2>
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 id="lightsaber.trainers.pt_trainer.PyModel" class="doc doc-heading">
+        <code>lightsaber.trainers.pt_trainer.PyModel</code>
+
+
+
+</h3>
+
+    <div class="doc doc-contents first">
+
+      <p>PyModel</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="lightsaber.trainers.pt_trainer.PyModel.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">train_dataset</span><span class="p">,</span> <span class="n">val_dataset</span><span class="p">,</span> <span class="n">cal_dataset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">test_dataset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">collate_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">loss_func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">out_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>hparams</code></td>
+        <td><code>Namespace</code></td>
+        <td><p>hyper-paramters for base model</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>model</code></td>
+        <td><code></code></td>
+        <td><p>base pytorch model defining the model logic. model forward should output logit for classfication and accept
+a single positional tensor (<code>x</code>) for input data and keyword tensors for <code>length</code> atleast. 
+Optinally can provide <code>hidden</code> keyword argument for sequential models to ingest past hidden state.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>train_dataset</code></td>
+        <td><code>torch.utils.data.Dataset</code></td>
+        <td><p>training dataset</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>val_dataset</code></td>
+        <td><code>torch.utils.data.Dataset</code></td>
+        <td><p>validation dataset</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>cal_dataset</code></td>
+        <td><code>torch.utils.data.Dataset</code></td>
+        <td><p>calibration dataset - if provided post-hoc calibration is performed</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>test_dataset</code></td>
+        <td><code>torch.utils.data.Dataset</code></td>
+        <td><p>test dataset - if provided, training also report test peformance</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>collate_fn</code></td>
+        <td><code></code></td>
+        <td><p>collate functions to handle inequal sample sizes in batch</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>optimizer</code></td>
+        <td><code>torch.optim.Optimizer</code></td>
+        <td><p>pytorch optimizer. If not provided, Adam is used with standard parameters</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>loss_func</code></td>
+        <td><code>callable</code></td>
+        <td><p>if provided, used to compute the loss. Default: cross entropy loss</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>out_transform</code></td>
+        <td><code>callable</code></td>
+        <td><p>if provided, convert logit to expected format. Default, softmax</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>num_workers</code></td>
+        <td><code>int, Default: 0</code></td>
+        <td><p>if provided sets the numer of workers used by the DataLoaders.</p></td>
+        <td><code>0</code></td>
+      </tr>
+      <tr>
+        <td><code>kwargs</code></td>
+        <td><code>dict</code></td>
+        <td><p>other parameters accepted by pl.LightningModule</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>lightsaber/trainers/pt_trainer.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span>
+             <span class="n">train_dataset</span><span class="p">,</span> <span class="n">val_dataset</span><span class="p">,</span>
+             <span class="n">cal_dataset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">test_dataset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">collate_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">loss_func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">out_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    hparams: Namespace</span>
+<span class="sd">        hyper-paramters for base model</span>
+<span class="sd">    model: </span>
+<span class="sd">        base pytorch model defining the model logic. model forward should output logit for classfication and accept</span>
+<span class="sd">        a single positional tensor (`x`) for input data and keyword tensors for `length` atleast. </span>
+<span class="sd">        Optinally can provide `hidden` keyword argument for sequential models to ingest past hidden state.</span>
+<span class="sd">    train_dataset: torch.utils.data.Dataset</span>
+<span class="sd">        training dataset </span>
+<span class="sd">    val_dataset: torch.utils.data.Dataset</span>
+<span class="sd">        validation dataset </span>
+<span class="sd">    cal_dataset: torch.utils.data.Dataset, optional</span>
+<span class="sd">        calibration dataset - if provided post-hoc calibration is performed</span>
+<span class="sd">    test_dataset: torch.utils.data.Dataset, optional</span>
+<span class="sd">        test dataset - if provided, training also report test peformance</span>
+<span class="sd">    collate_fn: </span>
+<span class="sd">        collate functions to handle inequal sample sizes in batch</span>
+<span class="sd">    optimizer: torch.optim.Optimizer, optional</span>
+<span class="sd">        pytorch optimizer. If not provided, Adam is used with standard parameters</span>
+<span class="sd">    loss_func: callable</span>
+<span class="sd">        if provided, used to compute the loss. Default: cross entropy loss</span>
+<span class="sd">    out_transform: callable</span>
+<span class="sd">        if provided, convert logit to expected format. Default, softmax</span>
+<span class="sd">    num_workers: int, Default: 0</span>
+<span class="sd">        if provided sets the numer of workers used by the DataLoaders. </span>
+<span class="sd">    kwargs: dict, optional</span>
+<span class="sd">        other parameters accepted by pl.LightningModule</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">PyModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">bk_hparams</span> <span class="o">=</span> <span class="n">hparams</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">train_dataset</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">val_dataset</span> <span class="o">=</span> <span class="n">val_dataset</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cal_dataset</span> <span class="o">=</span> <span class="n">cal_dataset</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">test_dataset</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span> <span class="o">=</span> <span class="n">num_workers</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">collate_fn</span> <span class="o">=</span> <span class="n">collate_fn</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_optimizer</span> <span class="o">=</span> <span class="n">optimizer</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;scheduler&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+    <span class="k">if</span> <span class="n">loss_func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss_func</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss_func</span> <span class="o">=</span> <span class="n">loss_func</span>
+
+    <span class="k">if</span> <span class="n">out_transform</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_transform</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Softmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_transform</span> <span class="o">=</span> <span class="n">out_transform</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.</span><span class="p">)</span>
+    <span class="k">return</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="lightsaber.trainers.pt_trainer.run_training_with_mlflow" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">lightsaber</span><span class="o">.</span><span class="n">trainers</span><span class="o">.</span><span class="n">pt_trainer</span><span class="o">.</span><span class="n">run_training_with_mlflow</span><span class="p">(</span><span class="n">mlflow_conf</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">wrapped_model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents first">
+
+      <p>Function to run supervised training for classifcation</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>mlflow_conf</code></td>
+        <td><code>dict</code></td>
+        <td><p>mlflow configuration e,g, MLFLOW_URI</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>trainer</code></td>
+        <td><code>pl.Trainer</code></td>
+        <td><p>a pytorch lightning trainer implementing <code>fit</code> function</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>wrapped_model</code></td>
+        <td><code>PyModel</code></td>
+        <td><p>wrapped PyModel</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kwargs</code></td>
+        <td><code>dict of dicts</code></td>
+        <td><p>can contain <code>artifacts</code> to log with models, <code>model_path</code> to specify model output path, and remianing used as experiment tags</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 id="lightsaber.trainers.sk_trainer.SKModel" class="doc doc-heading">
+        <code>lightsaber.trainers.sk_trainer.SKModel</code>
+
+
+
+</h3>
+
+    <div class="doc doc-contents first">
+
+      <p>SKModel</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="lightsaber.trainers.sk_trainer.SKModel.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_model</span><span class="p">,</span> <span class="n">model_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;undefined_model_name&#39;</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>base_model</code></td>
+        <td><code></code></td>
+        <td><p>base scikit-learn compatible model (classifier) defining model logic</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>model_params</code></td>
+        <td><code></code></td>
+        <td><p>if provided, sets the model parameters for base_model</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>name</code></td>
+        <td><code></code></td>
+        <td><p>name of the model</p></td>
+        <td><code>&#39;undefined_model_name&#39;</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>lightsaber/trainers/sk_trainer.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+             <span class="n">base_model</span><span class="p">,</span>
+             <span class="n">model_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+             <span class="n">name</span><span class="o">=</span><span class="s2">&quot;undefined_model_name&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    base_model:</span>
+<span class="sd">        base scikit-learn compatible model (classifier) defining model logic</span>
+<span class="sd">    model_params:</span>
+<span class="sd">        if provided, sets the model parameters for base_model</span>
+<span class="sd">    name:</span>
+<span class="sd">        name of the model</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">SKModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">base_model</span>
+    <span class="k">if</span> <span class="n">model_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="n">model_params</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;couldnt set model params - base_model/model_params inconsitent with scikit-learn&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">proba</span> <span class="o">=</span> <span class="p">[]</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="lightsaber.trainers.sk_trainer.run_training_with_mlflow" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">lightsaber</span><span class="o">.</span><span class="n">trainers</span><span class="o">.</span><span class="n">sk_trainer</span><span class="o">.</span><span class="n">run_training_with_mlflow</span><span class="p">(</span><span class="n">mlflow_conf</span><span class="p">,</span> <span class="n">wrapped_model</span><span class="p">,</span> <span class="n">train_dataloader</span><span class="p">,</span> <span class="n">val_dataloader</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">test_dataloader</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents first">
+
+      <p>Function to run supervised training for classifcation</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>mlflow_conf</code></td>
+        <td><code>dict</code></td>
+        <td><p>mlflow configuration e,g, MLFLOW_URI</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>wrapped_model</code></td>
+        <td><code>SKModel</code></td>
+        <td><p>wrapped SKModel</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>train_dataloader</code></td>
+        <td><code></code></td>
+        <td><p>training dataloader</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>val_dataloader</code></td>
+        <td><code></code></td>
+        <td><p>validation dataloader, optional</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>test_dataloader</code></td>
+        <td><code></code></td>
+        <td><p>optional</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>kwargs</code></td>
+        <td><code>dict of dicts</code></td>
+        <td><p>can contain <code>artifacts</code> to log with models, <code>model_path</code> to specify model output path, and remianing used as experiment tags</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+<h2 id="model-registration-and-load">Model Registration and Load</h2>
+<h3 id="pytorch">PyTorch</h3>
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="lightsaber.trainers.pt_trainer.register_model_with_mlflow" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">lightsaber</span><span class="o">.</span><span class="n">trainers</span><span class="o">.</span><span class="n">pt_trainer</span><span class="o">.</span><span class="n">register_model_with_mlflow</span><span class="p">(</span><span class="n">run_id</span><span class="p">,</span> <span class="n">mlflow_conf</span><span class="p">,</span> <span class="n">wrapped_model</span><span class="p">,</span> <span class="n">registered_model_name</span><span class="p">,</span> <span class="n">model_path</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">artifacts</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents first">
+
+      <p>Method to register a trained model</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>run_id</code></td>
+        <td><code>str</code></td>
+        <td><p>mlflow run id for the trained model</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mlflow_conf</code></td>
+        <td><code>dict</code></td>
+        <td><p>mlflow configuration e,g, MLFLOW_URI</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>wrapped_model</code></td>
+        <td><code>PyModel</code></td>
+        <td><p>model architecture to be logged</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>registered_model_name</code></td>
+        <td><code>str</code></td>
+        <td><p>name for registering the model</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>model_path</code></td>
+        <td><code>str</code></td>
+        <td><p>output path where model will be logged</p></td>
+        <td><code>&#39;model&#39;</code></td>
+      </tr>
+      <tr>
+        <td><code>artifacts</code></td>
+        <td><code>dict</code></td>
+        <td><p>dictionary of objects to log with the model</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="lightsaber.trainers.pt_trainer.load_model_from_mlflow" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">lightsaber</span><span class="o">.</span><span class="n">trainers</span><span class="o">.</span><span class="n">pt_trainer</span><span class="o">.</span><span class="n">load_model_from_mlflow</span><span class="p">(</span><span class="n">run_id</span><span class="p">,</span> <span class="n">mlflow_conf</span><span class="p">,</span> <span class="n">wrapped_model</span><span class="p">,</span> <span class="n">model_path</span><span class="o">=</span><span class="s1">&#39;model_checkpoint&#39;</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents first">
+
+      <p>Method to load a trained model from mlflow</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>run_id</code></td>
+        <td><code>str</code></td>
+        <td><p>mlflow run id for the trained model</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mlflow_conf</code></td>
+        <td><code>dict</code></td>
+        <td><p>mlflow configuration e,g, MLFLOW_URI</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>wrapped_model</code></td>
+        <td><code>PyModel</code></td>
+        <td><p>model architecture to be logged</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>model_path</code></td>
+        <td><code>str</code></td>
+        <td><p>output path where model checkpoints are logged</p></td>
+        <td><code>&#39;model_checkpoint&#39;</code></td>
+      </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+<h3 id="scikit-learn">Scikit-learn</h3>
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="lightsaber.trainers.sk_trainer.register_model_with_mlflow" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">lightsaber</span><span class="o">.</span><span class="n">trainers</span><span class="o">.</span><span class="n">sk_trainer</span><span class="o">.</span><span class="n">register_model_with_mlflow</span><span class="p">(</span><span class="n">run_id</span><span class="p">,</span> <span class="n">mlflow_conf</span><span class="p">,</span> <span class="n">wrapped_model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">registered_model_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model_path</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">artifacts</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents first">
+
+      <p>Method to register a trained model</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>run_id</code></td>
+        <td><code>str</code></td>
+        <td><p>mlflow run id for the trained model</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mlflow_conf</code></td>
+        <td><code>dict</code></td>
+        <td><p>mlflow configuration e,g, MLFLOW_URI</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>wrapped_model</code></td>
+        <td><code>SKModel</code></td>
+        <td><p>model architecture to be logged. If not provided, the model is directly read from mlflow</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>registered_model_name</code></td>
+        <td><code>str</code></td>
+        <td><p>name for registering the model</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>model_path</code></td>
+        <td><code>str</code></td>
+        <td><p>output path where model will be logged</p></td>
+        <td><code>&#39;model&#39;</code></td>
+      </tr>
+      <tr>
+        <td><code>artifacts</code></td>
+        <td><code>dict</code></td>
+        <td><p>dictionary of objects to log with the model</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="lightsaber.trainers.sk_trainer.load_model_from_mlflow" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">lightsaber</span><span class="o">.</span><span class="n">trainers</span><span class="o">.</span><span class="n">sk_trainer</span><span class="o">.</span><span class="n">load_model_from_mlflow</span><span class="p">(</span><span class="n">run_id</span><span class="p">,</span> <span class="n">mlflow_conf</span><span class="p">,</span> <span class="n">wrapped_model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model_path</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents first">
+
+      <p>Method to load a trained model from mlflow</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>run_id</code></td>
+        <td><code>str</code></td>
+        <td><p>mlflow run id for the trained model</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mlflow_conf</code></td>
+        <td><code>dict</code></td>
+        <td><p>mlflow configuration e,g, MLFLOW_URI</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>wrapped_model</code></td>
+        <td><code>SKModel</code></td>
+        <td><p>model architecture to be logged</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>model_path</code></td>
+        <td><code>str</code></td>
+        <td><p>output path where model checkpoints are logged</p></td>
+        <td><code>&#39;model&#39;</code></td>
+      </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../IHM_Example_Using_LSTM/" class="md-footer__link md-footer__link--prev" aria-label="Previous: IHM Example Using LSTM" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              IHM Example Using LSTM
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../install/" class="md-footer__link md-footer__link--next" aria-label="Next: Standalone Installation" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Standalone Installation
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.756773cc.min.js"></script>
+      
+    
+  </body>
+</html>
