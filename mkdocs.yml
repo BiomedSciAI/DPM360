@@ -29,12 +29,12 @@ plugins:
 nav:
   - Overview: 'index.md'
   - Components:
-    - Installer: 'installer.md'
     # - Installer: '!include ./installer/mkdocs.yml'
     - Service Builder: 'service_builder.md'
     # - Service Builder: '!include ./service_builder/mkdocs.yml'
     - Cohort Tools: '!include ./cohort_tools/mkdocs.yml'
     - Lightsaber: '!include ./lightsaber/mkdocs.yml'    
+    - Installer: 'installer.md'
 
 # extra:
 #   version:

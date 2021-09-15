@@ -1,4 +1,4 @@
-# Welcome to lightsaber
+# Welcome to Lightsaber
 
 <!-- For full documentation visit [mkdocs.org](https://www.mkdocs.org). -->
 
