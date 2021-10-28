@@ -35,10 +35,20 @@ to support: **(a) reproducible research, (b) accelarate model development, and (
 
 ## Installation Instructions
 
-From source: 
+`Lightsaber` is installable as a python package.  
 
-* for barebones `lightsaber`: `pip install .` 
-* For support with doc: `pip install .[doc]`
-* For all: `pip install .[full]`
+It can be installed using `conda` as:
+```
+conda install -c conda-forge dpm360-lightsaber
+```
+ or from `pypi` as:
+```
+pip install dpm360-lightsaber
+```
+It can also be installed from source using pip as follows:
+* barebones install of `Lightsaber`: `pip install .` 
+* with doc support: `pip install .[doc]`
+* with time-to-event modeling (T2E) support: `pip install .[t2e]`
+* full install with all components: `pip install .[full]`
 
 

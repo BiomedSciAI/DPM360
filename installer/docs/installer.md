@@ -119,7 +119,7 @@ The following table lists the configurable parameters of the `ohdsi` chart and t
 | ingress.enabled | whether to create an Ingress to expose the Atlas web interface | `false` |
 | ingress.annotations | provide any additional annotations which may be required. Evaluated as a template. | `{}` |
 | ingress.tls | ingress TLS config | `[]` |
-| `CDM_URL` | Location of Athena Vocabulary file in tar.gz format.  It could be either a s3 url or a local file |   |
+| `CDM_URL` | Location of Athena Vocabulary file in tar.gz format.  It could be either a s3 url or a local file. All necessary vocabulary files can be downloaded from the ATHENA download site: http://athena.ohdsi.org. A tutorial for Athena is available at https://www.youtube.com/watch?v=2WdwBASZYLk  |   |
 | `SYNPUF1K_URL` | Location of Synthetic 1K data file in tar.gz format.  It could be either a s3 url or a local file.  You can download this from[here](https://caruscloud.uniklinikum-dresden.de/index.php/s/teddxwwa2JipbXH/download). |   |
 | `RESULTS_TABLE_URL` | This will be the URL to get the Results schema.<br />Example:<br />http://[server:port](server:port)/WebAPI/ddl/results?dialect=<your_cdm_database_dialect>&schema=<your_results_schema>&vocabSchema=<your_vocab_schema>&tempSchema=<your_temp_schema>&initConceptHierarchy=true |   |
 | `CDM_SCHEMA` | Value of the CDM_SCHEMA in your CDM Database |   |
@@ -147,7 +147,7 @@ installing the chart. For example:
 
    The cdmInit container takes in the following parameters to initialize the data:
 
-   `CDM_URL`Location of Athena Vocabulary file in tar.gz format.  It could be either a s3 url or a local file `SYNPUF1K_URL`Location of Synthetic 1K data file in tar.gz format.  It could be either a s3 url or a local file.  You can download this from[here](https://caruscloud.uniklinikum-dresden.de/index.php/s/teddxwwa2JipbXH/download). ` RESULTS_TABLE_URL`This will be the URL to get the Results schema.
+   `CDM_URL`Location of Athena Vocabulary file in tar.gz format.  It could be either a s3 url or a local file. All necessary vocabulary files can be downloaded from the ATHENA download site: http://athena.ohdsi.org. A tutorial for Athena is available at https://www.youtube.com/watch?v=2WdwBASZYLk . `SYNPUF1K_URL`Location of Synthetic 1K data file in tar.gz format.  It could be either a s3 url or a local file.  You can download this from[here](https://caruscloud.uniklinikum-dresden.de/index.php/s/teddxwwa2JipbXH/download). ` RESULTS_TABLE_URL`This will be the URL to get the Results schema.
    Example:
    http://[server:port](server:port)/WebAPI/ddl/results?dialect=<your_cdm_database_dialect>&schema=<your_results_schema>&vocabSchema=<your_vocab_schema>&tempSchema=<your_temp_schema>&initConceptHierarchy=true
 
