@@ -29,10 +29,6 @@ plugins:
 nav:
   - Overview: 'index.md'
   - Components:
-<<<<<<< HEAD
-    - Installer: 'installer.md'
-=======
->>>>>>> fb1fecce5da53ce2c45bfb57f8fcd95e4c43f885
     # - Installer: '!include ./installer/mkdocs.yml'
     - Service Builder: 'service_builder.md'
     # - Service Builder: '!include ./service_builder/mkdocs.yml'
