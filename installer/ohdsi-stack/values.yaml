@@ -91,10 +91,10 @@ webApi:
   replicaCount: 1
   # the WebAPI image
   image: # +doc-gen:break
-    registry: ghcr.io
-    repository: chgl/ohdsi/webapi
-    tag: 2.8.0
-    pullPolicy: Always
+    registry: docker.io
+    repository: ohdsi/webapi
+    tag: 2.10.0
+    pullPolicy: Always    
 
   db:
     # database hostname

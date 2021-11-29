@@ -8,7 +8,7 @@ cdmInitJob:
   image: # +doc-gen:break
     registry: docker.io
     repository: ibmcom/dpm360-cdm_init
-    tag: "1.1"
+    tag: "1.2"
     pullPolicy: Always
 
 
@@ -32,7 +32,7 @@ cdmInitJob:
     - name: "API_KEY"
       value: "<Cloud object storage key>            
     - name: "RESULTS_TABLE_URL"
-      value: "ohdsi-webapi:8080/WebAPI/ddl/results?dialect=postgresql&schema=results&vocabSchema=cmd&tempSchema=temp&initConceptHierarchy=true"
+      value: "ohdsi-webapi:8080/WebAPI/ddl/results?dialect=postgresql&schema=results&vocabSchema=cdm&tempSchema=temp&initConceptHierarchy=true"
     - name: "CDM_SCHEMA"
       value: "cdm"
     - name: "OHDSI_WEBAPI_SCHEMA"
@@ -48,3 +48,5 @@ cdmInitJob:
         secretKeyRef:
           name: ohdsi-postgresql
           key: postgresql-password
+    - name: "WEBAPI_URL"
+      value: "ohdsi-webapi:8080/WebAPI"          

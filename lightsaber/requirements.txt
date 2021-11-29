@@ -1,12 +1,7 @@
 scikit-learn==0.23.*
 mlflow>=1.2.0
 pytorch-lightning==0.8.5
-<<<<<<< HEAD
 torch>=1.1.0
 toolz
-=======
-toolz
-ray[tune]
->>>>>>> fb1fecce5da53ce2c45bfb57f8fcd95e4c43f885
 tabulate
 

@@ -12,7 +12,7 @@ helm install modelregistry ./model-registry -n ohdsi --values ./model-registry/v
 # helm uninstall modelregistry -n ohdsi
 
 # Setup helm chart for OHDSI (atlas UI, webAPI and database)
-helm install  ohdsi  chgl/ohdsi -n ohdsi --values ohdsi-stack/values.yaml
+helm install  ohdsi  chgl/ohdsi -n ohdsi  --version 0.5.17  --values ohdsi-stack/values.yaml
 #helm delete  ohdsi -n ohdsi
 
 # Enable ingress

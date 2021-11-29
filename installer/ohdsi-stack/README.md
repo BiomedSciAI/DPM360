@@ -32,7 +32,7 @@ $ helm install ohdsi chgl/ohdsi -n <your namespace> --values values.yaml
 
 
 Update PGPASSWORD, CDM_URL, SYNPUF1K_URL, RESULTS_TABLE_URL values as needed from synpuf1k-etl.yaml. 
-Sample value for RESULTS_TABLE_URL: "http://<webapi-service>/WebAPI/ddl/results?dialect=postgresql&schema=results&vocabSchema=cmd&tempSchema=temp&initConceptHierarchy=true"   
+Sample value for RESULTS_TABLE_URL: "http://<webapi-service>/WebAPI/ddl/results?dialect=postgresql&schema=results&vocabSchema=cdm&tempSchema=temp&initConceptHierarchy=true"   
 Upload raw data into minio bucket. Obtain URLs, CDM_URL and SYNPUF1K_URL, for files hosted in minio. 
 $ helm install ohdsi-synpuf1k-etl chgl/ohdsi -n <your namespace> --values synpuf1k-etl.yaml
 ```
