@@ -50,6 +50,7 @@ We use [GitHub issues](https://github.com/IBM/DPM360/issues) for tracking reques
 
 ## Team
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=ke-NELSONBO">Nelson Bore</a>
+* <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-ssaranathan">Sundar Saranathan</a>
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-ibuleje">Italo Buleje</a>
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=ibm-Prithwish.Chakraborty">Prithwish Chaktraborty</a>
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=us-rachitac">Rachita Chandra</a>
