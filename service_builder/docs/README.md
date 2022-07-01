@@ -10,7 +10,7 @@ The Service Builder component is responsible for converting registered models in
 
 **In Step 4:** Using the model endpoint, potential users (e.g data scientist or product managers, etc.) can interact with the model, now deployed as a microservice, though a Swagger-based interface. In the interface they provide inputs to the model e.g., a patient id, which is then passed to the model for prediction, and a response is returned to the user.
 
-<figure><center><img src="../resources/service-builder-design.jpg" width="800"/><figcaption>Service Builder Architecture</figcaption></center></figure>
+<figure><center><img src="../docs/resources/service-builder-design.jpg" width="800"/><figcaption>Service Builder Architecture</figcaption></center></figure>
 
 # Setting up Service Builder Pipeline
 This section provides details on how one can setup the service builder pipeline in their cluster.
