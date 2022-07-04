@@ -30,5 +30,5 @@ The [<b>lightsaber</b>](https://github.com/IBM/DPM360/blob/main/lightsaber/docs/
 - you save and register your learned models with experimental artifacts in Model Registry
 
 The [<b>cohort tools</b>](https://github.com/IBM/DPM360/blob/main/cohort_tools/docs/index.md) component provides python scripts to extract features from cohorts defined via ATLAS or custom queries. It enables [integration with lightsaber](https://github.com/IBM/DPM360/blob/main/cohort_tools/docs/user_guide.md) to use features extracted from OHDSI databases. Using this component:
-- with cohort defined by Atlas and others, you define and extract features from the OMOP CDM database
-- you extract such features in CVS files and use them as inputs of lightsaber 
+- with cohort defined by Atlas and others, you define and extract the features from the OMOP CDM database
+- you extract such features in CVS files and use them as inputs for lightsaber 
