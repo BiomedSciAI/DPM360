@@ -12,8 +12,8 @@ DPM360 components are interoperable but also work as independent tools. They are
 
 ## DPM360 server side
 
-For the server side, the <b>installer</b> component sets up an OHDSI stack (Atlas, WebAPI, a Postgres Database, and Achilles) into a cloud cluster such as Kubernetes or OpenShift. See [installation guide](https://github.com/IBM/DPM360/blob/main/installer/docs/installer.md) for details. Its [<b>Express Installation Script</b> section](https://github.com/IBM/DPM360/blob/main/installer/docs/installer.md#express-installation-script) provides mininum setup operations. Using this component:
-- you run a OMOP CDM database uing Postgres on your cloud cluster
+For the server side, the <b>installer</b> component sets up an OHDSI stack (Atlas, WebAPI, a Postgres Database, and Achilles) into a cloud cluster such as Kubernetes or OpenShift. See [installation guide](https://github.com/IBM/DPM360/blob/main/installer/docs/installer.md) for details. Its [<b>Express Installation Script</b> section](https://github.com/IBM/DPM360/blob/main/installer/docs/installer.md#express-installation-script) provides minimum setup operations. Using this component:
+- you run a OMOP CDM database using Postgres on your cloud cluster
 - you run Atlas, WebAPI and other OHDSI service with the DB
 - you run Model Registry using MLFlow where your learned models are registered
 
@@ -25,8 +25,9 @@ The <b>service builder</b> component packages and deploys the learned models to 
 
 The [<b>lightsaber</b>](https://github.com/IBM/DPM360/blob/main/lightsaber/docs/index.md) component is an extensible training framework which provides blueprints for the development of disease progression models. See [installation guide](https://github.com/IBM/DPM360/blob/main/lightsaber/docs/install.md). Also see [user guide](https://github.com/IBM/DPM360/blob/main/lightsaber/docs/user_guide.md) for data loading and training details. Using this component:
 - you develop machine learning models using extensible data loaders and training pipelines
-- you use extensible data loaders designed for time-series dataset extrated from OHDSI and other EMRs
+- you use extensible data loaders designed for time-series dataset extracted from OHDSI and other EMRs
 - you use scikit-learn and PyTorch Lightning based training pipelines with pre-defined networks and loss functions for processing time-series dataset.
+- you save and register your learned models with experimental artifacts in Model Registry
 
 The [<b>cohort tools</b>](https://github.com/IBM/DPM360/blob/main/cohort_tools/docs/index.md) component provides python scripts to extract features from cohorts defined via ATLAS or custom queries. It enables [integration with lightsaber](https://github.com/IBM/DPM360/blob/main/cohort_tools/docs/user_guide.md) to use features extracted from OHDSI databases.
 
