@@ -13,10 +13,13 @@ DPM360 components are interoperable but also work as independent tools. They are
 ## DPM360 server side
 
 For the server side, the <b>installer</b> component sets up an OHDSI stack (Atlas, WebAPI, a Postgres Database, and Achilles) into a cloud cluster such as Kubernetes or OpenShift. See [installation guide](https://github.com/IBM/DPM360/blob/main/installer/docs/installer.md) for details. Its [<b>Express Installation Script</b> section](https://github.com/IBM/DPM360/blob/main/installer/docs/installer.md#express-installation-script) provides mininum setup operations. Using this component:
-- you have a OMOP CDM database on your cloud cluster
+- you run a OMOP CDM database uing Postgres on your cloud cluster
 - you run Atlas, WebAPI and other OHDSI service with the DB
+- you run Model Registry using MLFlow where your learned models are registered
 
-The <b>service builder</b> component packages and deploys the learned models to the target cloud cluster. See [installation guide](https://github.com/IBM/DPM360/blob/main/service_builder/docs/README.md) for details.
+The <b>service builder</b> component packages and deploys the learned models to the target cloud cluster. See [installation guide](https://github.com/IBM/DPM360/blob/main/service_builder/docs/README.md) for details. Using this component:
+- you make a microservice by deploying the model registered in Model Registry using KFServing
+- you test and interact with the deployed model microservice via a Swagger based interface
 
 ## DPM360 client side
 
