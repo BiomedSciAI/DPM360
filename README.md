@@ -8,6 +8,8 @@ Overview and YouTube demonstration are available [here](https://ibm.github.io/DP
 
 # Installation Guides
 
+DPM360 components are interoperable but also work as independent tools. They are working on a cloud cluster (DPM360 server side) and on a client server (DPM360 client side), having separate installation procedures. Please see the guides below to install each component.
+
 ## DPM360 server side
 
 For the server side, the <b>installer</b> component sets up an OHDSI stack (Atlas, WebAPI, a Postgres Database, and Achilles) into a cloud cluster such as Kubernetes or OpenShift. See [installation guide](https://github.com/IBM/DPM360/blob/main/installer/docs/installer.md) for details. Its <b>Express Installation Script</b> section provides mininum setup operations.
