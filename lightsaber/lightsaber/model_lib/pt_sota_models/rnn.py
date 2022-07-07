@@ -23,6 +23,8 @@ from torch.autograd import Variable
 from lightsaber import constants as C
 from lightsaber.trainers.components import BaseModel
 
+import logging
+log = logging.getLogger()
 
 class RNNBase(BaseModel):
     def __init__(self, 
