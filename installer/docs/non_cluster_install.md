@@ -135,10 +135,10 @@ services:
   cdmInitJob:
     image: ibmcom/dpm360-cdm_init:1.2
     volumes:
-      - ./data:/data
+      - ./data:/data # /data is mounted to ./data of the host
     environment:
-      - CDM_URL=file:///data/vocabs.tar.gz # data is mounted to the host, confirm file name is correct
-      - SYNPUF1K_URL=file:///data/synpuf1k.tar.gz # data is mounted to the host, confirm file name is correct
+      - CDM_URL=file:///data/vocabs.tar.gz # /data is mounted to the host, confirm file name is correct
+      - SYNPUF1K_URL=file:///data/synpuf1k.tar.gz # /data is mounted to the host, confirm file name is correct
 </pre>
 
 - run `docker-compose up`
