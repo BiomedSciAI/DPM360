@@ -49,7 +49,7 @@ listen_addresses = 'localhost, 172.17.0.1'
 
 To run docker container for OHDSI stack (ATLAS, WebAPI, and Achilles), follow instructions below. 
 
-- change directory to <dpm360 root dir>/installer/express/broadsea-example
+- change directory to &lt;dpm360 root dir&gt;/installer/express/broadsea-example
 - modify docker-compose.yml for your environment
 
 <pre>
