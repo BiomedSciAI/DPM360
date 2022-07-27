@@ -165,6 +165,6 @@ You can run MLFlow on the host as Model Registry, which can be connected to ligh
 ## What You Do Next
 
 - use Atlas &lt;host&gt;:18080/atlas/ to define cohorts and outcomes
-- use [cohort tools](../../cohort_tools/docs/index.md) to extract features to build training data
+- use [cohort tools](../../cohort_tools/docs/index.md) to extract features to make training data
 - use [lightsaber](../../lightsaber/docs/index.md) to build and train the model using above data
 - use **service builder** to deploy a service using the trained model
