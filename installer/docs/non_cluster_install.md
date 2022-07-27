@@ -1,5 +1,5 @@
 
-# Deployment of full OHDSI technology stack for non-cluster environments
+# Deployment of full OHDSI technology stack for a non-cluster environment
 
 ## About OHDSI Broadsea
 
@@ -32,14 +32,139 @@ Note that you can see this address before starting containers. In this case, we 
 
 Using this IP address, modify configuration files:
 
-
-**/etc/postgresql/10/main/pg_hba.conf**
-
-add the following line:<br>
+<pre>
+/etc/postgresql/10/main/pg_hba.conf:
+add the following line
 host    all    all    172.17.0.1/0    md5
+</pre>
 
-**/etc/postgresql/10/main/postgresql.conf**
-
-change listen_addresses variable as<br>
+<pre>
+/etc/postgresql/10/main/postgresql.conf:
+change listen_addresses variable as
 listen_addresses = 'localhost, 172.17.0.1'
+</pre>
 
+## Broadsea Container Deployment and Run
+
+
+To run docker container for OHDSI stack (ATLAS, WebAPI, and Achilles), follow instructions below. 
+
+- change directory to <dpm360 root dir>/installer/express/broadsea-example
+- modify docker-compose.yml for your environment
+
+<pre>
+services:
+  broadsea-webtools:
+    ports:
+      - "18080:8080" # change host port 18080 if needed
+    environment:
+      - WEBAPI_URL=http://172.17.0.1:18080 # confirm address and port
+      - datasource_url=jdbc:postgresql://172.17.0.1:5432/dpm360db # confirm address and postgresql configuration
+      - datasource_username=dpm360 # confirm postgresql configuration
+      - datasource_password=dpm360-password # confirm postgresql configuration
+      - flyway_datasource_url=jdbc:postgresql://172.17.0.1:5432/dpm360db # confirm address and postgresql configuration
+      - flyway_datasource_username=dpm360 # confirm postgresql configuration
+      - flyway_datasource_password=dpm360-password # confirm postgresql configuration
+</pre>
+
+- run `docker-compose up -d`
+  - please wait for while and access to &lt;host&gt;:18080/atlas/ to confirm it is started
+
+## Define and Populate OHDSI OMOP-CDM Database on PostgreSQL
+
+Next step is to setup PostgreSQL by defining tables and importing data. We provide a custom docker image to initialize the CDM database with Athena Vocabularies. Currently this only suppors [SynPUF 1k data](https://www.cms.gov/research-statistics-data-and-systems/downloadable-public-use-files/synpufs) but we plan to release a more general tool to setup the database.
+
+
+First, you make a vocabulary file.  All necessary vocabulary files can be downloaded from the ATHENA download site: http://athena.ohdsi.org. A tutorial for Athena is available at https://www.youtube.com/watch?v=2WdwBASZYLk. Download guide is given from 10:04. According to the guidance, please make vocabs.tar.gz, and put the file at:
+<pre>
+&lt;dpm360 root dir&gt;/installer/express/cdm-init-example-local/data/vocabs.tar.gz
+</pre>
+
+Please confirm vocabs.tar.gz includes the followings (confirm it has no directory structure):
+<pre>
+  CONCEPT_ANCESTOR.csv
+  CONCEPT_CLASS.csv
+  CONCEPT_RELATIONSHIP.csv
+  CONCEPT_SYNONYM.csv
+  CONCEPT.csv
+  DOMAIN.csv
+  DRUG_STRENGTH.csv
+  RELATIONSHIP.csv
+  VOCABULARY.csv
+</pre>
+
+Next, obtain SynPUF 1k (CDM 5.3.1) data from [here](https://caruscloud.uniklinikum-dresden.de/index.php/s/teddxwwa2JipbXH/download). You have to change the directory structure as expected. Try the following:
+
+`tar -zxvf synpuf1k.tar.gz *.csv`<br>
+`cd synpuf1k531`<br>
+`tar -zcvf synpuf1k.tar.gz *.csv`<br>
+and put the file at:
+<pre>
+&lt;dpm360 root dir&gt;/installer/express/cdm-init-example-local/data/synpuf1k.tar.gz
+</pre>
+
+Please confirm synpuf1k.tar.gz includes the followings (confirm it has no directory structure):
+<pre>
+  visit_occurrence.csv
+  care_site.csv
+  cdm_source.csv
+  condition_era.csv
+  condition_occurrence.csv
+  cost.csv
+  death.csv
+  device_exposure.csv
+  drug_era.csv
+  drug_exposure.csv
+  location.csv
+  measurement.csv
+  observation_period.csv
+  observation.csv
+  payer_plan_period.csv
+  person.csv
+  procedure_occurrence.csv
+  provider.csv
+</pre>
+
+The following instructions then run a docker container to prepare the database.
+
+- change directory to &lt;dpm360 root dir&gt;/installer/express/cdm-init-example-local
+- modify docker-compose.yml for your environment
+
+<pre>
+services:
+  cdmInitJob:
+    image: ibmcom/dpm360-cdm_init:1.2
+    volumes:
+      - ./data:/data
+    environment:
+      - CDM_URL=file:///data/vocabs.tar.gz # data are mounted to the host
+      - SYNPUF1K_URL=file:///data/synpuf1k.tar.gz # data are mounted to the host
+</pre>
+
+- run `docker-compose up`
+  - wait untill it ends
+  
+## Run Achilles (Recommended but Optional)
+
+
+[Achilles](https://ohdsi.github.io/Achilles/) computes statistics on your OMOP CDM database.
+
+
+Follow instructions below to run a docker container to make Achilles work for your database.
+
+- change directory to &lt;dpm360 root dir&gt;/installer/express/achilles-example
+- run `docker-compose up`
+  - wait untill it ends
+  - access to &lt;host&gt;:18080/atlas/ and click "Data source" to see the statistics of your database
+
+## Model Registry
+
+You can run MLFlow on the host as Model Registry, which can be connected to lightsaber (model training framework) and service builder (micro service builder using the trained model). A guidance is being prepared.
+
+
+## What You Do Next
+
+- use Atlas &lt;host&gt;:18080/atlas/ to define cohorts and outcomes
+- use [cohort tools](../../cohort_tools/docs/index.md) to extract features to build training data
+- use [lightsaber](../../lightsaber/docs/index.md) to build and train the model using above data
+- use **service builder** to deploy a service using the trained model
