@@ -137,8 +137,8 @@ services:
     volumes:
       - ./data:/data
     environment:
-      - CDM_URL=file:///data/vocabs.tar.gz # data are mounted to the host
-      - SYNPUF1K_URL=file:///data/synpuf1k.tar.gz # data are mounted to the host
+      - CDM_URL=file:///data/vocabs.tar.gz # data are mounted to the host, confirm file name is correct
+      - SYNPUF1K_URL=file:///data/synpuf1k.tar.gz # data are mounted to the host, confirm file name is correct
 </pre>
 
 - run `docker-compose up`
