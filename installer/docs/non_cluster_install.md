@@ -7,7 +7,7 @@
 You can use [OHDSI Broadsea](https://github.com/OHDSI/Broadsea) to build a docker container on your VM or server (hereafter, the host), which includes necessary OHDSI technologies such as ATLAS, WebAPI, Achilles, R Methods Library and others.
 
 
-Please have look at README.md for general information of dependencies and installation:
+Please have look at [README.md](https://github.com/OHDSI/Broadsea/blob/master/README.md) for general information of dependencies and installation:
 - Broadsea Dependencies
   - https://github.com/OHDSI/Broadsea#broadsea-dependencies
 - Quick Start Broadsea Deployment
