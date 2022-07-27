@@ -27,7 +27,7 @@ After installing PostgreSQL to the host, create the user and database using psql
 
 Next configure PostgreSQL to allow a docker VM to access to the PostgreSQL database. Please confirm your IP address of docker0 (virtual network bridge on the host) by<br>
 `ip address show dev docker0`.<br>
-Note that you can see this address before starting containers. In this case, we assume it is 172.17.0.1
+Note that you can see this address before starting containers (it is ok if docker service is on). In this case, we assume it is 172.17.0.1
 
 
 Using this IP address, modify configuration files:
