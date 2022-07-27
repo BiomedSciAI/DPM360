@@ -3,9 +3,12 @@ The **Installer** component installs the fully functional DPM60 into Kubernetes 
 
 <figure><center><img src="../docs/resources/installer_design.png" width="400"/><figcaption>DPM360 Installer</figcaption></center></figure>
 
-You may follow the detailed instructions or skip to the last section and use express installation scripts. 
+<br />
+<br />
 
-**Step 1:  Install the OHDSI Stack by following the instructions below.  This will install the OHDSI components ( Atlas, WebAPI, a Postgres Database, and Achilles)**
+You may follow the detailed instructions or skip to the last section and use express installation scripts. You also follow **[non-cloud-cluster setup](non_cluster_install.md)** if you want to try OHDSI stack without using a cluster.
+
+## **Step 1:  Install the OHDSI Stack by following the instructions below.  This will install the OHDSI components ( Atlas, WebAPI, a Postgres Database, and Achilles)**
 
 ## DPM360 - OHDSI stack installer
 
@@ -163,7 +166,7 @@ installing the chart. For example:
 If the deployment does not work, possible todo following this https://www.kubeflow.org/docs/started/workstation/minikube-linux/
 
 
-**Step 2: Install the Model Registry by following the instructions below.  This will install Mlflow with a Postgres and Minio backend.**
+## **Step 2: Install the Model Registry by following the instructions below.  This will install Mlflow with a Postgres and Minio backend.**
 
 ## MLFlow and dependcies
 
