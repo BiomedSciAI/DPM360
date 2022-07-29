@@ -21,9 +21,10 @@ The <b>service builder</b> component packages and deploys the learned models to 
 - make a microservice by deploying the model registered in Model Registry using KFServing
 - test and interact with the deployed model microservice via a Swagger based interface
 
-## DPM360 standalone python packages
+## DPM360 standalone python packages - enabling deep learning model training in python on OHDSI-OMOP data
 
 The [<b>lightsaber</b>](lightsaber/docs/index.md) component is an extensible Python training framework which provides blueprints for the development of disease progression models. See [installation guide](lightsaber/docs/install.md). Also see [user guide](lightsaber/docs/user_guide.md) for data loading and training details. Using this component:
+
 - develop machine learning models using extensible data loaders and training pipelines
 - use extensible data loaders designed for time-series dataset extracted from OHDSI and other EMRs
 - use scikit-learn and PyTorch Lightning based training pipelines with pre-defined networks and loss functions for processing time-series dataset.
