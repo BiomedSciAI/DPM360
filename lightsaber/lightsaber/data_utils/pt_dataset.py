@@ -439,7 +439,7 @@ class BaseDataset(Dataset):
         return obj
 
     @classmethod
-    def _select_features(cls, data, columns):
+    def _select_features(cls, data, columns, extra_columns=None):
         if columns is not None:
             if is_re(columns):
                 _feat_re = columns
@@ -450,8 +450,8 @@ class BaseDataset(Dataset):
                 _selected_cols = data.columns[data.columns.str.contains(_feat_re)]
             except Exception:
                 warnings.warn("regex mode failed. using raw mode")
-                _selected_cols = columns
-            columns = _selected_cols
+                _selected_cols = pd.Series(columns)
+            columns = _selected_cols.union(pd.Series(extra_columns))
             # Assume that feature columns is an inclusive list
             return data[columns]
         else:
@@ -471,7 +471,9 @@ class BaseDataset(Dataset):
         self.data = pd.read_csv(feat_file).set_index(self._idx_col)
         if self.target is not None:
             self.data = self.data.loc[self.target.index, :]   # accounting for the option that target can have lesser number of index than data
-        self.data = self._select_features(self.data, self._feat_columns)
+        self.data = self._select_features(self.data, self._feat_columns,
+                                          extra_columns=self._time_order_col
+                                         )
         return
 
     def apply_filters(self):

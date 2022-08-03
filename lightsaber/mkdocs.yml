@@ -13,5 +13,6 @@ nav:
       - IHM_Example_Using_HistGBT.ipynb
       - IHM_Example_Using_LSTM.ipynb
     - API: 'api.md'
+    - Release history: 'whats_new.md'
   - Standalone Installation: 'install.md'
 

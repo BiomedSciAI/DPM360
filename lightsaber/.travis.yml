@@ -7,7 +7,7 @@ python:
 
 install:
   - pip install .[full]
-  - pip install mike
+  - pip install mike==1.1.2
 
 # Making sure its not a shallow clone
 git:
@@ -17,8 +17,8 @@ env:
   global:
   - GH_URL: github.ibm.com
   - GH_REPO: CCHBAM/lightsaber.git
-  - STABLE_VERSION: 0.2
-  - DEV_VERSION: 0.2.rc
+  - STABLE_VERSION: 0.3.0
+  - DEV_VERSION: 0.3.0rc
 
 stages:
   - name: doc_master

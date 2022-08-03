@@ -55,4 +55,4 @@ PYTORCH_CLASS_DICT = {
     'GRU': torch.nn.GRU,
 }
 
-_deprecation_warn_msg = "Function/module depcreated. will be dropped in version 0.3"
+_deprecation_warn_msg = "Function/module depcreated. will be dropped in version 0.3.1"
