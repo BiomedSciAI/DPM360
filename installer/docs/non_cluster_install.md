@@ -7,7 +7,7 @@
 You can use [OHDSI Broadsea](https://github.com/OHDSI/Broadsea) to build a docker container on your VM or server (hereafter, the host), which includes necessary OHDSI technologies such as ATLAS, WebAPI, Achilles, R Methods Library and others.
 
 
-Please have look at [README.md](https://github.com/OHDSI/Broadsea/blob/master/README.md) for general information of dependencies and installation:
+Refer to [README.md](https://github.com/OHDSI/Broadsea/blob/master/README.md) for general information of dependencies and installation:
 - Broadsea Dependencies
   - https://github.com/OHDSI/Broadsea#broadsea-dependencies
 - Quick Start Broadsea Deployment
@@ -16,18 +16,19 @@ Please have look at [README.md](https://github.com/OHDSI/Broadsea/blob/master/RE
 ## Database Setup
 
 
-[Broadsea](https://github.com/OHDSI/Broadsea) supports Apache Impala, Oracle, MS SQL Server, PostgreSQL. Here we show an installation guide where you install and run PostgreSQL on the host in which you are running docker containers.
+[Broadsea](https://github.com/OHDSI/Broadsea) supports Apache Impala, Oracle, MS SQL Server, PostgreSQL. Here we show an installation guide where you can install and run PostgreSQL on the host in which you are running docker containers.
 
 
-After installing PostgreSQL to the host, create the user and database using psql commands assuming:
-- username: dpm360
-- password: dpm360-password
-- database name: dpm360db
+After installing PostgreSQL in the host, create the user and database using psql commands assuming:
+- username: `dpm360`
+- password: `dpm360-password`
+- database name: `dpm360db`
 
 
-Next configure PostgreSQL to allow a docker VM to access to the PostgreSQL database. Please confirm your IP address of docker0 (virtual network bridge on the host) by<br>
+Next configure PostgreSQL to allow a docker VM to access to the PostgreSQL database. 
+Please confirm the IP address of docker0 (virtual network bridge on the host) by<br>
 `ip address show dev docker0`.<br>
-Note that you can see this address before starting containers (it is ok if docker service is on). In this case, we assume it is 172.17.0.1
+**Note**, you can see this address before starting containers (it is usually ok if the docker service is on). Here, we assume the ip is `172.17.0.1`
 
 
 Using this IP address, modify configuration files:
@@ -162,7 +163,7 @@ Follow instructions below to run a docker container to make Achilles work for yo
 You can run MLFlow on the host as Model Registry, which can be connected to lightsaber (model training framework) and service builder (micro service builder using the trained model). A guidance is being prepared.
 
 
-## What You Do Next
+## What To Do Next
 
 - use Atlas &lt;host&gt;:18080/atlas/ to define cohorts and outcomes
 - use [cohort tools](../../cohort_tools/docs/index.md) to extract features to make training data
