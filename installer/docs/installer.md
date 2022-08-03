@@ -3,23 +3,28 @@ The **Installer** component installs the fully functional DPM60 into Kubernetes 
 
 <figure><center><img src="../docs/resources/installer_design.png" width="400"/><figcaption>DPM360 Installer</figcaption></center></figure>
 
-You may follow the detailed instructions or skip to the last section and use express installation scripts. 
+<br />
+<br />
 
-**Step 1:  Install the OHDSI Stack by following the instructions below.  This will install the OHDSI components ( Atlas, WebAPI, a Postgres Database, and Achilles)**
+You can follow the detailed instructions or skip to the last section and use the [express installation scripts](#Express-Installation-Script). Alternatively, you can also follow **[non-cloud-cluster setup](non_cluster_install.md)** if you want to try OHDSI stack without using a cluster.
 
-## DPM360 - OHDSI stack installer
+## **Step 1:  Install the OHDSI Stack**
+
+Follow the instructions below.  This will install the OHDSI components ( Atlas, WebAPI, a Postgres Database, and Achilles)
+
+### DPM360 - OHDSI stack installer
 
 This chart is an adaptation of chart listed by [chgl/ohdsi](https://github.com/chgl/charts/tree/master/charts/ohdsi)
 
 A sample values.yaml file is provided in the repository [here](https://github.ibm.com/IBM-Research-AI/dpm360/blob/master/installer/ohdsi-stack/values.yaml).
 
-## Introduction
+### Introduction
 
 This chart deploys the OHDSI WebAPI and ATLAS app. on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
 ##
 
-## Prerequisites
+### Prerequisites
 
 * Kubernetes v1.18+
 * Helm v3
@@ -27,7 +32,7 @@ This chart deploys the OHDSI WebAPI and ATLAS app. on a [Kubernetes](http://kube
 
 ##
 
-## Installing the Chart
+### Installing the Chart
 
 To install the chart with the release name `ohdsi`:
 
@@ -42,7 +47,7 @@ The command deploys the OHDSI WebAPI and ATLAS app. on the Kubernetes cluster in
 > **Tip**: List all releases using `helm list`
 
 
-## Uninstalling the Chart
+### Uninstalling the Chart
 
 To uninstall/delete the `ohdsi`:
 
@@ -51,7 +56,7 @@ To uninstall/delete the `ohdsi`:
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
 
-## Configuration
+### Configuration
 
 The following table lists the configurable parameters of the `ohdsi` chart and their default values.
 
@@ -140,7 +145,7 @@ installing the chart. For example:
 
 ##
 
-## Initialize the CDM using a custom container
+### Initialize the CDM using a custom container
 
 1. A custom docker image to initialize the CDM database with Athena Vocabularies and Synthetic 1K patient data is built based on the broad guidelines outlined [here](https://github.com/IBM/DPM360).
    This custom image is utilized in the cdmInitJob.image parameter in the values.yaml.
@@ -158,18 +163,20 @@ installing the chart. For example:
    `RESULTS_SCHEMA`Name of the schema that contains the results tables in your database.
    `TEMP_SCHEMA` Name of the schema that contains the temp results table in your database.
 
-## Troubleshooting
+### Troubleshooting
 
 If the deployment does not work, possible todo following this https://www.kubeflow.org/docs/started/workstation/minikube-linux/
 
 
-**Step 2: Install the Model Registry by following the instructions below.  This will install Mlflow with a Postgres and Minio backend.**
+## **Step 2: Install the Model Registry**
 
-## MLFlow and dependcies
+Follow the instructions below.  This will install MlFlow with a Postgres and Minio backend.
+
+### MLFlow and dependencies
 
 [DPM360](https://github.com/ibm/dpm360) - Helm chart for deploying Disease progression model framework including OHDSI tools ( Atlas, WebAPI), MLFlow and its dependencies ( minio for object storage and postgresql for relational database).
 
-## Pre-requisites
+### Pre-requisites
 
 ```console
 Download the chart repo
@@ -179,16 +186,16 @@ Update the values.yaml with paramters matching your cloud environment
 
 ```
 
-## Introduction
+### Introduction
 
 This chart deploys the MLFlow along with a minio based storage and postgesql database on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
-## Prerequisites
+### Prerequisites
 
 - Kubernetes v1.18+
 - Helm v3
 
-## Installing the Chart
+### Installing the Chart
 
 ```console
 Once you have cloned the repo (https://github.com/IBM/DPM360)
@@ -205,7 +212,7 @@ The command deploys the MLFlow (version 1.14.1) along with minio for storage and
 
 > **Tip**: List all releases using `helm list`
 
-## Uninstalling the Chart
+### Uninstalling the Chart
 
 To uninstall/delete the `modelregistry`:
 
@@ -215,7 +222,7 @@ $ helm delete modelregistry -n <yournamespace>
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
-## Configuration
+### Configuration
 
 The following table lists the configurable parameters of the `model-registry` chart and their default values.
 

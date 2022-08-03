@@ -1,0 +1,20 @@
+version: '3'
+services:
+  cdmInitJob:
+    image: ibmcom/dpm360-cdm_init:1.2
+    volumes:
+      - ./data:/data
+    environment:
+      - CDM_URL=file:///data/vocabs.tar.gz
+      - SYNPUF1K_URL=file:///data/synpuf1k.tar.gz
+      - RESULTS_TABLE_URL=http://172.17.0.1:18080/WebAPI/ddl/results?dialect=postgresql&schema=results&vocabSchema=cdm&tempSchema=temp&initConceptHierarchy=true
+      - CDM_SCHEMA=cdm
+      - OHDSI_WEBAPI_SCHEMA=ohdsi
+      - RESULTS_SCHEMA=results
+      - TEMP_SCHEMA=temp
+      - PGHOST=172.17.0.1
+      - PGPORT=5432
+      - PGDATABASE=dpm360db
+      - PGUSER=dpm360
+      - PGPASSWORD=dpm360-password
+      - WEBAPI_URL=http://172.17.0.1:18080/WebAPI

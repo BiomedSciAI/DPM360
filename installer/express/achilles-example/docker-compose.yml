@@ -1,0 +1,14 @@
+version: '3'
+services:
+  chgl-achilles-synpuf1k:
+    image: ghcr.io/chgl/ohdsi/achilles:master
+    # image: ohdsi/broadsea-achilles:master
+    environment:
+      - ACHILLES_SOURCE=synpuf-5.3.1
+      - ACHILLES_CDM_VERSION=5.3.1
+      - ACHILLES_DB_URI=postgresql://172.17.0.1:5432/dpm360db
+      - ACHILLES_DB_USERNAME=dpm360
+      - ACHILLES_DB_PASSWORD=dpm360-password
+      - ACHILLES_CDM_SCHEMA=cdm
+      - ACHILLES_VOCAB_SCHEMA=cdm
+      - ACHILLES_RES_SCHEMA=results
