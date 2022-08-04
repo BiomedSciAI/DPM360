@@ -139,3 +139,6 @@ main.pdf
 
 # MAC
 *.DS_Store
+
+# vim
+*.swp

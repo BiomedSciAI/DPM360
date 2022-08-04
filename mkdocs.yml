@@ -34,7 +34,9 @@ nav:
     # - Service Builder: '!include ./service_builder/mkdocs.yml'
     - Cohort Tools: '!include ./cohort_tools/mkdocs.yml'
     - Lightsaber: '!include ./lightsaber/mkdocs.yml'    
-    - Installer: 'installer.md'
+    - Installer: 
+      - Cluster Install: 'installer.md'
+      - Non-cluster Install: 'non_cluster_install.md' 
 
 # extra:
 #   version:
