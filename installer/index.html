@@ -8,32 +8,32 @@
       
       
       
-      
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.6">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.9">
     
     
       
-        <title>Installer - DPM360</title>
+        <title>Cluster Install - DPM360</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.802231af.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
         
       
+      
     
     
     
       
+        
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
-    
     
     
       <link rel="stylesheet" href="../assets/_mkdocstrings.css">
@@ -44,9 +44,9 @@
     
       <link rel="stylesheet" href="../css/pandas-dataframe.css">
     
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
-
 
     
     
@@ -61,7 +61,6 @@
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
   
     
-    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -78,16 +77,19 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+    
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="DPM360" class="md-header__button md-logo" aria-label="DPM360" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -99,7 +101,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Installer
+              Cluster Install
             
           </span>
         </div>
@@ -109,22 +111,21 @@
     
     
       <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
       </label>
-      
-<div class="md-search" data-md-component="search" role="dialog">
+      <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
         <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
         </button>
       </nav>
       
@@ -144,11 +145,10 @@
     
     
       <div class="md-header__source">
-        
-<a href="https://github.com/IBM/DPM360/" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/IBM/DPM360" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
     IBM/DPM360
@@ -157,11 +157,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -180,18 +183,17 @@
     <a href=".." title="DPM360" class="md-nav__button md-logo" aria-label="DPM360" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
 
     </a>
     DPM360
   </label>
   
     <div class="md-nav__source">
-      
-<a href="https://github.com/IBM/DPM360/" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/IBM/DPM360" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
     IBM/DPM360
@@ -231,10 +233,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
       
-      <label class="md-nav__link" for="__nav_2">
-        Components
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Components" data-md-level="1">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
@@ -243,6 +249,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -253,8 +260,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -262,12 +271,16 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" data-md-state="indeterminate" type="checkbox" id="__nav_2_2" checked>
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
       
-      <label class="md-nav__link" for="__nav_2_2">
-        Cohort Tools
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Cohort Tools
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Cohort Tools" data-md-level="2">
         <label class="md-nav__title" for="__nav_2_2">
           <span class="md-nav__icon md-icon"></span>
@@ -276,6 +289,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -286,8 +300,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -298,14 +314,17 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -313,12 +332,16 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" data-md-state="indeterminate" type="checkbox" id="__nav_2_3" checked>
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" checked>
       
-      <label class="md-nav__link" for="__nav_2_3">
-        Lightsaber
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Lightsaber
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Lightsaber" data-md-level="2">
         <label class="md-nav__title" for="__nav_2_3">
           <span class="md-nav__icon md-icon"></span>
@@ -327,6 +350,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -337,8 +361,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -346,12 +372,16 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3_2" data-md-state="indeterminate" type="checkbox" id="__nav_2_3_2" checked>
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_3_2" type="checkbox" id="__nav_2_3_2" checked>
       
-      <label class="md-nav__link" for="__nav_2_3_2">
-        Design and Usage
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3_2">
+          Design and Usage
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Design and Usage" data-md-level="3">
         <label class="md-nav__title" for="__nav_2_3_2">
           <span class="md-nav__icon md-icon"></span>
@@ -360,6 +390,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -370,8 +401,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -379,12 +412,16 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3_2_2" data-md-state="indeterminate" type="checkbox" id="__nav_2_3_2_2" checked>
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_3_2_2" type="checkbox" id="__nav_2_3_2_2" checked>
       
-      <label class="md-nav__link" for="__nav_2_3_2_2">
-        Example
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3_2_2">
+          Example
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Example" data-md-level="4">
         <label class="md-nav__title" for="__nav_2_3_2_2">
           <span class="md-nav__icon md-icon"></span>
@@ -393,6 +430,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -403,8 +441,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -415,14 +455,17 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -433,14 +476,31 @@
     </li>
   
 
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lightsaber/whats_new/" class="md-nav__link">
+        Release history
+      </a>
+    </li>
+  
+
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -451,14 +511,45 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
             
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          Installer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Installer" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Installer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
   
   
     
@@ -473,15 +564,16 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Installer
+          Cluster Install
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Installer
+        Cluster Install
       </a>
       
         
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -496,16 +588,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#step-1-install-the-ohdsi-stack" class="md-nav__link">
+    Step 1:  Install the OHDSI Stack
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1:  Install the OHDSI Stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#dpm360-ohdsi-stack-installer" class="md-nav__link">
     DPM360 - OHDSI stack installer
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#introduction" class="md-nav__link">
     Introduction
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -514,12 +619,18 @@
     
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
     Prerequisites
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -528,26 +639,32 @@
     
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#installing-the-chart" class="md-nav__link">
     Installing the Chart
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#uninstalling-the-chart" class="md-nav__link">
     Uninstalling the Chart
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
     Configuration
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -556,68 +673,87 @@
     
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#initialize-the-cdm-using-a-custom-container" class="md-nav__link">
     Initialize the CDM using a custom container
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#troubleshooting" class="md-nav__link">
     Troubleshooting
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#mlflow-and-dependcies" class="md-nav__link">
-    MLFlow and dependcies
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
+  <a href="#step-2-install-the-model-registry" class="md-nav__link">
+    Step 2: Install the Model Registry
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Install the Model Registry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mlflow-and-dependencies" class="md-nav__link">
+    MLFlow and dependencies
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pre-requisites" class="md-nav__link">
     Pre-requisites
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#introduction_1" class="md-nav__link">
     Introduction
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#prerequisites_1" class="md-nav__link">
     Prerequisites
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#installing-the-chart_1" class="md-nav__link">
     Installing the Chart
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#uninstalling-the-chart_1" class="md-nav__link">
     Uninstalling the Chart
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#configuration_1" class="md-nav__link">
     Configuration
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -655,6 +791,28 @@
     </li>
   
 
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../non_cluster_install/" class="md-nav__link">
+        Non-cluster Install
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
           
         </ul>
       </nav>
@@ -674,6 +832,7 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -688,16 +847,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#step-1-install-the-ohdsi-stack" class="md-nav__link">
+    Step 1:  Install the OHDSI Stack
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1:  Install the OHDSI Stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#dpm360-ohdsi-stack-installer" class="md-nav__link">
     DPM360 - OHDSI stack installer
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#introduction" class="md-nav__link">
     Introduction
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -706,12 +878,18 @@
     
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
     Prerequisites
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -720,26 +898,32 @@
     
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#installing-the-chart" class="md-nav__link">
     Installing the Chart
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#uninstalling-the-chart" class="md-nav__link">
     Uninstalling the Chart
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
     Configuration
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -748,68 +932,87 @@
     
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#initialize-the-cdm-using-a-custom-container" class="md-nav__link">
     Initialize the CDM using a custom container
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#troubleshooting" class="md-nav__link">
     Troubleshooting
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#mlflow-and-dependcies" class="md-nav__link">
-    MLFlow and dependcies
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
+  <a href="#step-2-install-the-model-registry" class="md-nav__link">
+    Step 2: Install the Model Registry
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Install the Model Registry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mlflow-and-dependencies" class="md-nav__link">
+    MLFlow and dependencies
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pre-requisites" class="md-nav__link">
     Pre-requisites
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#introduction_1" class="md-nav__link">
     Introduction
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#prerequisites_1" class="md-nav__link">
     Prerequisites
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#installing-the-chart_1" class="md-nav__link">
     Installing the Chart
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#uninstalling-the-chart_1" class="md-nav__link">
     Uninstalling the Chart
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#configuration_1" class="md-nav__link">
     Configuration
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -852,31 +1055,35 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/IBM/DPM360/edit/master/docs/installer.md" title="Edit this page" class="md-content__button md-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
-                  </a>
-                
-                
-                <h1 id="installer">Installer</h1>
+  <a href="https://github.com/IBM/DPM360/edit/master/docs/installer.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+<h1 id="installer">Installer</h1>
 <p>The <strong>Installer</strong> component installs the fully functional DPM60 into Kubernetes or OpenShift Container Platform using <a href="https://helm.sh/">Helm charts</a>. Upon installation, models for different endpoints are available for the user. Helm Charts are simply Kubernetes manifests combined into a single package that can be installed to Kubernetes clusters. Once packaged, installing a Helm Chart into a cluster is as easy as running a single helm install, which really simplifies the deployment of containerized applications.</p>
 <figure><center><img src="../resources/installer_design.png" width="400"/><figcaption>DPM360 Installer</figcaption></center></figure>
 
-<p>You may follow the detailed instructions or skip to the last section and use express installation scripts. </p>
-<p><strong>Step 1:  Install the OHDSI Stack by following the instructions below.  This will install the OHDSI components ( Atlas, WebAPI, a Postgres Database, and Achilles)</strong></p>
-<h2 id="dpm360-ohdsi-stack-installer">DPM360 - OHDSI stack installer</h2>
+<p><br />
+<br /></p>
+<p>You can follow the detailed instructions or skip to the last section and use the <a href="#Express-Installation-Script">express installation scripts</a>. Alternatively, you can also follow <strong><a href="../non_cluster_install/">non-cloud-cluster setup</a></strong> if you want to try OHDSI stack without using a cluster.</p>
+<h2 id="step-1-install-the-ohdsi-stack"><strong>Step 1:  Install the OHDSI Stack</strong></h2>
+<p>Follow the instructions below.  This will install the OHDSI components ( Atlas, WebAPI, a Postgres Database, and Achilles)</p>
+<h3 id="dpm360-ohdsi-stack-installer">DPM360 - OHDSI stack installer</h3>
 <p>This chart is an adaptation of chart listed by <a href="https://github.com/chgl/charts/tree/master/charts/ohdsi">chgl/ohdsi</a></p>
 <p>A sample values.yaml file is provided in the repository <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/master/installer/ohdsi-stack/values.yaml">here</a>.</p>
-<h2 id="introduction">Introduction</h2>
+<h3 id="introduction">Introduction</h3>
 <p>This chart deploys the OHDSI WebAPI and ATLAS app. on a <a href="http://kubernetes.io">Kubernetes</a> cluster using the <a href="https://helm.sh">Helm</a> package manager.</p>
 <h2 id="_1"></h2>
-<h2 id="prerequisites">Prerequisites</h2>
+<h3 id="prerequisites">Prerequisites</h3>
 <ul>
 <li>Kubernetes v1.18+</li>
 <li>Helm v3</li>
 <li>Persistent Volume claims for Postgres Database ( Refer to the Configuration section below)</li>
 </ul>
 <h2 id="_2"></h2>
-<h2 id="installing-the-chart">Installing the Chart</h2>
+<h3 id="installing-the-chart">Installing the Chart</h3>
 <p>To install the chart with the release name <code>ohdsi</code>:</p>
 <pre><code>$ helm repo add chgl https://chgl.github.io/charts
 $ helm repo update
@@ -886,12 +1093,12 @@ $ helm install ohdsi chgl/ohdsi -n &lt;your workspace&gt; --values values.yaml
 <blockquote>
 <p><strong>Tip</strong>: List all releases using <code>helm list</code></p>
 </blockquote>
-<h2 id="uninstalling-the-chart">Uninstalling the Chart</h2>
+<h3 id="uninstalling-the-chart">Uninstalling the Chart</h3>
 <p>To uninstall/delete the <code>ohdsi</code>:</p>
 <pre>$ <span class="pl-s1">helm delete ohdsi -n ohdsi</span></pre>
 
 <p>The command removes all the Kubernetes components associated with the chart and deletes the release.</p>
-<h2 id="configuration">Configuration</h2>
+<h3 id="configuration">Configuration</h3>
 <p>The following table lists the configurable parameters of the <code>ohdsi</code> chart and their default values.</p>
 <table>
 <thead>
@@ -1209,7 +1416,7 @@ $ helm install ohdsi chgl/ohdsi -n &lt;your workspace&gt; --values values.yaml
 </tr>
 <tr>
 <td><code>CDM_URL</code></td>
-<td>Location of Athena Vocabulary file in tar.gz format.  It could be either a s3 url or a local file</td>
+<td>Location of Athena Vocabulary file in tar.gz format.  It could be either a s3 url or a local file. All necessary vocabulary files can be downloaded from the ATHENA download site: http://athena.ohdsi.org. A tutorial for Athena is available at https://www.youtube.com/watch?v=2WdwBASZYLk</td>
 <td></td>
 </tr>
 <tr>
@@ -1262,39 +1469,40 @@ installing the chart. For example:</p>
 <pre>$ <span class="pl-s1">helm install ohdsi chgl/ohdsi -n ohdsi --values values.yaml</span></pre>
 
 <h2 id="_3"></h2>
-<h2 id="initialize-the-cdm-using-a-custom-container">Initialize the CDM using a custom container</h2>
+<h3 id="initialize-the-cdm-using-a-custom-container">Initialize the CDM using a custom container</h3>
 <ol>
 <li>A custom docker image to initialize the CDM database with Athena Vocabularies and Synthetic 1K patient data is built based on the broad guidelines outlined <a href="https://github.com/IBM/DPM360">here</a>.
    This custom image is utilized in the cdmInitJob.image parameter in the values.yaml.</li>
 </ol>
 <p>The cdmInit container takes in the following parameters to initialize the data:</p>
-<p><code>CDM_URL</code>Location of Athena Vocabulary file in tar.gz format.  It could be either a s3 url or a local file <code>SYNPUF1K_URL</code>Location of Synthetic 1K data file in tar.gz format.  It could be either a s3 url or a local file.  You can download this from<a href="https://caruscloud.uniklinikum-dresden.de/index.php/s/teddxwwa2JipbXH/download">here</a>. <code>RESULTS_TABLE_URL</code>This will be the URL to get the Results schema.
+<p><code>CDM_URL</code>Location of Athena Vocabulary file in tar.gz format.  It could be either a s3 url or a local file. All necessary vocabulary files can be downloaded from the ATHENA download site: http://athena.ohdsi.org. A tutorial for Athena is available at https://www.youtube.com/watch?v=2WdwBASZYLk . <code>SYNPUF1K_URL</code>Location of Synthetic 1K data file in tar.gz format.  It could be either a s3 url or a local file.  You can download this from<a href="https://caruscloud.uniklinikum-dresden.de/index.php/s/teddxwwa2JipbXH/download">here</a>. <code>RESULTS_TABLE_URL</code>This will be the URL to get the Results schema.
    Example:
    http://<a href="server:port">server:port</a>/WebAPI/ddl/results?dialect=<your_cdm_database_dialect>&amp;schema=<your_results_schema>&amp;vocabSchema=<your_vocab_schema>&amp;tempSchema=<your_temp_schema>&amp;initConceptHierarchy=true</p>
 <p><code>CDM_SCHEMA</code> Name of the schema that contains the CDM tables in your database.</p>
 <p><code>OHDSI_WEBAPI_SCHEMA</code> Name of the schema that contains the WebAPI tables in your database.</p>
 <p><code>RESULTS_SCHEMA</code>Name of the schema that contains the results tables in your database.
    <code>TEMP_SCHEMA</code> Name of the schema that contains the temp results table in your database.</p>
-<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="troubleshooting">Troubleshooting</h3>
 <p>If the deployment does not work, possible todo following this https://www.kubeflow.org/docs/started/workstation/minikube-linux/</p>
-<p><strong>Step 2: Install the Model Registry by following the instructions below.  This will install Mlflow with a Postgres and Minio backend.</strong></p>
-<h2 id="mlflow-and-dependcies">MLFlow and dependcies</h2>
+<h2 id="step-2-install-the-model-registry"><strong>Step 2: Install the Model Registry</strong></h2>
+<p>Follow the instructions below.  This will install MlFlow with a Postgres and Minio backend.</p>
+<h3 id="mlflow-and-dependencies">MLFlow and dependencies</h3>
 <p><a href="https://github.com/ibm/dpm360">DPM360</a> - Helm chart for deploying Disease progression model framework including OHDSI tools ( Atlas, WebAPI), MLFlow and its dependencies ( minio for object storage and postgresql for relational database).</p>
-<h2 id="pre-requisites">Pre-requisites</h2>
+<h3 id="pre-requisites">Pre-requisites</h3>
 <pre><code class="language-console">Download the chart repo
 In your cloud environment, create 3 persistent volume claims ( one for OHDSI postgres, one for minio-mlflow and one for postgres-mlflow)
 Update the values.yaml with paramters matching your cloud environment
 
 
 </code></pre>
-<h2 id="introduction_1">Introduction</h2>
+<h3 id="introduction_1">Introduction</h3>
 <p>This chart deploys the MLFlow along with a minio based storage and postgesql database on a <a href="http://kubernetes.io">Kubernetes</a> cluster using the <a href="https://helm.sh">Helm</a> package manager.</p>
-<h2 id="prerequisites_1">Prerequisites</h2>
+<h3 id="prerequisites_1">Prerequisites</h3>
 <ul>
 <li>Kubernetes v1.18+</li>
 <li>Helm v3</li>
 </ul>
-<h2 id="installing-the-chart_1">Installing the Chart</h2>
+<h3 id="installing-the-chart_1">Installing the Chart</h3>
 <pre><code class="language-console">Once you have cloned the repo (https://github.com/IBM/DPM360)
 
 $ cd to the folder where you have installer/
@@ -1308,12 +1516,12 @@ Update your ingress to allow access to the services created by the helm chart.
 <blockquote>
 <p><strong>Tip</strong>: List all releases using <code>helm list</code></p>
 </blockquote>
-<h2 id="uninstalling-the-chart_1">Uninstalling the Chart</h2>
+<h3 id="uninstalling-the-chart_1">Uninstalling the Chart</h3>
 <p>To uninstall/delete the <code>modelregistry</code>:</p>
 <pre><code class="language-console">$ helm delete modelregistry -n &lt;yournamespace&gt;
 </code></pre>
 <p>The command removes all the Kubernetes components associated with the chart and deletes the release.</p>
-<h2 id="configuration_1">Configuration</h2>
+<h3 id="configuration_1">Configuration</h3>
 <p>The following table lists the configurable parameters of the <code>model-registry</code> chart and their default values.</p>
 <table>
 <thead>
@@ -1585,28 +1793,24 @@ eg. sh ohdsi-stack/minio-upload.sh minioRoot minioRoot123 ~/Downloads
 </ul>
 <pre><code>sh 3-cluster-load-data.sh
 </code></pre>
-                
-              
-              
-                
-
 
               
             </article>
+            
           </div>
         </div>
         
       </main>
       
-        
-<footer class="md-footer">
+        <footer class="md-footer">
   
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
         <a href="../Lightsaber/install/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Standalone Installation" rel="prev">
           <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
           <div class="md-footer__title">
             <div class="md-ellipsis">
@@ -1619,18 +1823,34 @@ eg. sh ohdsi-stack/minio-upload.sh minioRoot minioRoot123 ~/Downloads
         </a>
       
       
+        
+        <a href="../non_cluster_install/" class="md-footer__link md-footer__link--next" aria-label="Next: Non-cluster Install" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Non-cluster Install
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
     </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
-        
-      </div>
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
       
     </div>
   </div>
@@ -1640,10 +1860,10 @@ eg. sh ohdsi-stack/minio-upload.sh minioRoot minioRoot123 ~/Downloads
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.756773cc.min.js"></script>
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
       
     
   </body>
