@@ -35,6 +35,7 @@ DEFAULT_DEVICE = 'cpu'
 DEFAULT_FILTER = None
 DEFAULT_TRANSFORM = [functoolz.identity]
 
+
 class SKDataLoader(object):
     """Custom data loaders for scikit-learn"""
 
@@ -89,8 +90,8 @@ class SKDataLoader(object):
         # Enforing a flatten function to make sure sklearn modules gets a
         # flattended data
         _filter_flatten_filled_drop_cols = filter_flatten_filled_drop_cols(cols_to_drop=cols_to_drop,
-                                                                                aggfunc=flatten,
-                                                                                fill_value=fill_value)
+                                                                           aggfunc=flatten,
+                                                                           fill_value=fill_value)
         self._filter = []
         if filter is not None:
             if isinstance(filter, (list, tuple)):
@@ -108,16 +109,16 @@ class SKDataLoader(object):
         transform = DEFAULT_TRANSFORM
 
         self._dataset = ptd.BaseDataset(self._tgt_file, 
-                                  self._feat_file, 
-                                  self._idx_col, 
-                                  self._tgt_col,
-                                  feat_columns=self._feat_columns, 
-                                  time_order_col=self._time_order_col,
-                                  category_map=self._category_map,
-                                  filter=self._filter,
-                                  transform=transform,
-                                  device=device
-                                 )
+                                        self._feat_file, 
+                                        self._idx_col, 
+                                        self._tgt_col,
+                                        feat_columns=self._feat_columns, 
+                                        time_order_col=self._time_order_col,
+                                        category_map=self._category_map,
+                                        filter=self._filter,
+                                        transform=transform,
+                                        device=device
+                                        )
         return
 
     @property

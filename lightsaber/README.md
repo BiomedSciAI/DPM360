@@ -1,6 +1,7 @@
 # Welcome to lightsaber
 
 <!-- For full documentation visit [mkdocs.org](https://www.mkdocs.org). -->
+## Overview
 
 `lightsaber` is designed ground up to provide a _simple_, _composible_, and unified
 model training framework. It has been designed based on state-of-the-art open source

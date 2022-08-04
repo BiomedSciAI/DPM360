@@ -31,6 +31,7 @@ import mlflow.sklearn
 import time
 import six
 import warnings
+import uuid
 
 from lightsaber import constants as C
 from lightsaber.metrics import Metrics
@@ -43,15 +44,17 @@ from lightsaber.trainers.helper import (setup_mlflow, get_model, get_predefined_
 
 import logging
 log = logging.getLogger()
+
+
 # ***********************************************************************
 #         SK Model Trainer
 # ***********************************************************************
 class SKModel(object):
     """SKModel
     """
-    def __init__(self, 
+    def __init__(self,
                  base_model,
-                 model_params=None, 
+                 model_params=None,
                  name="undefined_model_name"):
         """
         Parameters
@@ -69,13 +72,14 @@ class SKModel(object):
             try:
                 self.set_params(**model_params)
             except Exception as e:
-                warnings.warn(f"couldnt set model params - base_model/model_params inconsitent with scikit-learn")
+                warnings.warn("couldnt set model params - base_model/model_params inconsitent with scikit-learn")
+                log.debug(f'Error in model params:{e}')
         self.__name__ = name
-        
+
         self.metrics = {}
         self.proba = []
         # self.params = self.model.get_params()
- 
+
     @property
     def params(self):
         try:
@@ -88,7 +92,6 @@ class SKModel(object):
     def set_params(self, **parameters):
         self.model.set_params(**parameters)
         return self
-
 
     def fit(self, X, y, experiment_name=""): # default exp name is timestamp
         """
@@ -112,7 +115,6 @@ class SKModel(object):
         """
         return self.model.predict(X)
 
-
     def calibrate(self, X, y):
         ccc = CalibratedClassifierCV(self.model, method='isotonic', cv='prefit')
         ccc.fit(X, y)
@@ -120,15 +122,15 @@ class SKModel(object):
         #  self.params = self.model.get_params()
         return self
 
-    def tune(self, 
+    def tune(self,
              X, y,
              hyper_params,
-             experiment_name, 
+             experiment_name,
              cv=C.DEFAULT_CV,
              scoring=C.DEFAULT_SCORING_CLASSIFIER,
-            ):  ## NEEDS MODIFICATION
+             ):  ## NEEDS MODIFICATION
         """Tune hyperparameters for model. Uses mlflow to log best model, Gridsearch model, scaler, and best_score
-        
+
         Parameters
         ----------
         X: np.array
@@ -155,12 +157,12 @@ class SKModel(object):
     def predict_proba(self, X):
         """
         Predicts on X and returns class probabilitiyes
-        
+
         Parameters
         ----------
         X: np.array
             Feature matrix
-            
+
         Returns
         -------
         array of shape (n_samples, n_classes)
@@ -175,11 +177,11 @@ class SKModel(object):
         return self.predict_proba(p_X)
 
 
-def run_training_with_mlflow(mlflow_conf, 
-                             wrapped_model,
-                             train_dataloader, 
-                             val_dataloader=None, 
-                             test_dataloader=None,
+def run_training_with_mlflow(mlflow_conf:dict,
+                             wrapped_model:SKModel,
+                             train_dataloader:skd.SKDataLoader,
+                             val_dataloader:skd.SKDataLoader=None,
+                             test_dataloader:skd.SKDataLoader=None,
                              **kwargs):
     """
     Function to run supervised training for classifcation
@@ -189,52 +191,76 @@ def run_training_with_mlflow(mlflow_conf,
     mlflow_conf: dict
         mlflow configuration e,g, MLFLOW_URI
     wrapped_model: SKModel
-        wrapped SKModel 
-    train_dataloader:
+        wrapped SKModel
+    train_dataloader: skd.SKDataLoader
         training dataloader
-    val_dataloader:
-        validation dataloader, optional
-    test_dataloader:
-        optional
-    kwargs: dict of dicts, optional
-        can contain `artifacts` to log with models, `model_path` to specify model output path, and remianing used as experiment tags
-        
+    val_dataloader: skd.SKDataLoader, optional
+        validation dataloader
+    test_dataloader: skd.SKDataLoader, optional
+        test dataloader
+    model_path: str, optional
+        prefix for storing model in MlFlow
+    artifacts: dict, optional
+        any artifact to be logged by user
+    metrics: Callable, optional
+        if specified, used for calculating all metrics. else inferred from problem type
+    tune: bool, optional
+        if specified tune model based on inner cv. Default: False
+    scoring: Callable, optional
+        used when tune=True. sklearn compatible scoring function to score the models for grid search. default: C.DEFAULT_SCORING_CLASSIFIER
+    inner_cv: object, optional
+        used when tune=True. sklearn compatible cross validation folds to for grid search. default: C.DEFAULT_CV
+    h_search: dict, optional
+        used when tune=True (required). sklearn compatible search space for grid search. 
+    run_id: str, optional
+        if specified uses existing mlflow run.
+    kwargs: dict, optional
+        remaining keyword argumennts are used as experiment tags
+
     Returns
     -------
     tuple:
-        (run_id, run_metrics, val_y, val_yhat, val_pred_proba, test_y, test_yhat, test_pred_proba)
+        (run_id, run_metrics, y_val, y_val_hat, y_val_pred, y_test, y_test_hat, y_test_pred,)
     """
-    tune = kwargs.get('tune', False)
-    if tune:
-        inner_cv = kwargs.get('inner_cv', C.DEFAULT_CV)
-        h_search = kwargs.pop('h_search', None)
-        if h_search is None:
-            raise AttributeError(f'if tuner is requested, h_search should be provided')
-        scoring = kwargs.get('scoring', C.DEFAULT_SCORING_CLASSIFIER)
-        
     model_path = kwargs.pop('model_path', 'model')
-    # model_save_dir = Path(kwargs.get('model_save_dir', C.MODEL_SAVE_DIR))
-    # model_save_dir.mkdir(parents=True, exist_ok=True)
     artifacts = kwargs.pop('artifacts', dict())
 
     mlflow_conf.setdefault('problem_type', 'classifier')
     mlflow_setup = setup_mlflow(**mlflow_conf)
 
-    calculate_metrics = Metrics(mlflow_conf['problem_type'])
+    # Support for user-defined run time metrics
+    _metrics = kwargs.pop('metrics', None)
+    if _metrics is not None:
+        calculate_metrics = _metrics
+        assert callable(calculate_metrics), f"metric function {_metrics} must be callable."
+    else:
+        calculate_metrics = Metrics(mlflow_conf['problem_type'])
     log.debug(f"Mlflow setup: {mlflow_setup}")
     log.debug(f"Used metrics: {calculate_metrics}")
 
     experiment_name = mlflow_setup['experiment_name']
+    log.debug(f'Starting experiment {experiment_name}')
 
     experiment_tags = dict()
     experiment_tags.update(**kwargs)
 
-    with mlflow.start_run():
-        run_id = mlflow.active_run().info.run_id 
+    # support for tuning
+    tune = kwargs.get('tune', False)
+    if tune:
+        inner_cv = kwargs.get('inner_cv', C.DEFAULT_CV)
+        h_search = kwargs.pop('h_search', None)
+        if h_search is None:
+            raise AttributeError('if tuner is requested, h_search should be provided')
+        scoring = kwargs.get('scoring', C.DEFAULT_SCORING_CLASSIFIER)
+
+    # Support for resuming a run
+    run_id = kwargs.pop('run_id', None)
+    with mlflow.start_run(run_id=run_id):
+        run_id = mlflow.active_run().info.run_id
         _start_time = time.time()
 
         X_train, y_train = train_dataloader.get_data()
-        
+
         if val_dataloader is not None:
             X_val, y_val = val_dataloader.get_data()
             outer_cv, _X, _y = get_predefined_split(X_train, y_train, X_val, y_val)
@@ -254,13 +280,13 @@ def run_training_with_mlflow(mlflow_conf,
         if tune:
             m, gs = wrapped_model.tune(X=_X, y=_y,
                                        hyper_params=h_search,
-                                       cv=inner_cv, 
-                                       experiment_name=experiment_name, 
+                                       cv=inner_cv,
+                                       experiment_name=experiment_name,
                                        scoring=scoring)
-            
+
             mlflow.sklearn.log_model(m, experiment_name + '_model')
             mlflow.sklearn.log_model(gs, experiment_name + '_GridSearchCV')
-            
+
             log.info(f"Experiment: {experiment_name} has finished hyperparameter tuning")
             log.info("Hyperparameter search space: " + str(h_search))
             # log params
@@ -268,70 +294,80 @@ def run_training_with_mlflow(mlflow_conf,
             print(f"Best_params:\n {gs.best_params_}")
         else:
             wrapped_model.fit(X=X_train, y=y_train)#, Xstd = X_train_std)
-        
+
             mlflow.sklearn.log_model(wrapped_model.model, experiment_name + '_model')
             mlflow.log_params(wrapped_model.params)
             log.info(f"Experiment: {experiment_name} has finished training")
 
         for split_id, (train_index, val_index) in enumerate(outer_cv.split(_X, _y)):
             if split_id >= 1:
-                warnings.warn("Current logic for tune and implicit outer_cv not correct")
+                warnings.warn("Current logic for tune and implicit outer_cv not correct... skipping calculating metrics for validation fold")
+                y_val = None
+                y_val_hat = None
+                y_val_pred = None
+                val_score = None
                 break
 
-            _X_train, _X_val = _X[train_index, :], _X[val_index, :]
-            _y_train, _y_val = _y[train_index], _y[val_index]
-            
-            y_val_proba = wrapped_model.predict_proba(_X_val)
-            if y_val_proba.ndim > 1:
-                y_val_proba = y_val_proba[:,1]
+            _, _X_val = _X[train_index, :], _X[val_index, :]
+            _, y_val = _y[train_index], _y[val_index]
+
+            y_val_pred = wrapped_model.predict_proba(_X_val)
+            # if y_val_pred.ndim > 1:
+            #     y_val_pred = y_val_pred[:, 1]
 
             y_val_hat = wrapped_model.predict(_X_val)
-            val_score = wrapped_model.score(_X_val, _y_val)
+            val_score = wrapped_model.score(_X_val, y_val)
+            if y_val.ndim == 2 and y_val.shape[1] == 1:
+                y_val = y_val.squeeze(axis=1)
 
         if test_dataloader is not None:
-            y_test_proba = wrapped_model.predict_proba(X_test)
-            if y_test_proba.ndim > 1:
-                y_test_proba = y_test_proba[:, 1]
+            y_test_pred = wrapped_model.predict_proba(X_test)
+            # if y_test_pred.ndim > 1:
+            #     y_test_pred = y_test_pred[:, 1]
             y_test_hat = wrapped_model.predict(X_test)
             test_score = wrapped_model.score(X_test, y_test)
+            if y_test.ndim == 2 and y_test.shape[1] == 1:
+                y_test = y_test.squeeze(axis=1)
         else:
             y_test=None
             y_test_hat=None
-            y_test_proba=None
+            y_test_pred=None
             test_score =None
 
-        # Calculate metrics
-        wrapped_model.metrics = calculate_metrics(y_val=y_val, 
-                                             y_val_proba=y_val_proba, 
-                                             y_val_hat=y_val_hat,
-                                             val_score=val_score, 
-                                             y_test=y_test, 
-                                             y_test_proba=y_test_proba, 
-                                             y_test_hat=y_test_hat,
-                                             test_score=test_score
-                                            )
         _end_time = time.time()
         run_time = (_end_time - _start_time)
-        
-        # log metrics
-        mlflow.log_metrics(wrapped_model.metrics)
 
-        experiment_tags.update(dict(run_time=run_time))
-        if experiment_tags is not None:
-            mlflow.set_tags(experiment_tags)
+    # Experiment ended. logging things
+    experiment_tags.update(dict(run_time=run_time))
 
-        # Other artifacts
-        _tmp = {f"artifact/{art_name}": art_val 
-                for art_name, art_val in six.iteritems(artifacts)}
-        helper.log_artifacts(_tmp, run_id, mlflow_uri=mlflow_setup['mlflow_uri'], delete=True) 
+    # Calculate metrics
+    try:
+        run_metrics = calculate_metrics(y_val=y_val, y_val_hat=y_val_hat, y_val_proba=y_val_pred, val_score=val_score,
+                                        y_test=y_test, y_test_hat=y_test_hat, y_test_proba=y_test_pred, test_score=test_score)
 
-        return (run_id,
-                wrapped_model.metrics,
-                y_val, y_val_hat, y_val_proba,
-                y_test, y_test_hat, y_test_proba,
-                )
+    except Exception as e:
+        warnings.warn(f"{e}")
+        log.warning(f"something went wrong while computing metrics: {e}")
+        run_metrics = None
 
-def load_model_from_mlflow(run_id, 
+    # log metrics
+    helper.log_metrics(run_metrics, run_id=run_id)
+
+    # Other artifacts
+    _tmp = {f"artifact/{art_name}": art_val
+            for art_name, art_val in six.iteritems(artifacts)}
+    helper.log_artifacts(_tmp, run_id=run_id, mlflow_uri=mlflow_setup['mlflow_uri'], delete=True)
+
+    helper.set_tags(experiment_tags, run_id=run_id)
+
+    return (run_id, 
+            run_metrics, 
+            y_val, y_val_hat, y_val_pred,
+            y_test, y_test_hat, y_test_pred,
+            )
+
+
+def load_model_from_mlflow(run_id,
                            mlflow_conf,
                            wrapped_model=None,
                            model_path="model",
@@ -356,14 +392,14 @@ def load_model_from_mlflow(run_id,
     """
     mlflow_setup = helper.setup_mlflow(**mlflow_conf)
     model_uri = f"runs:/{run_id}/{mlflow_setup['experiment_name']}_{model_path}"
-    run_data = helper.fetch_mlflow_run(run_id, 
+    run_data = helper.fetch_mlflow_run(run_id,
                                        mlflow_uri=mlflow_setup['mlflow_uri'],
                                        parse_params=True
                                        )
 
     hparams = run_data['params']
 
-    # ckpt_path = helper.get_artifact_path(run_data['artifact_paths'][0], 
+    # ckpt_path = helper.get_artifact_path(run_data['artifact_paths'][0],
     #                                      artifact_uri=run_data['info'].artifact_uri)
     #  wrapped_model = load_model(wrapped_model, ckpt_path)
     model_name = run_data['tags']['model']
@@ -372,7 +408,8 @@ def load_model_from_mlflow(run_id,
         wrapped_model = SKModel(base_model, hparams, name=model_name)
     return wrapped_model
 
-def register_model_with_mlflow(run_id, 
+
+def register_model_with_mlflow(run_id,
                                mlflow_conf,
                                wrapped_model=None,
                                registered_model_name=None,
@@ -398,7 +435,7 @@ def register_model_with_mlflow(run_id,
     """
     # Getting run info
     mlflow_setup = helper.setup_mlflow(**mlflow_conf)
-    wrapped_model = load_model_from_mlflow(run_id, mlflow_conf, 
+    wrapped_model = load_model_from_mlflow(run_id, mlflow_conf,
                                            wrapped_model=wrapped_model, model_path=model_path)
 
     if registered_model_name is None:
@@ -415,4 +452,4 @@ def register_model_with_mlflow(run_id,
     # logging other artifacts
     dumper = helper.model_register_dumper(registered_model_name=registered_model_name)
     helper.log_artifacts(artifacts, run_id, mlflow_uri=mlflow_setup['mlflow_uri'], dumper=dumper, delete=True)
-    return 
+    return

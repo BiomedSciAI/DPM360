@@ -57,6 +57,13 @@ def pr_at_k(y_true, y_hat, y_proba, pct, average='binary'):
     Returns:
         dict with precision_at_k and recall_at_k
     '''
+    if y_proba.ndim > 1:
+        if y_proba.ndim == 2:
+            print('Warning: currently only supporting the majority class')
+            y_proba = np.ravel(y_proba[:, -1])
+        else:
+            raise Exception('Number of dimensions can only be one')
+
     k = round(pct * len(y_true))
     merged_values = np.vstack([y_true.T, y_hat.T, y_proba.T]).T #np.hstack((y_true, probas_pred)) # concat y_true and prediction probabilities
     merged_values = merged_values[(-merged_values[:,2]).argsort()] # sort by probabilities
@@ -100,6 +107,7 @@ class Metrics(object):
     def classifier_metrics(y_val, y_val_hat, y_val_proba=None, val_score=None,
                            y_test=None, y_test_hat=None, y_test_proba=None, test_score=None):
         '''
+        #TODO: fix this
         Calculate metrics for model evaluation 
         Args:
             y_true: (1d np.array) actual labels, 1 - positve class, 0 - negative class
@@ -108,13 +116,17 @@ class Metrics(object):
         Returns:
             dict with train_error, test_error, precision, recall, auc, auprc, accuracy, and precision recalls at k%
         '''
-        # Validation part  
+        # Validation part 
         val_precision = precision_score(y_true=y_val, y_pred=y_val_hat)
         val_recall = recall_score(y_true=y_val, y_pred=y_val_hat)
         val_accuracy = accuracy_score(y_true=y_val, y_pred=y_val_hat)
+
         val_auc, val_auprc, val_brier_score = 0, 0, 0
         _prak = {}
         if y_val_proba is not None:
+            # Selecting the majority class when y is provided as a single dimension vector
+            if y_val.ndim == 1 and y_val_proba.ndim == 2:
+                y_val_proba = y_val_proba[:,-1]  
             val_auc = roc_auc_score(y_val, y_val_proba)
             val_auprc = average_precision_score(y_val, y_val_proba)
             val_brier_score = brier_score_loss(y_val, y_val_proba)
@@ -148,13 +160,16 @@ class Metrics(object):
             test_auc, test_auprc, test_brier_score = 0, 0, 0
             _prak = {}
             if y_test_proba is not None:
+                if y_test.ndim == 1 and y_test_proba.ndim == 2:
+                    y_test_proba = y_test_proba[:,-1]  
                 test_auc = roc_auc_score(y_test, y_test_proba)
                 test_auprc = average_precision_score(y_test, y_test_proba)
                 test_brier_score = brier_score_loss(y_test, y_test_proba)
                 # Recall on highest ½%, 1%, 2%, 5 of risk scores
+                # TODO: use joblib here
                 for pct in [0.005, 0.01, 0.02, 0.05]: 
-                    _tmp = pr_at_k(y_true=y_test, y_hat=y_test_hat,
-                                   y_proba=y_test_proba, pct=pct)
+                    _tmp = pr_at_k(y_true=y_test, y_hat=y_test_hat, y_proba=y_test_proba,
+                                   pct=pct)
                     for key, value in six.iteritems(_tmp):
                         _prak[f'Test_{key}'] = value 
 

@@ -1,7 +1,8 @@
-scikit-learn==0.23.*
+scikit-learn>=1.*
 mlflow>=1.2.0
-pytorch-lightning==0.8.5
-torch>=1.1.0
+pandas>=1.2
+pytorch-lightning>=1.*
 toolz
+ray[tune]>=1.13.*
 tabulate
 

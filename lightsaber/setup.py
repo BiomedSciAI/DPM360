@@ -48,14 +48,16 @@ except AttributeError:
 #  reqs = [str(ir.req) for ir in install_reqs]
 
 _t2e_deps = ["pysurvival==0.1.2"]
-_doc_deps = ["mkdocs==1.2.2", 
-             "mkdocs-material==7.2.6",
-             "mkdocstrings==0.15.2",
-             "mknotebooks==0.7.0",
-			 "mkdocs-monorepo-plugin==0.4.16",
-             "pytkdocs[numpy-style]==0.11.1",
-             #  "mkdocs-pdf-export-plugin==0.5.8"
-            ]
+_doc_deps = [
+    "Jinja2==3.1.2",
+    "mkdocs==1.3.0", 
+    "mkdocs-material==8.3.9",
+    "mkdocstrings==0.18.1",
+    "mknotebooks==0.7.1",
+    "mkdocs-monorepo-plugin==1.0.2",
+    "pytkdocs[numpy-style]==0.16.1"
+    #  "mkdocs-pdf-export-plugin==0.5.8"
+]
 
 _full_deps = _t2e_deps + _doc_deps
 

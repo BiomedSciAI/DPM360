@@ -35,6 +35,7 @@ from lightsaber import constants as C
 import logging
 log = logging.getLogger()
 
+
 # ***********************************************************************
 #         General Utils
 # ***********************************************************************
@@ -69,6 +70,7 @@ def get_model(model_type, model_params=None):
         model = model_to_call(verbose=2)
     return model
 
+
 # ***********************************************************************
 #         MLFlow
 # ***********************************************************************
@@ -97,11 +99,12 @@ def setup_mlflow(mlflow_uri=C.MLFLOW_URI,
 
     return dict(problem_type=problem_type, experiment_name=experiment_name, mlflow_uri=mlflow_uri)
 
+
 def fetch_mlflow_run(run_id, 
                      mlflow_uri=C.MLFLOW_URI,
                      artifacts_prefix=['model'],
                      parse_params=False
-                    ):
+                     ):
     # ref: https://www.mlflow.org/docs/latest/python_api/mlflow.sklearn.html
     client = mlflow.tracking.MlflowClient(tracking_uri=mlflow_uri)
     run = client.get_run(run_id)
@@ -128,6 +131,7 @@ def fetch_mlflow_run(run_id,
                 tags=tags, 
                 artifact_paths=artifacts)
 
+
 def fetch_mlflow_experiment(experiment_name, 
                             mlflow_uri=C.MLFLOW_URI,
                             **kwargs):
@@ -138,6 +142,7 @@ def fetch_mlflow_experiment(experiment_name,
     run_df = mlflow.search_runs(experiment_id, **kwargs)
     return run_df
 
+
 def _parse_logged_params(params):
     _params = dict()
     for k, v in six.iteritems(params):
@@ -147,6 +152,7 @@ def _parse_logged_params(params):
             val = v
         _params.setdefault(k, val)
     return _params
+
 
 def get_artifact_path(artifact_path,
                       artifact_uri,
@@ -179,7 +185,7 @@ def safe_dumper(obj, obj_name):
     try:
         is_file = Path(obj).is_file()
     except Exception as e:
-        warnings.warn(f"problem during file checking: {e}\ncontinuing")
+        warnings.warn(f"problem during file checking: {e}\ncontinuing", stacklevel=2)
 
     if not is_file:
         assert not hasattr(obj, 'read'), "Object cannot be a open stream"
@@ -188,26 +194,26 @@ def safe_dumper(obj, obj_name):
             tmp_filename = tmp_file.name
     else:
         tmp_filename = obj
-    art_name = obj_name
+    #  art_name = obj_name
     return tmp_filename, obj_name
 
 
 @functoolz.curry
 def model_register_dumper(obj, obj_name, registered_model_name=None):
     """
-    If obj is not a file name dump it as a file. 
+    If obj is not a file name dump it as a file
     """
     if (obj_name == 'test_feat_file'):
         temp_filename = 'X_test.csv'
     elif (obj_name == 'test_tgt_file'):
         temp_filename = 'y_test.csv'
     elif (obj_name == 'config'):
-        temp_filename = registered_model_name+'.yaml'
+        temp_filename = registered_model_name + '.yaml'
     else:
         temp_filename = None
     if temp_filename is not None:
         shutil.copy(obj, temp_filename)
-    art_name =  "features"
+    art_name = "features"
     return temp_filename, art_name
 
 
@@ -228,6 +234,33 @@ def log_artifacts(artifacts,
         if delete: 
             os.remove(tmp_filename)
     return ret_fnames
+
+
+def set_tags(tags,
+             run_id, 
+             mlflow_uri=C.MLFLOW_URI, 
+             ):
+    """helper function to add tag to existing run
+    """
+    client = mlflow.tracking.MlflowClient(tracking_uri=mlflow_uri)
+    # TODO: use batch mode
+    for key, value in six.iteritems(tags):
+        client.set_tag(run_id, key, value) 
+    return
+
+
+def log_metrics(metrics,
+                run_id, 
+                mlflow_uri=C.MLFLOW_URI, 
+                ):
+    """helper function to add metric to existing run
+    """
+    client = mlflow.tracking.MlflowClient(tracking_uri=mlflow_uri)
+    # TODO: use batch mode
+    for key, value in six.iteritems(metrics):
+        client.log_metric(run_id, key, value) 
+    return
+
 
 # ***********************************************************************
 #         SK Model Utils

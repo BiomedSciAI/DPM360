@@ -1,4 +1,6 @@
-# Changelog
+# Release History
+
+Release notes for major `lightsaber` releases are linked in this page
 
 ## v0.3.0
 
