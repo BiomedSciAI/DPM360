@@ -15,7 +15,7 @@ torch==1.4.0
 torchvision==0.5.0
 toolz==0.11
 scikit-learn==0.24.1
-pytorch-lightning==0.8.5
+pytorch-lightning==1.6.0
 attrs==20.3.0
 cffi==1.14.5
 iniconfig==1.1.1
