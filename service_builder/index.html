@@ -1,0 +1,811 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Service Builder - DPM360</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../css/ansi-colours.css">
+    
+      <link rel="stylesheet" href="../css/jupyter-cells.css">
+    
+      <link rel="stylesheet" href="../css/pandas-dataframe.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#service-builder" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="DPM360" class="md-header__button md-logo" aria-label="DPM360" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DPM360
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Service Builder
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/IBM/DPM360" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    IBM/DPM360
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="DPM360" class="md-nav__button md-logo" aria-label="DPM360" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    DPM360
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/IBM/DPM360" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    IBM/DPM360
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Components" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Service Builder
+      </a>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Cohort Tools
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cohort Tools" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Cohort Tools
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CohortTools/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CohortTools/user_guide/" class="md-nav__link">
+        User Guide
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Lightsaber
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lightsaber" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Lightsaber
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lightsaber/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_3_2" type="checkbox" id="__nav_2_3_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3_2">
+          Design and Usage
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Design and Usage" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Design and Usage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lightsaber/user_guide/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_3_2_2" type="checkbox" id="__nav_2_3_2_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3_2_2">
+          Example
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Example" data-md-level="4">
+        <label class="md-nav__title" for="__nav_2_3_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Example
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lightsaber/IHM_Example_Using_HistGBT/" class="md-nav__link">
+        IHM Example Using HistGBT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lightsaber/IHM_Example_Using_LSTM/" class="md-nav__link">
+        IHM Example Using LSTM
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lightsaber/api/" class="md-nav__link">
+        API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lightsaber/whats_new/" class="md-nav__link">
+        Release history
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lightsaber/install/" class="md-nav__link">
+        Standalone Installation
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          Installer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Installer" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Installer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installer/" class="md-nav__link">
+        Cluster Install
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../non_cluster_install/" class="md-nav__link">
+        Non-cluster Install
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/IBM/DPM360/edit/master/docs/service_builder.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+<h1 id="service-builder">Service Builder</h1>
+<p>The Service Builder component is responsible for converting registered models into micro-services. It achieves this through a number of automated steps as shown in the diagram below.</p>
+<p><strong>In Step 1:</strong> The Service Builder comes with an inbuilt post-registration-hook in the form of a Cron job which is configured to listen for a deployment-ready model in the Model Registry. Identification of deployment-ready model is done using a “production” tag being set on the model within the registry e.g by the machine learning researcher or model creator. A registered model has metadata that includes the model binary file, its dependencies and related artifacts etc.</p>
+<p><strong>In Step 2:</strong> Upon finding a deployment-ready model in the registry, the post-registration-hook extracts model and its dependencies from the Model Registry and packages the model as a micro-service in a Docker container using a framework called “Model Wrapper”.</p>
+<p><strong>In Step 3:</strong> Upon successful packaging of the model as a container, the execution flow proceeds to model deployment in a target cloud cluster e.g. Kubernetes or OpenShift. The deployment process makes use of a base deployment image, Model Wrapper as well as the actual container created in the previous step. Upon successful deployment a callback function updates model metadata in the Model Registry with deployment status and model access endpoint.</p>
+<p><strong>In Step 4:</strong> Using the model endpoint, potential users (e.g data scientist or product managers, etc.) can interact with the model, now deployed as a microservice, though a Swagger-based interface. In the interface they provide inputs to the model e.g., a patient id, which is then passed to the model for prediction, and a response is returned to the user.</p>
+<figure><center><img src="../resources/service-builder-design.jpg" width="800"/><figcaption>Service Builder Architecture</figcaption></center></figure>
+
+<h1 id="setting-up-service-builder-pipeline">Setting up Service Builder Pipeline</h1>
+<p>This section provides details on how one can setup the service builder pipeline in their cluster.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Kubernetes v1.18+</li>
+<li>Python 3</li>
+<li>Docker</li>
+</ul>
+<h2 id="setting-up-cron-jobpre-registration-hook">Setting up Cron Job(Pre-registration Hook)</h2>
+<p>From the <a href="https://github.ibm.com/IBM-Research-AI/dpm360">DPM360 root folder</a> navigate to <a href="https://github.ibm.com/IBM-Research-AI/dpm360/tree/dev/service_builder">service builder folder</a> and follow the following steps to setup the pre-registration hook cron job service. </p>
+<p><strong>Step 1 (Optional):</strong>  The cron job service comes with a pre-built base docker image which can be replaced. To replace the base image you can build a new one using the following command while inside the <a href="https://github.ibm.com/IBM-Research-AI/dpm360/tree/dev/service_builder/cron_job">cron job folder</a>.</p>
+<pre><code>docker build -t dpm360-cronjob .
+</code></pre>
+<p>Upon a successful image build, you can proceed to tag the image with a preferred name and push the image to a container registry of you choice. The sample commands below are used to push the image to DPM360 docker hub space. NB: Depending on the chosen registry one may have to set permissions to access the image, the current base image is stored in docker hub which does not require permissions for one to pull/access the image. </p>
+<pre><code>docker  tag dpm360-cronjob ibmcom/dpm360-cronjob   
+docker  push ibmcom/dpm360-cronjob
+</code></pre>
+<p><strong>Step 2 (Optional):</strong> If you have built a new image and pushed to a different registry ensure that the new image tag is updated in the <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/dev/service_builder/cron_job/cronjob.yaml#L15">cron job deployment file</a>.</p>
+<p><strong>Step 3:</strong> Update the <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/dev/service_builder/cron_job/cronjob.yaml">cron job deployment file</a> with needed environment variables. These variables are outlined below with representation explanation details given. These environment variables include details for a Model Registry(e.g. <a href="https://mlflow.org/">Mflow</a>) which is used to retrieve deployment ready models to be deployed to a kubernetes cluster. These variables also include env variables for the target cluster(e.g. Kubernetes or OpenShift).</p>
+<pre><code>       - name: MLFLOW_API
+         value: &lt;YOUR_VALUE_HERE&gt; ---&gt;  Represents model registry end points
+       - name: K8s_CLUSTER
+         value: &lt;YOUR_VALUE_HERE&gt; ---&gt;  Represents K8S cluster name
+       - name: K8S_API_KEY
+         value: &lt;YOUR_VALUE_HERE&gt; ---&gt;  Represents K8S cluster key
+       - name: K8S_API
+         value: &lt;YOUR_VALUE_HERE&gt; ---&gt;  Represents K8S cluster API
+       - name: K8S_NAME_SPACE
+         value: &lt;YOUR_VALUE_HERE&gt; ---&gt; Represents K8S cluster project name
+       - name: DPM360_SERVICE_BUILDER_HOST_NAME
+         value: &lt;YOUR_VALUE_HERE&gt; ---&gt; Represents service builder host name(more details in updating model wrapper section below)
+       - name: MLFLOW_TRACKING_URI
+         value: &lt;YOUR_VALUE_HERE&gt; ---&gt; Represents model registry  tracking uri
+       - name: MLFLOW_S3_ENDPOINT_URL
+         value: &lt;YOUR_VALUE_HERE&gt; ---&gt; Represents model registry s3 endpoint uri
+       - name: AWS_SECRET_ACCESS_KEY
+         value: &lt;YOUR_VALUE_HERE&gt; ---&gt; Represents model registry s3 secret access key
+       - name: AWS_ACCESS_KEY_ID
+         value: &lt;YOUR_VALUE_HERE&gt; ---&gt; Represents model registry s3 secret access id
+</code></pre>
+<p>NB: <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/dev/service_builder/cron_job/cronjob.yaml#L6">Cron job scheduler</a> can also be updated, by default the scheduler is set to check for ready models in the model registry after every 2 minutes.</p>
+<p><strong>Step 4:</strong> In the target kubernetes cluster set up a cron job service using <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/dev/service_builder/cron_job/cronjob.yaml">cron job deployment file</a> after updating the values described in step 2 above. Details of creating a cron job for kubernetes cluster via the dashboard can be found <a href="https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/">here</a>. To create the cron job via command line, login to Kubernetes/OpenShift and run the following commands to start the cron  job. </p>
+<pre><code>oc apply -f cron_job/cronjob.yaml  ---&gt; OpenShift Specific
+
+or
+
+kubectl apply -f cron_job/cronjob.yaml  ---&gt; Kubernetes Specific
+</code></pre>
+<p><strong>Step 5:</strong>  Once the cron job has been setup, it uses an <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/dev/service_builder/cron_job/execute.sh">executor</a> to fetch the model and deploy the model to a given cluster. The deployment process uses the following kubernetes controller templates <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/dev/service_builder/cron_job/deployment_template.yaml">Deployment</a>, <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/dev/service_builder/cron_job/service_template.yaml">Service</a> and <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/dev/service_builder/cron_job/ingress_template.yaml">Ingress</a>, the details of the different kubernetes controllers can be found <a href="https://kubernetes.io/docs/concepts/">here</a>. The templates are first updated with the relevant details either from the values set in the <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/dev/service_builder/cron_job/cronjob.yaml">cron job deployment file</a> or from the model registry metadata. Thereafter, these files are then used for model deployment and generation of the model's swagger endpoint. With every successful model deployment the <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/dev/service_builder/cron_job/execute.sh">executor</a> also updates model registry with the deployed model swagger endpoint. </p>
+<p><strong>NB:</strong> To test the <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/dev/service_builder/cron_job/execute.sh">executor</a> script locally, you can export the needed environment variables as outlined in the <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/dev/service_builder/cron_job/cronjob.yaml">cron job deployment file</a> and run the <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/dev/service_builder/cron_job/execute.sh">executor</a> as a bash script. This approach is useful in debugging to ensure that the <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/dev/service_builder/cron_job/execute.sh">executor</a> script works as expected.</p>
+<h2 id="updating-the-model-wrapper">Updating the Model Wrapper</h2>
+<p>From the <a href="https://github.ibm.com/IBM-Research-AI/dpm360">DPM360 root folder</a> navigate to the <a href="https://github.ibm.com/IBM-Research-AI/dpm360/tree/dev/service_builder">service builder folder</a> and follow the following steps to update model wrapper base image. The model wrapper base image is responsible for serving a given model from model registry. It achieves this by using a pre-built docker image which is pre-packaged with required model dependencies. This base image and model dependencies can be updated by following the steps below.</p>
+<p><strong>Step 1 :</strong> Update any model dependencies needed in the <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/dev/service_builder/requirements.txt">requirements file</a>. This file is used during the image build process for the model wrapper base image (see step 2 below). NB: Using a prepackaged base image with required dependencies improves the process of deploying new models as it skips building new docker images for every model.</p>
+<p><strong>Step 2 :</strong> Run the following command to build a new image with the updated requirements. </p>
+<pre><code>docker build -t dpm360-service-builder -f service_builder/Dockerfile .
+</code></pre>
+<p><strong>Step 3 :</strong> Tag and push the image to your preferred container registry. In the example below we are pushing to the <a href="https://hub.docker.com/r/ibmcom">DPM360 docker hub registry</a>.</p>
+<pre><code>docker build -t dpm360-service-builder -f service_builder/Dockerfile .
+docker push ibmcom/dpm360-service-builder
+</code></pre>
+<p><strong>Step 4 :</strong> After updating the model wrapper image, remember to update <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/dev/service_builder/cron_job/deployment_template.yaml#L19">model deployment file </a> with the right image tag. If you have used a container registry that requires permissions to access image, you can also update the <a href="https://github.ibm.com/IBM-Research-AI/dpm360/blob/dev/service_builder/cron_job/deployment_template.yaml">model deployment file </a> with secrets needed to access the image. Examples of how to set private registry secrets in the deployment file can be found <a href="https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/">here</a></p>
+<h2 id="deploying-a-new-model-using-model-wrapper">Deploying a New Model Using Model Wrapper</h2>
+<p>Follow the following steps to deploy a production ready model from model registry. The example uses <a href="https://mlflow.org/">Mflow</a>) model registry.</p>
+<p><strong>Step 1 :</strong> Setup a Mlflow model registry in your cluster and have the following cofiguration variables handy for the next steps. Please note that the variables naming style is based on <a href="https://mlflow.org/">Mflow</a>) .</p>
+<pre><code>    MODEL_REGISTRY_API=&lt;YOUR_VALUE_HERE&gt;                     ---&gt; Represents model registry end point
+    MLFLOW_TRACKING_URI=&lt;YOUR_VALUE_HERE&gt;                    ---&gt; Represents model registry  tracking uri              
+    AWS_ACCESS_KEY_ID=&lt;YOUR_VALUE_HERE&gt;                      ---&gt; Represents model registry s3 secret access key
+    AWS_SECRET_ACCESS_KEY=&lt;YOUR_VALUE_HERE&gt;                  ---&gt; Represents model registry s3 secret access id
+    MLFLOW_S3_ENDPOINT_URL=&lt;YOUR_VALUE_HERE&gt;                 ---&gt; Represents model registry s3 endpoint uri
+</code></pre>
+<p><strong>Step 2 :</strong> Setup your Kubernetes/Openshift instance and follow the <a href="https://github.ibm.com/IBM-Research-AI/dpm360/tree/dev/service_builder#setting-up-cron-jobpre-registration-hook">instructions to set cron job</a>.</p>
+<p><strong>Step 3 :</strong> Having setup Mlflow model registry, Kubernetes/Openshift instance and the cron job is running you can now proceed to train a model. Model training can be done using <a href="https://github.ibm.com/IBM-Research-AI/dpm360/tree/dev/lightsaber#welcome-to-lightsaber">lighsaber</a> which requires model registry cofiguration variables outlined in step 1 to register the model in the registry. A set of feature files which include <a href="">contract yaml</a> and <a href="">test data</a> are also registered alongside the model in the registry. These files are used by the model wrapper to ....  </p>
+<p><strong>Step 4 :</strong> After training a model you can proceed to Mlflow dashboard where you can tag a model version on your choice as production ready. Tagging a model as production ready makes it ready for the cron job to identify and deploy it as a micro-service. After some few minutes a set of new tags will be appended to existing model version which confirms that the model was succcessfully deployed. Example of the tags are shown in the image below</p>
+<p><img alt="mlflow-tags" src="../resources/mlflow-tags.jpg" /></p>
+<p>Using model_endpoint value one can access the deployed model swagger endpoint to start using model.</p>
+<p><strong>Step 5 :</strong> To test the image localy ensure that you have set the necessary environment variables which will be passed to the docker run command in step 6. The list of environment variables needed are shown below with explanations on what they represent. The image below shows an example of how one can get model source value to be used in the configurations below.</p>
+<p><img alt="mlflow-source-runs" src="../resources/mlflow-source-runs.jpg" /></p>
+<pre><code>    MODEL_NAME=&lt;YOUR_VALUE_HERE&gt;                             ---&gt; Represents model name from model registry
+    MODEL_VERSION=1                                          ---&gt; Represents model version from model registry
+    MODEL_SOURCE=&lt;YOUR_VALUE_HERE&gt;                           ---&gt; Represents model source from model registry e.g. s3://mlflow-experiments/0/81e4192736f8497384e09d6928ee0f2f/artifacts/model
+    MODEL_RUN_ID=&lt;YOUR_VALUE_HERE&gt;                           ---&gt; Represents model run id from model registry
+    MODEL_REGISTRY_API=&lt;YOUR_VALUE_HERE&gt;                     ---&gt; Represents model registry end point
+    MLFLOW_TRACKING_URI=&lt;YOUR_VALUE_HERE&gt;                    ---&gt; Represents model registry  tracking uri              
+    AWS_ACCESS_KEY_ID=&lt;YOUR_VALUE_HERE&gt;                      ---&gt; Represents model registry s3 secret access key
+    AWS_SECRET_ACCESS_KEY=&lt;YOUR_VALUE_HERE&gt;                  ---&gt; Represents model registry s3 secret access id
+    MLFLOW_S3_ENDPOINT_URL=&lt;YOUR_VALUE_HERE&gt;                 ---&gt; Represents model registry s3 endpoint uri
+</code></pre>
+<p><strong>Step 6 :</strong>  Test the image locally in order to ensure that it works as expected by running the following docker run command.</p>
+<pre><code>docker run --p &lt;YOUR_PORT_VALUE_HERE&gt;:&lt;YOUR_PORT_VALUE_HERE&gt; -e PORT=&lt;YOUR_PORT_VALUE_HERE&gt; -e MLFLOW_S3_ENDPOINT_URL=&lt;YOUR_VALUE_HERE&gt; -e AWS_ACCESS_KEY_ID=&lt;YOUR_VALUE_HERE&gt; -e AWS_SECRET_ACCESS_KEY=&lt;YOUR_VALUE_HERE&gt; -e MODEL_NAME=&lt;YOUR_VALUE_HERE&gt; -e MODEL_VERSION=&lt;YOUR_VALUE_HERE&gt; -e MODEL_RUN_ID=&lt;YOUR_VALUE_HERE&gt; -e MLFLOW_TRACKING_URI=&lt;YOUR_VALUE_HERE&gt; -e MODEL_SOURCE=&lt;YOUR_VALUE_HERE&gt; -ti dpm360-service-builder
+</code></pre>
+<p><strong>Step 7 :</strong> With a successful docker run in the step above, load the following endpoint in your browser to access the locally deployed model. NB: Replace MODEL_NAME with the exact value used above</p>
+<pre><code>http://0.0.0.0:8080/&lt;MODEL_NAME&gt;/api/
+</code></pre>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Overview
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../CohortTools/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Overview
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1070 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Getting Started - DPM360</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../css/ansi-colours.css">
+    
+      <link rel="stylesheet" href="../../css/jupyter-cells.css">
+    
+      <link rel="stylesheet" href="../../css/pandas-dataframe.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#getting-started" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="DPM360" class="md-header__button md-logo" aria-label="DPM360" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DPM360
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Getting Started
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/IBM/DPM360" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    IBM/DPM360
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="DPM360" class="md-nav__button md-logo" aria-label="DPM360" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    DPM360
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/IBM/DPM360" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    IBM/DPM360
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Components" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../service_builder/" class="md-nav__link">
+        Service Builder
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Cohort Tools
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cohort Tools" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Cohort Tools
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CohortTools/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CohortTools/user_guide/" class="md-nav__link">
+        User Guide
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Lightsaber
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lightsaber" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Lightsaber
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3_2" type="checkbox" id="__nav_2_3_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3_2">
+          Design and Usage
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Design and Usage" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Design and Usage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Getting Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Getting Started
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#data-ingestion-modules" class="md-nav__link">
+    Data Ingestion Modules
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Ingestion Modules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filters-and-transforms" class="md-nav__link">
+    Filters and Transforms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simplified-api-for-scikit-learn" class="md-nav__link">
+    Simplified API for scikit-learn
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-training" class="md-nav__link">
+    Model Training
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Training">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wrapping-model-definitions-with-task-specific-trainers" class="md-nav__link">
+    Wrapping model definitions with task specific trainers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-model-training" class="md-nav__link">
+    Running model training
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-registration-and-inference" class="md-nav__link">
+    Model Registration and Inference
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_3_2_2" type="checkbox" id="__nav_2_3_2_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3_2_2">
+          Example
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Example" data-md-level="4">
+        <label class="md-nav__title" for="__nav_2_3_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Example
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IHM_Example_Using_HistGBT/" class="md-nav__link">
+        IHM Example Using HistGBT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IHM_Example_Using_LSTM/" class="md-nav__link">
+        IHM Example Using LSTM
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../whats_new/" class="md-nav__link">
+        Release history
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        Standalone Installation
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          Installer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Installer" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Installer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installer/" class="md-nav__link">
+        Cluster Install
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../non_cluster_install/" class="md-nav__link">
+        Non-cluster Install
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#data-ingestion-modules" class="md-nav__link">
+    Data Ingestion Modules
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Ingestion Modules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filters-and-transforms" class="md-nav__link">
+    Filters and Transforms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simplified-api-for-scikit-learn" class="md-nav__link">
+    Simplified API for scikit-learn
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-training" class="md-nav__link">
+    Model Training
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Training">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wrapping-model-definitions-with-task-specific-trainers" class="md-nav__link">
+    Wrapping model definitions with task specific trainers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-model-training" class="md-nav__link">
+    Running model training
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-registration-and-inference" class="md-nav__link">
+    Model Registration and Inference
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/IBM/DPM360/edit/master/lightsaber/docs/user_guide.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+<h1 id="getting-started">Getting Started</h1>
+<p><img alt="Lightsaber architectural diagram" src="../resources/architectural_view.png" /></p>
+<p><code>Lightsaber</code> contains four key modules (comprising the core of <code>Lightsaber</code>) that aims to promote reuse and standardization of DPM model training workflow as below: </p>
+<ul>
+<li><em>Data ingestion modules</em> to support standardized methods of ingesting and transforming raw data (containing extracted features and target values).</li>
+<li><em>Model Trainers</em> to support standardized training of DPM models by adopting the best practices as default</li>
+<li>
+<p><em>Experiment Management</em> to ensure repeatable experimentation and standardized reporting via: </p>
+<ul>
+<li><code>metrics</code> to calculate DPM problem specific model evaluation, and </li>
+<li>in-built Model tracking and support for post-hoc model evaluation.</li>
+</ul>
+</li>
+<li>
+<p><em>Experimental Framework</em> exposing user friendly state-of-the art tools for hyper-parameter tunings and distributed computing</p>
+</li>
+</ul>
+<p>In addition, <code>Lightsaber</code> comes with task specific defaults and utilities (e.g. post-hoc calibration for classification tasks and resampling for imbalanced learning) and pre-packaged models/components with sane defaults for DPM.</p>
+<p><code>Lightsaber</code> supports both <code>scikit-learn</code> and <code>pytorch</code> compliant models.
+This guide details the first 3 core components and describes the recommended workflow:</p>
+<h2 id="data-ingestion-modules">Data Ingestion Modules</h2>
+<p>To develop DPM models, once the data has been curated (via cohort definition and feature extraction), <code>Lightsaber</code> provides data ingestion modules to consume curated data across splits in a repeatable and standard manner. For this process, the primary data ingestion is provided by <a class="autorefs autorefs-internal" href="../api/#lightsaber.data_utils.pt_dataset.BaseDataset">BaseDataset</a> class</p>
+<p>It accepts the following parameters</p>
+<pre><code>Parameters
+----------
+tgt_file:
+    target file path
+feat_file:
+    feature file path
+idx_col: str or List[str]
+    index columns in the data. present in both `tgt_file` and `feat_file`
+tgt_col: str or List[str]
+    target column present in `tgt_file` 
+feat_columns:
+    feature columns to select from. either a single regex or list of columns (partial regex that matches the complete column name is ok. e.g. `CCS` would only match `CCS` whereas `CCS.*` will match `CCS_XYZ` and `CCS`) 
+    Default: `None` -&gt; implies all columns
+time_order_col:
+    column(s) that signify the time ordering for a single example.
+    Default: `None` -&gt; implies no columns 
+category_map:
+    dictionary of column maps
+transform: single callable or list/tuple of callables
+    how to transform data. if list of callables provided eg `[f, g]`, `g(f(x))` used 
+    Default: drop `lightsaber.constants::DEFAULT_DROP_COLS` and fillna
+filter: single callable or list/tuple of callables
+    how to filter data. if list of callables provided eg `[f, g]`, `g(f(x))` used 
+    Default: no operation
+device: str
+    valid pytorch device. `cpu` or `gpu`
+</code></pre>
+<p>First, <code>tgt_file</code> and <code>feat_file</code> parameters lets a user specify the <code>csv</code>-like curated data to setup the supervised training
+setting (setting <code>tgt_file</code> to <code>None</code> lets one use <code>BaseDatset</code> in an inference mode).
+For a specific experiment, a user may want to use only a selected number of features.
+This can be achieved by using the <code>feat_columns</code> parameter that accepts either a list of feature columns or a regular expression specifying the sub-list of columns.
+For added convenience, It can also support a hybrid approach such as:</p>
+<pre><code class="language-python">feat_columns = ['featA', 'b_feat*']
+</code></pre>
+<p>In many DPM use cases, extracted data can also contain a number of categorical features. Often times domain information about the possible categories (e.g. age groups) are available. Using the <code>category_map</code> parameter, a user can specify the categorical features and their expected categories - <code>BaseDataset</code> internally handles and converts such features (e.g. by one-hot encoding the features) for downstream analysis.</p>
+<p><code>BaseDataset</code> also assumes and supports temporal data natively. Users need to specify the index (<code>idx_col</code>) and target (<code>tgt_col</code>) columns - If <code>idx_col</code> is a list, it assumes that the second value indicates the temporal order and data is sorted according to it. However, users can also specify an additional <code>time_order_col</code> to specify a different sort order for their problem or for custom pre-processing (e.g. using filters and transforms). Specifically for <code>pytorch</code> models, <code>Lightsaber</code> also provides custom <a class="autorefs autorefs-internal" href="../api/#lightsaber.data_utils.pt_dataset.collate_fn">collate function</a> to handle samples with unequal temporal length.</p>
+<p>Finally, on the same extracted cohort and features, users can conduct different experiments by using different pre-processing techniques. This is handled by the concept of <a href="user_guide#fitlers-and-transform">filters and transforms</a>.</p>
+<h3 id="filters-and-transforms">Filters and Transforms</h3>
+<p><code>BaseDataset</code> supports a set of composable functions called <code>filters</code> and <code>transforms</code> that can be used to transform the input data. While both lets a user run pre-processing steps on the data, <code>filters</code> are applied during once after the data is loaded and acts on both features and target values. <code>transform</code> on the other hand works only on features and is used every time data for a single sample is accessed. (in most cases, users may only need to use <code>filters</code>).</p>
+<p><strong>Filters</strong> accepts as arguments <code>(data, target)</code> and other keyword functions and always returns <code>(data, target)</code>.
+An example filter to flatten a temporal data using <code>max</code> as the aggregation function  can be defined as follows:</p>
+<pre><code class="language-python">@functoolz.curry
+def filter_flatten(data, target, method='max'):
+    data = (data.groupby(data.index.names)
+                .agg(method))
+    log.debug(&quot;Done in flatten&quot;)
+    return data, target
+</code></pre>
+<p>While such <code>filters</code> can be user-defined and specified at run-time, 
+<code>Lightsaber</code> also comes pre-packaged with a set of filters covering some common use cases:</p>
+<ul>
+<li><code>filter_fillna</code>: fill <code>NA</code></li>
+<li><code>filter_preprocessor</code>: to chain any <code>scikit-learn</code> (compliant) pre-processor in the correct manner</li>
+<li><code>filter_flatten_filled_drop_cols</code>: to flatten temporal data, fill <code>NA</code>, and drop extra columns</li>
+<li><code>filt_get_last_index</code>: to get the last time point from each example for a temporal dataset (e.g. useful for training <code>Med2Vec</code> models)</li>
+</ul>
+<p><strong>Transform</strong> are functions that are applied at run-time to feature extracts while returning the data for a single
+example. It accepts as arguments <code>(data)</code> and other keywords. It always returns <code>(data)</code>.</p>
+<p>Lightsaber comes pre-packaged with a set of transforms including flattening and dropping <code>NA</code> at runtime.</p>
+<p><em>transforms</em> are generally discouraged as these are applied at run time and can slow down data fetching.
+In general, if it is possible to load the entire data in memory use <code>filters</code> - else use <code>transforms</code>.</p>
+<h3 id="simplified-api-for-scikit-learn">Simplified API for scikit-learn</h3>
+<p>While <code>BaseDataset</code> is a general purpose data ingestion module, <code>Lightsaber</code>
+provides a higher level api to access data in a format more accessible to people familiar with <code>scikit-learn</code>.</p>
+<p>It is provided by <a class="autorefs autorefs-internal" href="../api/#lightsaber.data_utils.sk_dataloader.SKDataLoader">SKDataLoader</a> class:</p>
+<p>It accepts the following parameters:</p>
+<pre><code>Parameters
+----------
+tgt_file:
+    target file path
+feat_file:
+    feature file path
+idx_col:
+    columns to specify the unique examples from the feature and target set
+tgt_col:
+    columns to specify the target column from the target set.
+feat_columns:
+    feature columns to select from. either list of columns (partials columns using `*` allowed) or a single regex
+    Default: `None` -&gt; implies all columns
+time_order_col:
+    column(s) that signify the time ordering for a single example.
+    Default: `None` -&gt; implies no columns
+category_map:
+    dictionary of column maps
+fill_value:
+    pandas compatible function or value to fill missing data
+flatten:
+    Functions to aggregate and flatten temporal data
+cols_to_drop:
+    list of columns to drop
+preprocessor:
+    any scikit-learn pre-processor that needs to be used agains the data
+</code></pre>
+<p>The parameters common to <code>BaseDatset</code> serve the same purpose here. 
+Additionally, <code>fill_value</code>, <code>flatten</code>, and <code>cols_to_drop</code> provide quick ways to impute the data, flatten temporal data, and drop redundant columns (e.g. required by filters but not required during modeling) - these can take simple <code>str</code> values as accepted by <code>pandas</code> api.</p>
+<p>A typical example usage of this class to ingest a temporal data, flatten it using <code>max</code> aggregation, and re-scale using <code>StandardScalar</code> can be found in the <a href="../IHM_Example_Using_HistGBT/#reading-data-along-with-usage-of-pre-processor">examples</a>.</p>
+<h2 id="model-training">Model Training</h2>
+<p>Model Training is supported for both <code>pytorch</code> and <code>scikit-learn</code> models. In general, task specific model trainers are available for both types of model that accepts the corresponding data ingestion modules and follows the following common steps:</p>
+<h3 id="wrapping-model-definitions-with-task-specific-trainers">Wrapping model definitions with task specific trainers</h3>
+<p>In this step, models defined in <code>pytorch</code>/<code>scikit-learn</code> are wrapped in a task specific trainers that injects hooks for model training and tracking codes.
+For classification, it injects hooks such as 
+(a) common training steps for classification, (b) post-hoc model calibration, and (b) tuning codes. </p>
+<p>The wrapper classes are as follows:</p>
+<p><strong><code>pytorch</code> wrappers</strong>: provided by <a class="autorefs autorefs-internal" href="../api/#lightsaber.trainers.pt_trainer.PyModel">PyModel</a>. 
+While the full parameter list can be found in the API documentation, two of the most important attributes while wrapping the model are:</p>
+<pre><code>Parameters
+----------
+hparams: Namespace
+    hyper-paramters for base model
+model: 
+    base pytorch model defining the model logic. model forward should output logit for classfication and accept
+    a single positional tensor (`x`) for input data and keyword tensors for `length` atleast. 
+    Optinally can provide `hidden` keyword argument for sequential models to ingest past hidden state.
+</code></pre>
+<p>In general, the base <code>model</code> contains the logic for defining the network architecture (e.g. <code>MLP</code>) and can optionally provide functions for:</p>
+<ul>
+<li>defining custom function to predict the probability from logit via <code>predict_proba</code> (Default: <code>PyModel</code> uses <code>out_transform</code> on logit output)</li>
+<li>checkpoint manipulation via <code>on_load_checkpoint</code></li>
+</ul>
+<p>In addition, <code>PyModel</code> parses the hyper-parameters <code>hparams</code> to provide:</p>
+<ul>
+<li>regularization of the base  model parameters (via <code>apply_regularization) if</code>hparams.l1_reg<code>or</code>hparams.l2_reg` is present, </li>
+<li>calibration via <code>set_temperature</code>, and</li>
+<li>freeze n layers via <code>freeze_except_last_layer</code></li>
+</ul>
+<p>Finally, it provides <code>predict_patient</code> to conduct inference on a single patient data</p>
+<p><strong><code>sklearn</code> wrappers</strong>: provded by <a class="autorefs autorefs-internal" href="../api/#lightsaber.trainers.sk_trainer.SKModel">SKModel</a>.</p>
+<p>Similar to <code>pytorch</code> it accepts <code>base_model</code> as a paramters which must be a scikit-learn compatible classifier. Some of the added utilites injected by <code>SKModel</code> are:</p>
+<ul>
+<li><code>fit</code></li>
+<li><code>calibrate</code>: to provide post fitting calibration from calibration dataset</li>
+<li><code>tune</code>: run hyper-parameter training using <code>GridSearchCV</code></li>
+</ul>
+<h3 id="running-model-training">Running model training</h3>
+<p>Once the base models are wrapped, <code>Lightsaber</code> provides utilities to run model training with associated model tracking via <code>Mlflow</code>. </p>
+<p>It is provided by:</p>
+<ul>
+<li><a class="autorefs autorefs-internal" href="../api/#lightsaber.trainers.pt_trainer.run_training_with_mlflow">Pytorch training</a></li>
+<li><a class="autorefs autorefs-internal" href="../api/#lightsaber.trainers.sk_trainer.run_training_with_mlflow">scikit-learn training</a></li>
+</ul>
+<p>Both of these accept the following parameters</p>
+<pre><code>mlflow_conf: dict
+    mlflow configuration e,g, MLFLOW_URI
+wrapped_model: SKModel
+    wrapped SKModel 
+kwargs: dict of dicts, optional
+    can contain `artifacts` to log with models, `model_path` to specify model output path, and remianing used as experiment tags
+</code></pre>
+<p>where <code>wrapped_model</code> is the appropriate wrapped model from <code>PyModel</code>/<code>SKModel</code> and the Mlflow tracker to log to can be provided at run time (e,g, the <code>MLFLOW_URI</code>, default <code>file:./mlruns</code>).</p>
+<p>In addition, <code>pytorch</code> training accepts a <code>pytorch_lightning.Trainer</code> object that 
+can be configured at run-time to train the models. On the ohter hand <code>scikit-learn</code> trainer also accepts <code>train</code> and <code>test</code> dataloaders. </p>
+<p>Both of these return a consistent set of values including the <code>run_id</code> associated with the run in <code>Mlflow</code>, relevant classification metrics, and predicted values for <code>test</code> and <code>validation</code> folds.</p>
+<p><strong>Other improtant functions</strong></p>
+<p><code>lightsaber.trainers.sk_trainer.model_init</code>: helper function to abstract standard model training pre-amble for training</p>
+<h2 id="model-registration-and-inference">Model Registration and Inference</h2>
+<p>Once a model is trained and <code>run_id</code> is available, 
+to register a model <code>Lightsaber</code> follows the subsequent steps:</p>
+<ul>
+<li>a saved model (along with hyper-params and weights) is retrieved using run_id</li>
+<li>model is initialized using the weights</li>
+<li>model is logged to Mlflow under registered model name</li>
+</ul>
+<p>These functions are provided by:</p>
+<ul>
+<li>for <code>pytorch</code>: <a class="autorefs autorefs-internal" href="../api/#lightsaber.trainers.pt_trainer.register_model_with_mlflow">model registration utility</a></li>
+<li>for <code>scikit-learn</code>: <a class="autorefs autorefs-internal" href="../api/#lightsaber.trainers.sk_trainer.register_model_with_mlflow">model registration utility</a></li>
+</ul>
+<p><code>Lightsaber</code> also  natively supports conducting inferences on new patients using the registered model. The key steps involve:</p>
+<ul>
+<li>loading the registerd model from Mlflow</li>
+<li>Ingest the new test data using the appropriate data ingestion (e.g. <a class="autorefs autorefs-internal" href="../api/#lightsaber.data_utils.pt_dataset.BaseDataset">BaseDataset</a> for <code>pytorch</code>) in inference mode (setting <code>tgt_file</code> to <code>None</code>)</li>
+<li>Use the <code>predict_patient</code> from the appropriate model wrapper (e.g. [PyModel][lightsaber.trainers.pt_trainer.PyModel
+]) method to generate inference for the patient of intereset</li>
+</ul>
+<p>Interested readers can take a look at the following examples:</p>
+<ul>
+<li>for <code>scikit-learn</code> : <a href="../IHM_Example_Using_HistGBT/#ihm-model-registration">Example Notebook with HistGBT</a></li>
+<li>for <code>pytorch</code>: <a href="../IHM_Example_Using_LSTM/#ihm-model-registration">Example Notebook with LSTM</a></li>
+</ul>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Introduction" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Introduction
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../IHM_Example_Using_HistGBT/" class="md-footer__link md-footer__link--next" aria-label="Next: IHM Example Using HistGBT" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              IHM Example Using HistGBT
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>
