@@ -70,7 +70,7 @@ setup(
     long_description_content_type="text/markdown",
     author='Prithwish Chakraborty',
     author_email='prithwish.chakraborty@ibm.com',
-    url='https://ibm.github.io/DPM360/Lightsaber/',	
+    url='https://biomedsciai.github.io/DPM360/Lightsaber/',	
     packages=find_packages(exclude=('tests', 'docs')),
     install_requires=reqs,
     extras_require={
