@@ -20,4 +20,4 @@ It can also be installed from source using pip as follows:
 * with time-to-event modeling (T2E) support: `pip install .[t2e]`
 * full install with all components: `pip install .[full]`
 
-For convenience, an example conda environment compatible with `Lightsaber` is available in [github](https://github.com/IBM/DPM360/blob/main/environment.yaml).
+For convenience, an example conda environment compatible with `Lightsaber` is available in [github](https://github.com/BiomedSciAI/DPM360/blob/main/lightsaber/environment.yaml).
