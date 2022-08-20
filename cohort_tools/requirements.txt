@@ -3,7 +3,7 @@ cffi==1.14.5
 iniconfig==1.1.1
 Jinja2==2.11.3
 MarkupSafe==1.1.1
-numpy==1.19.5
+#numpy==1.19.5
 packaging==20.9
 pandas==1.1.2
 pluggy==0.13.1
