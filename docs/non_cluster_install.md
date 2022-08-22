@@ -166,6 +166,6 @@ You can run MLFlow on the host as Model Registry, which can be connected to ligh
 ## What To Do Next
 
 - use Atlas &lt;host&gt;:18080/atlas/ to define cohorts and outcomes
-- use [cohort tools](https://ibm.github.io/DPM360/CohortTools) to extract features to make training data
-- use [lightsaber](https://ibm.github.io/DPM360/Lightsaber) to build and train the model using above data
+- use [cohort tools](https://biomedsciai.github.io/DPM360/CohortTools) to extract features to make training data
+- use [lightsaber](https://biomedsciai.github.io/DPM360/Lightsaber) to build and train the model using above data
 - use **service builder** to deploy a service using the trained model

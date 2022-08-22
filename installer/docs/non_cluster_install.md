@@ -33,17 +33,17 @@ Please confirm the IP address of docker0 (virtual network bridge on the host) by
 
 Using this IP address, modify configuration files:
 
-<pre>
+```
 /etc/postgresql/10/main/pg_hba.conf:
 add the following line
 host    all    all    172.17.0.1/0    md5
-</pre>
+```
 
-<pre>
+```
 /etc/postgresql/10/main/postgresql.conf:
 change listen_addresses variable as
 listen_addresses = 'localhost, 172.17.0.1'
-</pre>
+```
 
 ## Broadsea Container Deployment and Run
 
@@ -53,7 +53,7 @@ To run docker container for OHDSI stack (ATLAS, WebAPI, and Achilles), follow in
 - change directory to &lt;dpm360 root dir&gt;/installer/express/broadsea-example
 - modify docker-compose.yml for your environment
 
-<pre>
+```
 services:
   broadsea-webtools:
     ports:
@@ -66,7 +66,7 @@ services:
       - flyway_datasource_url=jdbc:postgresql://172.17.0.1:5432/dpm360db # confirm address and postgresql configuration
       - flyway_datasource_username=dpm360 # confirm postgresql configuration
       - flyway_datasource_password=dpm360-password # confirm postgresql configuration
-</pre>
+```
 
 - run `docker-compose up -d`
   - please wait for while and access to &lt;host&gt;:18080/atlas/ to confirm it is started
@@ -77,12 +77,12 @@ Next step is to setup PostgreSQL by defining tables and importing data. We provi
 
 
 First, you make a vocabulary file.  All necessary vocabulary files can be downloaded from the ATHENA download site: http://athena.ohdsi.org. A tutorial for Athena is available at https://www.youtube.com/watch?v=2WdwBASZYLk. Download guide is given from 10:04. According to the guidance, please make vocabs.tar.gz, and put the file at:
-<pre>
-&lt;dpm360 root dir&gt;/installer/express/cdm-init-example-local/data/vocabs.tar.gz
-</pre>
+```
+<dpm360 root dir>/installer/express/cdm-init-example-local/data/vocabs.tar.gz
+```
 
 Please confirm vocabs.tar.gz includes the followings (confirm it has no directory structure):
-<pre>
+```
   CONCEPT_ANCESTOR.csv
   CONCEPT_CLASS.csv
   CONCEPT_RELATIONSHIP.csv
@@ -92,7 +92,7 @@ Please confirm vocabs.tar.gz includes the followings (confirm it has no director
   DRUG_STRENGTH.csv
   RELATIONSHIP.csv
   VOCABULARY.csv
-</pre>
+```
 
 Next, obtain SynPUF 1k (CDM 5.3.1) data from [here](https://caruscloud.uniklinikum-dresden.de/index.php/s/teddxwwa2JipbXH/download). You have to change the directory structure as expected. Try the following:
 
@@ -100,12 +100,12 @@ Next, obtain SynPUF 1k (CDM 5.3.1) data from [here](https://caruscloud.uniklinik
 `cd synpuf1k531`<br>
 `tar -zcvf synpuf1k.tar.gz *.csv`<br>
 and put the file at:
-<pre>
-&lt;dpm360 root dir&gt;/installer/express/cdm-init-example-local/data/synpuf1k.tar.gz
-</pre>
+```
+<dpm360 root dir>/installer/express/cdm-init-example-local/data/synpuf1k.tar.gz
+```
 
 Please confirm synpuf1k.tar.gz includes the followings (confirm it has no directory structure):
-<pre>
+```
   visit_occurrence.csv
   care_site.csv
   cdm_source.csv
@@ -124,14 +124,14 @@ Please confirm synpuf1k.tar.gz includes the followings (confirm it has no direct
   person.csv
   procedure_occurrence.csv
   provider.csv
-</pre>
+```
 
 The following instructions then run a docker container to prepare the database.
 
 - change directory to &lt;dpm360 root dir&gt;/installer/express/cdm-init-example-local
 - modify docker-compose.yml for your environment
 
-<pre>
+```
 services:
   cdmInitJob:
     image: ibmcom/dpm360-cdm_init:1.2
@@ -140,7 +140,7 @@ services:
     environment:
       - CDM_URL=file:///data/vocabs.tar.gz # /data is mounted to the host, confirm file name is correct
       - SYNPUF1K_URL=file:///data/synpuf1k.tar.gz # /data is mounted to the host, confirm file name is correct
-</pre>
+```
 
 - run `docker-compose up`
   - wait untill it ends

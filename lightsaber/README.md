@@ -52,4 +52,4 @@ It can also be installed from source using pip as follows:
 * with time-to-event modeling (T2E) support: `pip install .[t2e]`
 * full install with all components: `pip install .[full]`
 
-[![Downloads](https://pepy.tech/badge/lightsaber)](https://pepy.tech/project/dpm360-lightsaber)
+[![Downloads](https://pepy.tech/badge/dpm360-lightsaber)](https://pepy.tech/project/dpm360-lightsaber)

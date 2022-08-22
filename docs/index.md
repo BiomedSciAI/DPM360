@@ -1,3 +1,5 @@
+### DPM360 -- Disease Progression Modeling workbench 360, aiming at providing an end-to-end deep learning model training framework in python on OHDSI-OMOP data
+
 #  Overview
 
 <center><iframe width="560" height="315" src="https://www.youtube.com/embed/CLnMzRv0hCc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
@@ -5,6 +7,7 @@
 Disease Progression Modeling workbench 360 (DPM360) is a clinical informatics framework for collaborative research and delivery of healthcare AI. DPM360, when fully developed, will manage the entire modeling life cycle, from data analysis (e.g., cohort identification) to machine learning algorithm development and prototyping. DPM360 augments the advantages of data model standardization and tooling (OMOP-CDM, Athena, ATLAS) with a powerful machine learning training framework, and a mechanism for rapid prototyping through automatic deployment of models as containerized services to a cloud environment.
 
 <figure><center><img src=./resources/png/dpm360v2.png "DPM360" width="300"/></center><figcaption>DPM360 Component View</figcaption></figure>
+
 ## Background
 
 Chronic diseases are becoming more and more prevalent across the globe and are known to drive rising costs of healthcare. The health informatics community has reacted to these challenges with the development of data driven Disease Progression Modeling (DPM) techniques seeking to describe the time course of such diseases to track evolution and predict severity over time. These techniques are vast, ranging from disease staging and patient trajectory analytics, prediction and event time to event estimations for important disease related events of interests. While applications of DPM are numerous for both providers (e.g., decision support for patient care), payers (e.g., care management) and pharmas (e.g., clinical trial enrichment), the adoption of DPM is hindered by the complexity of developing and managing DPM models throughout their life cycle, from data to production. While organizations like [OHDSI](https://www.ohdsi.org/) have made huge strides to help the research community with widely adopted data models like OMOP coupled with cohorting tools like [Atlas](https://www.ohdsi.org/atlas-a-unified-interface-for-the-ohdsi-tools/), work remains to be done to provide the right platform for the complete management of DPM models. In this demonstration, we introduce Disease Progression Modeling Workbench 360 (DPM360), a work-in-progress system to address these concerns.
@@ -38,15 +41,17 @@ DPM360 is made up of three key components.
 3. The **Installer** component installs the fully functional DPM360 into Kubernetes or OpenShift Container Platform using [Helm charts](https://helm.sh/). Upon installation, models for different endpoints are available for the user. Helm Charts are simply Kubernetes manifests combined into a single package that can be installed to Kubernetes clusters. Once packaged, installing a Helm Chart into a cluster is as easy as running a single helm install, which really simplifies the deployment of containerized applications.  
 
 ## Code
-The code for DPM360 can be found at our <a href="https://github.com/IBM/DPM360">Github repository</a>
+The code for DPM360 can be found at our <a href="https://github.com/BiomedSciAI/DPM360">Github repository</a>
 
+<!--
 ## Roadmap
 <figure><center><img src=./resources/png/dpm360_roadmap.png /></center><figcaption>DPM360 Roadmap</figcaption></figure>
+-->
 
 ## Contribute
 We love to hear from you by asking question, reporting bugs, feature requests and contributing as a committer to shape the future of the project. 
 
-We use [GitHub issues](https://github.com/IBM/DPM360/issues) for tracking requests and bugs.
+We use [GitHub issues](https://github.com/BiomedSciAI/DPM360/issues) for tracking requests and bugs.
 
 ## Team
 * <a href="https://researcher.watson.ibm.com/researcher/view.php?person=ke-NELSONBO">Nelson Bore</a>
@@ -80,5 +85,5 @@ Accepted at AMIA 2021 Annual Symposium, To appear. (2021)
 </a>
 
 ## License
-[Apache License 2.0](https://github.ibm.com/IBM-Research-AI/dpm360/blob/master/LICENSE.txt)
+[Apache License 2.0](https://github.com/BiomedSciAI/DPM360/LICENSE.txt)
 

@@ -28,7 +28,7 @@ More specifically, `Lightsaber` aims to augment, and not substitute, the modeler
 
 To summarize, it is thus an `opinionated` take on how DPM model development should be conducted by providing with a unified core to abstract and standardize out the engineering, evaluation, model training, and model tracking to support: **(a) reproducible research, (b) accelerate model development, and (c) standardize model deployment**. 
 
- While `Lightsaber` would be automatically installed as part of [DPM360](https://ibm.github.io/DPM360/), it can also be installed as a standalone python package - please see the [standalone installation instructions](install.md)
+ While `Lightsaber` would be automatically installed as part of [DPM360](https://biomedsciai.github.io/DPM360/), it can also be installed as a standalone python package - please see the [standalone installation instructions](install.md)
 
 ## Why Use Lightsaber
 
