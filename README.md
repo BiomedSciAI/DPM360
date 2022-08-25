@@ -2,7 +2,7 @@
 # DPM360 [![Downloads](https://pepy.tech/badge/dpm360-lightsaber)](https://pepy.tech/project/dpm360-lightsaber)
 Repository for Disease Progression Modeling workbench 360 - An end-to-end deep learning model training framework  in python on OHDSI-OMOP data
 
-Overview and YouTube demonstration are available [here](https://ibm.github.io/DPM360/). License, Contribution, Publications are also available there.
+Overview and YouTube demonstration are available [here](https://biomedsciai.github.io/DPM360/). License, Contribution, Publications are also available there.
 
 <figure><center><img src=./docs/resources/png/dpm360v2.png "DPM360" width="300"/></center><figcaption>DPM360 Component View</figcaption></figure>
 
