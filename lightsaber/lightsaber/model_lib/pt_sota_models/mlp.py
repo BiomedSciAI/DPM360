@@ -34,7 +34,7 @@ class MLPBase(BaseModel):
                  batch_first=True, 
                  act='ReLU',
                  *args, **kwargs
-                ):
+                 ):
         """
         Parameters
         ----------
@@ -84,7 +84,6 @@ class MLPBase(BaseModel):
     def forward(self, *args, **kwargs):
         raise NotImplementedError("This class should not be used bare")
 
-
     def __repr__(self):
         return self.model.__repr__()
 
@@ -97,16 +96,16 @@ class MLPClassifier(MLPBase, ClassifierMixin):
                  batch_first=True, 
                  act='ReLU',
                  *args, **kwargs
-                ):
+                 ):
         """TODO: to be defined. """
         MLPBase.__init__(self, input_dim, output_dim, hidden_dim, 
-                 n_layers, 
-                 bias=bias, 
-                 dropout=dropout, 
-                 batch_first=batch_first, 
-                 act=act,
-                 *args, **kwargs
-                )
+                         n_layers, 
+                         bias=bias, 
+                         dropout=dropout, 
+                         batch_first=batch_first, 
+                         act=act,
+                         *args, **kwargs
+                         )
         self.logit = self.get_logit()
         self.dropout = nn.Dropout(dropout)
         
