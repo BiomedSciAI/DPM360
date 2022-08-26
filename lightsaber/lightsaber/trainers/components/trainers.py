@@ -1,30 +1,13 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-## Copyright 2020 IBM Corporation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
+#!/usr/bin/env python
 from abc import abstractmethod, ABC
-import os
-import json
-import pickle
-import socket
-import numpy as np
-import tqdm
-import re
-import time
-import six
+from argparse import ArgumentParser, Namespace
+from functools import partial
 from inspect import signature
+from tempfile import NamedTemporaryFile
+import copy
+import tqdm
+import os
+import re
 
 from typing import Optional, Callable
 
@@ -34,13 +17,6 @@ from torch import optim
 from torch.nn import functional as F
 from torch.utils.data import DataLoader, Dataset
 from torch.optim.optimizer import Optimizer
-from argparse import ArgumentParser, Namespace
-
-# For num_workers >1 in Dataloader
-# try:
-#     T.multiprocessing.set_start_method('spawn')
-# except RuntimeError:
-#     pass
 
 import pytorch_lightning as pl
 import mlflow
@@ -49,20 +25,9 @@ import mlflow.pytorch
 from torchmetrics.functional import accuracy
 
 from lightsaber import constants as C
-from lightsaber.data_utils import utils as du
-from lightsaber.data_utils import pt_dataset as ptd
-from lightsaber.metrics import Metrics
-from lightsaber.trainers import helper
-from lightsaber.trainers.temperature_scaling import _ECELoss
-from lightsaber.trainers.helper import setup_mlflow
-from lightsaber.trainers.pt_regularizer import l1_regularization, l2_regularization
-from lightsaber.trainers.components import BaseModel    # importing for backward compatibility
+from .regularizer import l1_regularization, l2_regularization
 
-from functools import partial
-import copy
-from tempfile import NamedTemporaryFile
 import warnings
-
 import logging
 log = logging.getLogger()
 
@@ -75,20 +40,51 @@ def load_model(model, ckpt_path):
     return model
 
 
-class PyModel(pl.LightningModule):
-    """PyModel"""
+# TODO: see if this is still required
+def _find_checkpoint(model, checkpoint_path=None):
+    if checkpoint_path is None:
+        if model is not None and hasattr(model, 'trainer'):
+            trainer = model.trainer
+
+            # do nothing if there's not dir or callback
+            no_ckpt_callback = (trainer.checkpoint_callback is None) or (not trainer.checkpoint_callback)
+            if no_ckpt_callback or not os.path.exists(trainer.checkpoint_callback.filepath):
+                pass
+            else:
+                # restore trainer state and model if there is a weight for this experiment
+                last_epoch = -1
+                last_ckpt_name = None
+
+                # find last epoch
+                checkpoints = os.listdir(trainer.checkpoint_callback.filepath)
+                for name in checkpoints:
+                    # ignore hpc ckpts
+                    if 'hpc_' in name:
+                        continue
+
+                    if '.ckpt' in name:
+                        epoch = name.split('epoch_')[1]
+                        epoch = int(re.sub('[^0-9]', '', epoch))
+
+                        if epoch > last_epoch:
+                            last_epoch = epoch
+                            last_ckpt_name = name
+                if last_ckpt_name is not None:
+                    checkpoint_path = os.path.join(trainer.checkpoint_callback.filepath, last_ckpt_name)
+    return checkpoint_path
+
+
+# *****************************************************
+#                 Task Specific
+# *****************************************************
+class BaseTask(pl.LightningModule, ABC):
+    """BaseTask"""
     def __init__(self, 
                  hparams:Namespace, 
                  model:nn.Module,
-                 train_dataset: Optional[Dataset] = None, 
-                 val_dataset: Optional[Dataset] = None,
-                 cal_dataset: Optional[Dataset] = None, 
-                 test_dataset: Optional[Dataset] = None,
-                 collate_fn: Optional[Callable] = None, 
                  optimizer: Optional[Optimizer] = None,
                  loss_func: Optional[Callable] = None, 
                  out_transform: Optional[Callable] = None, 
-                 num_workers: Optional[int] = 0, 
                  debug: Optional[bool] = False,
                  **kwargs):
         """
@@ -100,42 +96,21 @@ class PyModel(pl.LightningModule):
             base pytorch model defining the model logic. model forward should output logit for classfication and accept
             a single positional tensor (`x`) for input data and keyword tensors for `length` atleast. 
             Optinally can provide `hidden` keyword argument for sequential models to ingest past hidden state.
-        train_dataset: torch.utils.data.Dataset, optional
-            training dataset 
-        val_dataset: torch.utils.data.Dataset, optional
-            validation dataset 
-        cal_dataset: torch.utils.data.Dataset, optional
-            calibration dataset - if provided post-hoc calibration is performed
-        test_dataset: torch.utils.data.Dataset, optional
-            test dataset - if provided, training also report test peformance
-        collate_fn: 
-            collate functions to handle inequal sample sizes in batch
         optimizer: torch.optim.Optimizer, optional
             pytorch optimizer. If not provided, Adam is used with standard parameters
         loss_func: callable
             if provided, used to compute the loss. Default: cross entropy loss
         out_transform: callable
             if provided, convert logit to expected format. Default, softmax
-        num_workers: int, Default: 0
-            if provided sets the numer of workers used by the DataLoaders. 
         kwargs: dict, optional
             other parameters accepted by pl.LightningModule
         """
-        super(PyModel, self).__init__()
+        super(BaseTask, self).__init__()
         #  self.bk_hparams = hparams
         self.model = model
 
         self._debug = debug
-
-        self.train_dataset = train_dataset
-        self.val_dataset = val_dataset
-        self.cal_dataset = cal_dataset
-        self.test_dataset = test_dataset
-
-        self.num_workers = num_workers
-
-        self.collate_fn = collate_fn
-
+        self._loss_func = loss_func
         self._optimizer = optimizer
         self._scheduler = kwargs.get('scheduler', None)
         self._kwargs = kwargs
@@ -143,20 +118,11 @@ class PyModel(pl.LightningModule):
         # save hyper-parameters
         self.save_hyperparameters(hparams)
 
-        # -------------------------------------------
-        # TODO: Move to classifier
-        if loss_func is None:
-            self.loss_func = nn.CrossEntropyLoss()
-        else:
-            self.loss_func = loss_func
+        self._setup_task()
+        return
 
-        if out_transform is None:
-            self.out_transform = nn.Softmax(dim=1)
-        else:
-            self.out_transform = out_transform
-
-        self.temperature = nn.Parameter(T.ones(1) * 1.)
-        # -------------------------------------------
+    @abstractmethod
+    def _setup_task(self):
         return
 
     def configure_optimizers(self):
@@ -264,14 +230,15 @@ class PyModel(pl.LightningModule):
         return loss, n_examples, score
 
     # TODO: move this to classification
+    @abstractmethod
     def _process_common_output(self, y_pred):
-        _, y_hat = T.max(y_pred.data, 1)
+        y_hat = None
         return y_hat
     
     # TODO: make this an abstractmethod. currently done for classification
+    @abstractmethod
     def _calculate_score(self, y_pred, y):
-        y_hat = self._process_common_output(y_pred)
-        score = accuracy(y_hat, y)
+        score = None
         return score
 
     def training_step(self, batch, batch_idx):
@@ -469,335 +436,6 @@ class PyModel(pl.LightningModule):
         proba = self.predict_proba(p_x, lengths=p_lengths)
         return proba
 
-    # --------------------------------------------------------------
-    #  Dataset handling section
-    # TODO: move to dataset class
-    # -------------------------------------------------------------
-    def _pin_memory(self):
-        pin_memory = False
-        try:
-            if self.trainer.on_gpu:
-                pin_memory=True
-        except AttributeError:
-            pass
-        return pin_memory
-
-    def train_dataloader(self):
-        warnings.warn(f'{C._deprecation_warn_msg}. Pass dataloader directly', DeprecationWarning, stacklevel=2)
-        sampler = self._kwargs.get('train_sampler', None)
-        shuffle = True if sampler is None else False
-
-        pin_memory = self._pin_memory()
-        # REQUIRED
-        dataloader = DataLoader(self.train_dataset, 
-                                collate_fn=self.collate_fn, 
-                                shuffle=shuffle,
-                                batch_size=self.hparams.batch_size,
-                                sampler=sampler,
-                                pin_memory=pin_memory,
-                                num_workers=self.num_workers
-                                )
-        return dataloader
-
-    def val_dataloader(self):
-        warnings.warn(f'{C._deprecation_warn_msg}. Pass dataloader directly', DeprecationWarning, stacklevel=2)
-        if self.val_dataset is None:
-            dataset = ptd.EmptyDataset()
-            dataloader = DataLoader(dataset)
-        else:
-            dataset = self.val_dataset
-            pin_memory = self._pin_memory()
-            dataloader = DataLoader(self.val_dataset, 
-                                    collate_fn=self.collate_fn, 
-                                    pin_memory=pin_memory,
-                                    batch_size=self.hparams.batch_size,
-                                    num_workers=self.num_workers
-                                    )
-        return dataloader
-
-    def test_dataloader(self):
-        warnings.warn(f'{C._deprecation_warn_msg}. Pass dataloader directly', DeprecationWarning, stacklevel=2)
-        if self.test_dataset is None:
-            dataset = ptd.EmptyDataset()
-            dataloader = DataLoader(dataset)
-        else:
-            dataset = self.test_dataset
-            pin_memory = self._pin_memory()
-            dataloader = DataLoader(self.test_dataset, 
-                                    collate_fn=self.collate_fn,
-                                    pin_memory=pin_memory,
-                                    batch_size=self.hparams.batch_size,
-                                    num_workers=self.num_workers)
-        return dataloader
-
-    def cal_dataloader(self):
-        warnings.warn(f'{C._deprecation_warn_msg}. Pass dataloader directly', DeprecationWarning, stacklevel=2)
-        if self.cal_dataset is None:
-            dataset = ptd.EmptyDataset()
-            dataloader = DataLoader(dataset)
-        else:
-            dataset = self.cal_dataset
-            pin_memory = self._pin_memory()
-            dataloader = DataLoader(self.cal_dataset, collate_fn=self.collate_fn, pin_memory=pin_memory,
-                                    batch_size=self.hparams.batch_size,num_workers=self.num_workers)
-        return dataloader
-    
-
-# TODO: see if this is still required
-def _find_checkpoint(model, checkpoint_path=None):
-    if checkpoint_path is None:
-        if model is not None and hasattr(model, 'trainer'):
-            trainer = model.trainer
-
-            # do nothing if there's not dir or callback
-            no_ckpt_callback = (trainer.checkpoint_callback is None) or (not trainer.checkpoint_callback)
-            if no_ckpt_callback or not os.path.exists(trainer.checkpoint_callback.filepath):
-                pass
-            else:
-                # restore trainer state and model if there is a weight for this experiment
-                last_epoch = -1
-                last_ckpt_name = None
-
-                # find last epoch
-                checkpoints = os.listdir(trainer.checkpoint_callback.filepath)
-                for name in checkpoints:
-                    # ignore hpc ckpts
-                    if 'hpc_' in name:
-                        continue
-
-                    if '.ckpt' in name:
-                        epoch = name.split('epoch_')[1]
-                        epoch = int(re.sub('[^0-9]', '', epoch))
-
-                        if epoch > last_epoch:
-                            last_epoch = epoch
-                            last_ckpt_name = name
-                if last_ckpt_name is not None:
-                    checkpoint_path = os.path.join(trainer.checkpoint_callback.filepath, last_ckpt_name)
-    return checkpoint_path
-
-
-# TODO: see if this can be broken down and reusable
-# potentially move to to a mlflow section
-
-def post_training(trainer, wrapped_model, ckpt_path, model_path, **kwargs):
-    cal_dataloader = wrapped_model.cal_dataloader()
-    if len(cal_dataloader) > 0 and kwargs.get('calibrate', False):
-        wrapped_model.set_temperature(cal_dataloader)
-        # manually setting the best model and the model mode
-        if ckpt_path is not None:
-            ckpt_path = os.path.join(os.path.dirname(ckpt_path),
-                                     f"{os.path.basename(ckpt_path).rstrip('.ckpt')}-calibrated.ckpt"
-                                     )
-        else:
-            ckpt_path = os.path.join(os.getcwd(), f"{model_path}-calibrated.ckpt")
-        trainer.save_checkpoint(ckpt_path)
-        print(f"Calibrated model saved to {ckpt_path}")
-    return wrapped_model, ckpt_path
-
-
-def run_training_with_mlflow(mlflow_conf: dict,
-                             train_args: Namespace,
-                             wrapped_model: PyModel,
-                             train_dataloader=None,
-                             val_dataloader=None,
-                             test_dataloader=None,
-                             cal_dataloader=None,
-                             **kwargs):
-    """
-    Function to run supervised training for classifcation
-
-    Parameters
-    ----------
-    mlflow_conf: dict
-        mlflow configuration e,g, MLFLOW_URI
-    train_args: Namespace
-        namespace with arguments for pl.Trainer instance. See `pytorch_lightning.trainer.Trainer` for supported options
-        TODO: potentially hyper-parameters for model
-    wrapped_model: PyModel
-        wrapped PyModel
-    train_dataloader: DataLoader, optional
-        training dataloader
-        If not provided dataloader is extracted from `wrapped_model` (backwards compatibility)
-    val_dataloader: DataLoader, optional
-        validation dataloader.
-        If not provided dataloader is extracted from `wrapped_model` (backwards compatibility)
-    test_dataloader: DataLoader, optional
-        test dataloader
-        If not provided dataloader is extracted from `wrapped_model` (backwards compatibility)
-    cal_dataloader: DataLoader, optional
-        calibration dataloader
-        If not provided dataloader is extracted from `wrapped_model` (backwards compatibility)
-    model_path: str
-        prefix for storing model in MlFlow
-    artifacts: dict, optional
-        any artifact to be logged by user
-    metrics: Callable, optional
-        if specified, used for calculating all metrics. else inferred from problem type
-    run_id: str, optional
-        if specified uses existing mlflow run.
-    auto_init_logger: bool, default: True
-        if specificed, loggers are generated automatically.
-        else, assumes user passed it (this is planned and not implemented now)
-    kwargs: dict, optional
-        remaining keyword argumennts are used as experiment tags
-
-    Returns
-    -------
-    tuple:
-        (run_id, run_metrics, y_val, y_val_hat, y_val_pred, y_test, y_test_hat, y_test_pred,)
-    """
-    model_path = kwargs.pop('model_path', 'model')
-    artifacts = kwargs.pop('artifacts', dict())
-
-    mlflow_conf.setdefault('problem_type', 'classifier')
-    mlflow_setup = setup_mlflow(**mlflow_conf)
-
-    # Support for user-defined run time metrics
-    _metrics = kwargs.pop('metrics', None)
-    if _metrics is not None:
-        calculate_metrics = _metrics
-        assert callable(calculate_metrics), f"metric function {_metrics} must be callable."
-    else:
-        calculate_metrics = Metrics(mlflow_conf['problem_type'])
-    log.debug(f"Mlflow setup: {mlflow_setup}")
-    log.debug(f"Used metrics: {calculate_metrics}")
-
-    experiment_name = mlflow_setup['experiment_name']
-    log.debug(f'Starting experiment {experiment_name}')
-
-    experiment_tags = dict()
-    experiment_tags.update(**kwargs)
-
-    # **Collecting the dataloaders**
-    # TODO: deprecate this in next version
-    if train_dataloader is None:
-        train_dataloader = wrapped_model.train_dataloader()
-    if val_dataloader is None:
-        val_dataloader = wrapped_model.val_dataloader()
-    if test_dataloader is None:
-        test_dataloader = wrapped_model.test_dataloader()
-    if cal_dataloader is None:
-        cal_dataloader = wrapped_model.cal_dataloader()
-
-    auto_init_logger = kwargs.pop('auto_init_logger', True)
-    if auto_init_logger:
-        mlf_logger = pl.loggers.MLFlowLogger(experiment_name=experiment_name,
-                                             tracking_uri=mlflow_setup['mlflow_uri'],
-                                             tags=experiment_tags
-                                             )
-        _logger = [mlf_logger]
-    else:
-        # Possible logic:
-        # 1. parse train_args to strip the logger if exists
-        # 2. assert MlFlowLogger is one of the logger present
-        mlf_logger = None
-        _logger = []
-        raise NotImplementedError('TODO: allow users to specify logger')
-
-    # Trying to resume a run
-    # N.B. We are monkey patching this here so that future user supplied logger
-    #      can be modified to correct run_id
-    run_id = kwargs.pop('run_id', None)
-    if run_id is not None:
-        mlf_logger._run_id = run_id
-
-    _parsed_train_args = pl.Trainer.parse_argparser(train_args)
-    trainer = pl.Trainer.from_argparse_args(_parsed_train_args, logger=_logger)
-
-    # Starting to train
-    _start_time = time.time()
-    trainer.fit(wrapped_model, 
-                train_dataloaders=train_dataloader,
-                val_dataloaders=val_dataloader,
-                )
-
-    run_id = mlf_logger._run_id  #TODO: when supporting user supplied logger, check this to get the correct mlflow run id
-    #  mlflow.log_params(wrapped_model.get_params())
-
-    # Finding the checkpoint path
-    try:
-        ckpt_path = None
-        for callback in trainer.callbacks:
-            if isinstance(callback, pl.callbacks.ModelCheckpoint):
-                ckpt_path = callback.best_model_path
-                break
-        if ckpt_path is None:
-            raise Exception('couldnt determine the best model from callbacks..falling back to file matching')
-    except Exception:
-        ckpt_path = _find_checkpoint(wrapped_model)
-    log.info(f"Best model is temporarily in {ckpt_path}")
-
-    try:
-        checkpoint = pl.utilities.cloud_io.load(ckpt_path)['state_dict']
-        wrapped_model.load_state_dict(checkpoint)
-    except Exception as e:
-        raise Exception(f"couldnt restore model properly from {ckpt_path}. Error={e}")
-
-    # Post training routines. e.g. Calibrating if calibration requested
-    wrapped_model, ckpt_path = post_training(trainer, wrapped_model, ckpt_path, model_path)
-    # Setting up for evaluation loop
-    wrapped_model.eval()
-
-    # Collecting metrics
-    if (not isinstance(val_dataloader, DataLoader)) and (len(val_dataloader) > 1):
-        raise NotImplementedError("For now supporting only one val dataloader")
-    val_payload = trainer.predict(wrapped_model, val_dataloader)
-    # TODO: remove this step if the bug is fixed
-    val_payload = wrapped_model._on_predict_epoch_end(val_payload)
-                                               
-    y_val = val_payload['y'].data.cpu().numpy()
-    y_val_pred = val_payload['y_pred'].data.cpu().numpy()
-    y_val_hat = val_payload['y_hat'].data.cpu().numpy()
-
-    if len(test_dataloader) > 0:
-        if (not isinstance(test_dataloader, DataLoader)) and (len(test_dataloader) > 1):
-            raise NotImplementedError("For now supporting only one test dataloader")
-        test_payload = trainer.predict(wrapped_model, test_dataloader)
-        # TODO: remove this step if the bug is fixed
-        test_payload = wrapped_model._on_predict_epoch_end(test_payload)
-
-        y_test = test_payload['y'].data.cpu().numpy()
-        y_test_pred = test_payload['y_pred'].data.cpu().numpy()
-        y_test_hat = test_payload['y_hat'].data.cpu().numpy()
-    else:
-        y_test, y_test_pred, y_test_hat = None, None, None 
-
-    _end_time = time.time()
-    run_time = (_end_time - _start_time)
-    # Experiment ended. logging things
-    experiment_tags.update(dict(run_time=run_time))
-
-    try:
-        run_metrics = calculate_metrics(y_val=y_val, y_val_hat=y_val_hat, y_val_proba=y_val_pred, 
-                                        y_test=y_test, y_test_hat=y_test_hat, y_test_proba=y_test_pred)
-
-    except Exception as e:
-        warnings.warn(f"{e}")
-        log.warning(f"something went wrong while computing metrics: {e}")
-        run_metrics = None
-
-    helper.log_metrics(run_metrics, run_id=run_id)
-
-    _tmp = {f"artifact/{art_name}": art_val 
-            for art_name, art_val in six.iteritems(artifacts)}
-    _tmp['model_checkpoint'] = ckpt_path
-    helper.log_artifacts(_tmp, run_id=run_id, mlflow_uri=mlflow_setup['mlflow_uri'], delete=True) 
-
-    helper.set_tags(experiment_tags, run_id=run_id)
-
-    # Pytorch log model not working
-    # *****************************
-    #  mlflow.pytorch.log_model(wrapped_model, model_path, registered_model_name=problem_type)     # <------ use mlflow.pytorch.log_model to log trained sklearn model
-    #  print("Model saved in run {}, and registered on {} as a new version of model name {}"
-    #       .format(active_run, os.environ['MLFLOW_URI'], problem_type))
-
-    return (run_id, 
-            run_metrics, 
-            y_val, y_val_hat, y_val_pred,
-            y_test, y_test_hat, y_test_pred,
-            )
-
 
 def load_model_from_mlflow(run_id, 
                            mlflow_conf,
@@ -882,3 +520,63 @@ def register_model_with_mlflow(run_id,
     dumper = helper.model_register_dumper(registered_model_name=registered_model_name)
     helper.log_artifacts(artifacts, run_id, mlflow_uri=mlflow_setup['mlflow_uri'], dumper=dumper, delete=True)
     return 
+
+# *****************************************************
+#             Model specific 
+# *****************************************************
+class BaseModel(nn.Module, ABC):
+    """Docstring for BaseModel. """
+
+    def __init__(self):
+        """TODO: to be defined. """
+        super(BaseModel, self).__init__()
+
+    @staticmethod
+    def add_model_specific_args(parent_parser):
+        """
+        Specify the hyperparams for this model
+        """
+        # MODEL specific
+        parser = ArgumentParser(parents=[parent_parser])
+        parser.add_argument('-lr', '--learning_rate', default=0.02, type=float)
+        parser.add_argument('-bs', '--batch_size', default=32, type=int)
+
+        # training specific (for this model)
+        parser.add_argument('--max_nb_epochs', default=2, type=int)
+
+        return parser
+
+    def _get_packed_last_time(self, output, lengths=None):
+        """
+        Return last valid output from packed sequence
+
+        ref: https://blog.nelsonliu.me/2018/01/25/extracting-last-timestep-outputs-from-pytorch-rnns/
+        """
+        if isinstance(output, T.nn.utils.rnn.PackedSequence):
+            # Unpack, with batch_first=True.
+            output, lengths = T.nn.utils.rnn.pad_packed_sequence(output, batch_first=self.batch_first)
+        
+        if lengths is None:
+            if self.batch_first:
+                last_output = output[:, -1, :]
+            else:
+                last_output = output[-1, :, :]
+        else:
+            # Extract the outputs for the last timestep of each example
+            idx = (T.LongTensor(lengths) - 1).view(-1, 1).expand(
+                len(lengths), output.size(2))
+            time_dimension = 1 if self.batch_first else 0
+            idx = idx.unsqueeze(time_dimension)
+            if output.is_cuda:
+                idx = idx.cuda(output.data.get_device())
+            # Shape: (batch_size, rnn_hidden_dim)
+            last_output = output.gather(
+                time_dimension, T.autograd.Variable(idx)).squeeze(time_dimension)
+        return last_output
+
+
+class ClassifierMixin(object):
+    def get_logit(self):
+        bias = self._kwargs.get('op_bias', False)
+        return nn.Linear(self.hidden_dim, self.output_dim, bias=bias)
+
