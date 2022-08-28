@@ -1135,7 +1135,7 @@ lightsaber.data_utils.pt_dataset.BaseDataset            (<span title="torch.util
 
 
 <h4 class="doc doc-heading" id="lightsaber.data_utils.pt_dataset.BaseDataset.__init__">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tgt_file</span><span class="p">,</span> <span class="n">feat_file</span><span class="p">,</span> <span class="n">idx_col</span><span class="p">,</span> <span class="n">tgt_col</span><span class="p">,</span> <span class="n">feat_columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">time_order_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category_map</span><span class="o">=</span><span class="p">{},</span> <span class="n">transform</span><span class="o">=</span><span class="p">[</span><span class="o">&lt;</span><span class="n">function</span> <span class="n">transform_drop_cols</span> <span class="n">at</span> <span class="mh">0x7f9c4a43f4d0</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">transform_fillna</span> <span class="n">at</span> <span class="mh">0x7f9c4a43f560</span><span class="o">&gt;</span><span class="p">],</span> <span class="nb">filter</span><span class="o">=</span><span class="p">[</span><span class="o">&lt;</span><span class="n">function</span> <span class="n">identity_nd</span> <span class="n">at</span> <span class="mh">0x7f9cd6015c20</span><span class="o">&gt;</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tgt_file</span><span class="p">,</span> <span class="n">feat_file</span><span class="p">,</span> <span class="n">idx_col</span><span class="p">,</span> <span class="n">tgt_col</span><span class="p">,</span> <span class="n">feat_columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">time_order_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category_map</span><span class="o">=</span><span class="p">{},</span> <span class="n">transform</span><span class="o">=</span><span class="p">[</span><span class="o">&lt;</span><span class="n">function</span> <span class="n">transform_drop_cols</span> <span class="n">at</span> <span class="mh">0x7f5ff18e94d0</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">transform_fillna</span> <span class="n">at</span> <span class="mh">0x7f5ff18e9560</span><span class="o">&gt;</span><span class="p">],</span> <span class="nb">filter</span><span class="o">=</span><span class="p">[</span><span class="o">&lt;</span><span class="n">function</span> <span class="n">identity_nd</span> <span class="n">at</span> <span class="mh">0x7f607d4bfc20</span><span class="o">&gt;</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
@@ -1207,14 +1207,14 @@ Default: <code>None</code> -&gt; implies no columns</p></td>
         <td><code>single callable or list/tuple of callables</code></td>
         <td><p>how to transform data. if list of callables provided eg <code>[f, g]</code>, <code>g(f(x))</code> used 
 Default: drop <code>lightsaber.constants::DEFAULT_DROP_COLS</code> and fillna</p></td>
-        <td><code>[&lt;function transform_drop_cols at 0x7f9c4a43f4d0&gt;, &lt;function transform_fillna at 0x7f9c4a43f560&gt;]</code></td>
+        <td><code>[&lt;function transform_drop_cols at 0x7f5ff18e94d0&gt;, &lt;function transform_fillna at 0x7f5ff18e9560&gt;]</code></td>
       </tr>
       <tr>
         <td><code>filter</code></td>
         <td><code>single callable or list/tuple of callables</code></td>
         <td><p>how to filter data. if list of callables provided eg <code>[f, g]</code>, <code>g(f(x))</code> used 
 Default: no operation</p></td>
-        <td><code>[&lt;function identity_nd at 0x7f9cd6015c20&gt;]</code></td>
+        <td><code>[&lt;function identity_nd at 0x7f607d4bfc20&gt;]</code></td>
       </tr>
       <tr>
         <td><code>device</code></td>
