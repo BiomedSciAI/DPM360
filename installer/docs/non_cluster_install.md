@@ -31,7 +31,7 @@ Please confirm the IP address of docker0 (virtual network bridge on the host) by
 **Note**, you can see this address before starting containers (it is usually ok if the docker service is on). Here, we assume the ip is `172.17.0.1`
 
 
-Using this IP address, modify configuration files:
+Using this IP address, modify configuration files (assuming using PostgreSQL version 10):
 
 ```
 /etc/postgresql/10/main/pg_hba.conf:
